@@ -1,0 +1,783 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+  <head>
+
+
+<script type="text/javascript" src="/static/js/analytics.js"></script>
+<script type="text/javascript">archive_analytics.values.server_name="wwwb-app14.us.archive.org";archive_analytics.values.server_ms=409;</script>
+<link type="text/css" rel="stylesheet" href="/static/css/banner-styles.css"/>
+
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="KEYWORDS" content="Classifieds" />
+<meta name="robots" content="index,follow" />
+<link rel="shortcut icon" href="/web/20100114134724im_/http://tlug.ss.org/favicon.ico" />
+<link title="Creative Commons" type="application/rdf+xml" href="/mediawiki/index.php?title=Classifieds&amp;action=creativecommons" rel="meta" />
+<link rel="copyright" href="http://www.gnu.org/copyleft/fdl.html" />
+    <title>Classifieds - GTALUG</title>
+    <style type="text/css" media="screen,projection">/*<![CDATA[*/ @import "/web/20100114134724cs_/http://tlug.ss.org/mediawiki/skins/gtalug/main.css"; /*]]>*/</style>
+    <link rel="stylesheet" type="text/css" media="print" href="/web/20100114134724cs_/http://tlug.ss.org/mediawiki/skins/common/commonPrint.css" />
+    <!--[if lt IE 5.5000]><style type="text/css">@import "/mediawiki/skins/gtalug/IE50Fixes.css";</style><![endif]-->
+    <!--[if IE 5.5000]><style type="text/css">@import "/mediawiki/skins/gtalug/IE55Fixes.css";</style><![endif]-->
+    <!--[if gte IE 6]><style type="text/css">@import "/mediawiki/skins/gtalug/IE60Fixes.css";</style><![endif]-->
+    <!--[if IE]><script type="text/javascript" src="/mediawiki/skins/common/IEFixes.js"></script>
+    <meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+    <script type="text/javascript" src="/web/20100114134724js_/http://tlug.ss.org/mediawiki/index.php?title=-&amp;action=raw&amp;gen=js"></script>    <script type="text/javascript" src="/web/20100114134724js_/http://tlug.ss.org/mediawiki/skins/common/wikibits.js"></script>
+    <style type="text/css">/*<![CDATA[*/
+@import "/web/20100114134724cs_/http://tlug.ss.org/mediawiki/index.php?title=MediaWiki:Gtalug.css&action=raw&ctype=text/css&smaxage=18000";
+@import "/web/20100114134724cs_/http://tlug.ss.org/mediawiki/index.php?title=-&action=raw&gen=css&maxage=18000";
+/*]]>*/</style>              </head>
+  <body                 class="ns-0">
+
+
+<!-- BEGIN WAYBACK TOOLBAR INSERT -->
+<script type="text/javascript" src="/static/js/disclaim-element.js" ></script>
+<script type="text/javascript" src="/static/js/graph-calc.js" ></script>
+<script type="text/javascript">//<![CDATA[
+var __wm = (function(imgWidth,imgHeight,yearImgWidth,monthImgWidth){
+var wbPrefix = "/web/";
+var wbCurrentUrl = "http://tlug.ss.org/wiki/Classifieds";
+
+var firstYear = 1996;
+var displayDay = "14";
+var displayMonth = "Jan";
+var displayYear = "2010";
+var prettyMonths = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+var $D=document,$=function(n){return document.getElementById(n)};
+var trackerVal,curYear = -1,curMonth = -1;
+var yearTracker,monthTracker;
+function showTrackers(val) {
+  if (val===trackerVal) return;
+  var $ipp=$("wm-ipp");
+  var $y=$("displayYearEl"),$m=$("displayMonthEl"),$d=$("displayDayEl");
+  if (val) {
+    $ipp.className="hi";
+  } else {
+    $ipp.className="";
+    $y.innerHTML=displayYear;$m.innerHTML=displayMonth;$d.innerHTML=displayDay;
+  }
+  yearTracker.style.display=val?"inline":"none";
+  monthTracker.style.display=val?"inline":"none";
+  trackerVal = val;
+}
+function trackMouseMove(event,element) {
+  var eventX = getEventX(event);
+  var elementX = getElementX(element);
+  var xOff = Math.min(Math.max(0, eventX - elementX),imgWidth);
+  var monthOff = xOff % yearImgWidth;
+
+  var year = Math.floor(xOff / yearImgWidth);
+  var monthOfYear = Math.min(11,Math.floor(monthOff / monthImgWidth));
+  // 1 extra border pixel at the left edge of the year:
+  var month = (year * 12) + monthOfYear;
+  var day = monthOff % 2==1?15:1;
+  var dateString = zeroPad(year + firstYear) + zeroPad(monthOfYear+1,2) +
+    zeroPad(day,2) + "000000";
+
+  $("displayYearEl").innerHTML=year+firstYear;
+  $("displayMonthEl").innerHTML=prettyMonths[monthOfYear];
+  // looks too jarring when it changes..
+  //$("displayDayEl").innerHTML=zeroPad(day,2);
+  var url = wbPrefix + dateString + '/' +  wbCurrentUrl;
+  $("wm-graph-anchor").href=url;
+
+  if(curYear != year) {
+    var yrOff = year * yearImgWidth;
+    yearTracker.style.left = yrOff + "px";
+    curYear = year;
+  }
+  if(curMonth != month) {
+    var mtOff = year + (month * monthImgWidth) + 1;
+    monthTracker.style.left = mtOff + "px";
+    curMonth = month;
+  }
+}
+function hideToolbar() {
+  $("wm-ipp").style.display="none";
+}
+function bootstrap() {
+  var $spk=$("wm-ipp-sparkline");
+  yearTracker=$D.createElement('div');
+  yearTracker.className='yt';
+  with(yearTracker.style){
+    display='none';width=yearImgWidth+"px";height=imgHeight+"px";
+  }
+  monthTracker=$D.createElement('div');
+  monthTracker.className='mt';
+  with(monthTracker.style){
+    display='none';width=monthImgWidth+"px";height=imgHeight+"px";
+  }
+  $spk.appendChild(yearTracker);
+  $spk.appendChild(monthTracker);
+
+  var $ipp=$("wm-ipp");
+  $ipp&&disclaimElement($ipp);
+}
+return{st:showTrackers,mv:trackMouseMove,h:hideToolbar,bt:bootstrap};
+})(500, 27, 25, 2);//]]>
+</script>
+<style type="text/css">
+body {
+  margin-top:0 !important;
+  padding-top:0 !important;
+  min-width:800px !important;
+}
+</style>
+<div id="wm-ipp" lang="en" style="display:none;">
+
+<div style="position:fixed;left:0;top:0;width:100%!important">
+<div id="wm-ipp-inside">
+   <table style="width:100%;"><tbody><tr>
+   <td id="wm-logo">
+       <a href="/web/" title="Wayback Machine home page"><img src="/static/images/toolbar/wayback-toolbar-logo.png" alt="Wayback Machine" width="110" height="39" border="0" /></a>
+   </td>
+   <td class="c">
+       <table style="margin:0 auto;"><tbody><tr>
+       <td class="u" colspan="2">
+       <form target="_top" method="get" action="/web/form-submit.jsp" name="wmtb" id="wmtb"><input type="text" name="url" id="wmtbURL" value="http://tlug.ss.org/wiki/Classifieds" style="width:400px;" onfocus="this.focus();this.select();" /><input type="hidden" name="type" value="replay" /><input type="hidden" name="date" value="20100114134724" /><input type="submit" value="Go" /><span id="wm_tb_options" style="display:block;"></span></form>
+       </td>
+       <td class="n" rowspan="2">
+           <table><tbody>
+           <!-- NEXT/PREV MONTH NAV AND MONTH INDICATOR -->
+           <tr class="m">
+           	<td class="b" nowrap="nowrap">
+		
+		    <a href="/web/20091214083050/http://tlug.ss.org/wiki/Classifieds" title="14 Dec 2009">DEC</a>
+		
+		</td>
+		<td class="c" id="displayMonthEl" title="You are here: 13:47:24 Jan 14, 2010">JAN</td>
+		<td class="f" nowrap="nowrap">
+		
+		    Feb
+		
+                </td>
+	    </tr>
+           <!-- NEXT/PREV CAPTURE NAV AND DAY OF MONTH INDICATOR -->
+           <tr class="d">
+               <td class="b" nowrap="nowrap">
+               
+                   <a href="/web/20091214083050/http://tlug.ss.org/wiki/Classifieds" title="8:30:50 Dec 14, 2009"><img src="/static/images/toolbar/wm_tb_prv_on.png" alt="Previous capture" width="14" height="16" border="0" /></a>
+               
+               </td>
+               <td class="c" id="displayDayEl" style="width:34px;font-size:24px;" title="You are here: 13:47:24 Jan 14, 2010">14</td>
+	       <td class="f" nowrap="nowrap">
+               
+                   <img src="/static/images/toolbar/wm_tb_nxt_off.png" alt="Next capture" width="14" height="16" border="0"/>
+               
+	       </td>
+           </tr>
+           <!-- NEXT/PREV YEAR NAV AND YEAR INDICATOR -->
+           <tr class="y">
+	       <td class="b" nowrap="nowrap">
+               
+                   <a href="/web/20081230042318/http://tlug.ss.org/wiki/Classifieds" title="30 Dec 2008"><strong>2008</strong></a>
+               
+               </td>
+               <td class="c" id="displayYearEl" title="You are here: 13:47:24 Jan 14, 2010">2010</td>
+	       <td class="f" nowrap="nowrap">
+               
+                   2011
+               
+	       </td>
+           </tr>
+           </tbody></table>
+       </td>
+       </tr>
+       <tr>
+       <td class="s">
+           <a class="t" href="/web/20100114134724*/http://tlug.ss.org/wiki/Classifieds" title="See a list of every capture for this URL">25 captures</a>
+           <div class="r" title="Timespan for captures of this URL">1 May 06 - 14 Jan 10</div>
+       </td>
+       <td class="k">
+       <a href="" id="wm-graph-anchor">
+       <div id="wm-ipp-sparkline" title="Explore captures for this URL">
+	 <img id="sparklineImgId" alt="sparklines"
+		 onmouseover="__wm.st(1)" onmouseout="__wm.st(0)"
+		 onmousemove="__wm.mv(event,this)"
+		 width="500"
+		 height="27"
+		 border="0"
+		 src="/web/jsp/graph.jsp?graphdata=500_27_1996:-1:000000000000_1997:-1:000000000000_1998:-1:000000000000_1999:-1:000000000000_2000:-1:000000000000_2001:-1:000000000000_2002:-1:000000000000_2003:-1:000000000000_2004:-1:000000000000_2005:-1:000000000000_2006:-1:000010000100_2007:-1:010110120000_2008:-1:000021201001_2009:-1:111111011001_2010:0:100000000000_2011:-1:000000000000_2012:-1:000000000000_2013:-1:000000000000_2014:-1:000000000000_2015:-1:000000000000" />
+       </div>
+       </a>
+       </td>
+       </tr></tbody></table>
+   </td>
+   <td class="r">
+       <a href="#close" onclick="__wm.h();return false;" style="background-image:url(/static/images/toolbar/wm_tb_close.png);top:5px;" title="Close the toolbar">Close</a>
+       <a href="http://faq.web.archive.org/" style="background-image:url(/static/images/toolbar/wm_tb_help.png);bottom:5px;" title="Get some help using the Wayback Machine">Help</a>
+   </td>
+   </tr></tbody></table>
+</div>
+</div>
+</div>
+<script type="text/javascript">__wm.bt();</script>
+<!-- END WAYBACK TOOLBAR INSERT -->
+
+    <div id="globalWrapper">
+      <div id="column-content">
+	<div id="content">
+	  <a name="top" id="top"></a>
+	  	  <h1 class="firstHeading">Classifieds</h1>
+	  <div id="bodyContent">
+	    <h3 id="siteSub">From GTALUG</h3>
+	    <div id="contentSub"></div>
+	    	    	    <!-- start content -->
+	    <div class="editsection" style="float:right;margin-left:5px;">[<a href="/web/20100114134724/http://tlug.ss.org/mediawiki/index.php?title=Classifieds&amp;action=edit&amp;section=1" title="Classifieds">edit</a>]</div><a name="Sr._System_Engineer_.28Linux.29"></a><h2> <b>Sr. System Engineer (Linux)</b> </h2>
+<p>As engineers , you deal with some of the most challenging problems any of us have come across every day. The scale and speed of our clients growth force them to experiment with techniques and technologies only the very biggest websites ever need to use. Sometimes they find something other people have pioneered, and adapt it to fit. Other times they’re the pioneers, inventing new scaling solutions that we haven’t seen anyone else using yet. If you'd like to work in a challenging engineering environment where every new project is a learning opportunity, desire to work in a super cool environment with really smart people and get paid well for your efforts, then you've come to the right place.
+</p><p>Our Client has a flat engineering structure that gives individuals a great deal of responsibility. As a senior systems engineer, you will be involved in all stages of developing the product you are working on. You'll create new product ideas and help guide the product roadmap, spec out what the next generation will look like, and implement it yourself. Because of this, we look for individuals who thrive in an environment where they will work creatively and take initiative.
+</p><p>Our Client is seeking a seasoned, forward thinking Systems Engineer to join the Operations team. This is a full-time position based in their Toronto office. This position will be primarily responsible for managing and providing active support for mission-critical server environment running established and cutting-edge platforms such as: MySQL, Linux, Apache, Ejabberd, CouchDB, and Sphinx.
+Responsibilities
+</p>
+<pre>   * Continually improve the performance and scalability of the site
+   * Configure servers and network
+   * Monitor site stability and performance
+   * Troubleshoot issues with hardware, software, applications and network
+   * Prioritize tasks and work independently yet interact well within a project-oriented team environment
+   * Solve problems quickly and automate processes
+   * Pick up new technologies and services quickly
+   * Develop and maintain back up systems, monitoring tools and automation systems
+   * Debug issues with Linux software, applications and network
+   * Resolve technical challenges encountered in LAMP technologies
+   * Document current and future configuration processes and policies
+   * Occasional in 24x7 on-call support
+</pre>
+<p>Requirements
+</p>
+<pre>   * B.S. in Computer Science or equivalent experience
+   * 4+ years of experience with Linux
+   * Working knowledge of TCP/IP, security, LAMP (Linux, Apache, MySQL, PHP), and MTAs
+   * Scripting and programming skills (Such as Perl, Python, or Ruby is a plus)
+   * Experience with troubleshooting firewalls, VPNs, Load Balancers, IP Routing
+   * Working knowledge of MySQL administration, replication, backup, querying (SQL)
+   * Excellent verbal and written communication skills
+</pre>
+<p>To Apply
+</p><p>All interested applicants are asked to build an online profile by clicking on the following url:
+<a href="/web/20100114134724/http://tbe.taleo.net/NA12/ats/careers/requisition.jsp?org=IPNETWORKXS&amp;cws=1&amp;rid=46" class='external free' title="http://tbe.taleo.net/NA12/ats/careers/requisition.jsp?org=IPNETWORKXS&amp;cws=1&amp;rid=46" rel="nofollow">http://tbe.taleo.net/NA12/ats/careers/requisition.jsp?org=IPNETWORKXS&amp;cws=1&amp;rid=46</a>
+</p>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/web/20100114134724/http://tlug.ss.org/mediawiki/index.php?title=Classifieds&amp;action=edit&amp;section=2" title="Classifieds">edit</a>]</div><a name="Senior_Network_Engineer_.28Linux.29"></a><h2> <b>Senior Network Engineer (Linux)</b> </h2>
+<p><br />
+Solidifi Inc. (Markham, ON Canada, Hwy 7/Leslie)
+www.solidifi.com 
+</p><p>About Us 
+Solidifi is a leading provider of collateral valuation, risk management and data analytic services to the North American mortgage industry. Solidifi provides mortgage lenders and professionals with a flexible service platform for procuring collateral valuations from marketplace vendors and appraisers, with complete transparency and data to make “incredibly smart decisions”. Solidifi currently serves leading global financial institutions and operates Canada’s largest appraiser network. \ 
+</p><p>Solidifi is expanding its service offerings to the Property and Casualty (P&amp;C) insurance market, by leveraging its transaction management platform, together with risk data from the mortgage process and cost data from its partners to provide P&amp;C insurers with property replacement cost and underwriting tools that mitigate property loss risk. 
+</p><p>Solidifi currently serves leading global financial institutions and is positioned to operate North America’s largest appraiser network. Solidifi is based in Toronto, ON and has its US office in Chicago, IL. 
+</p><p>Position Description 
+As a senior member of the Technology team, Senior Network Engineer you are passionate about open source technologies and will provide leadership and guidance in the planning, implementation and deployment of IT Infrastructure projects based on priority and company strategic plans. You will assist in assembling relative costs and benefits associated with technology initiatives and present them in an orderly, objective manner. You will work closely with the Enterprise Architect to configure and make recommendations on production hardware / software configurations at the OS level and, to a lesser extent, at the Application level. You will also help to identify long term performance and load trends and help to develop plans and procedures for Solidifi’s system expansion. 
+</p><p>Responsibilities 
+Planning, Management, Deployment and Maintenance 
+•Company infrastructure, including, exchange, telecom, network, Data Centre, disaster recovery planning and IT standards and policies. 
+•Networks architecture according to Company needs and best practices. 
+•Mission critical customer facing 24/7 systems and applications. 
+•IT systems, networks and IT infrastructure to ensure they are, supported and available to all users with minimal down time. 
+•Deployment of Rack-mount server products as well as Storage products, and VMWare through relationships with third party vendors 
+Implementation, deployment and management of: 
+oOperating systems, Web, MySQL, servers (Exchange) email, blackberry and other, Clusters, Web Farms. 
+oOpen Source products including Linux (RedHat, Fedora, Ubuntu, etc) 
+oProduction Software including: Tomcat, Apache, etc. 
+oCisco products including Access routers, Firewalls, Switches and Content Servers. 
+•Security solutions including Digital Certificates, VPNs, data encryption, Firewall, user authentication, security principles, methodologies, and best practices, policies and procedures to ensure compliance with industry regulations. 
+•Ongoing monitoring of solutions using Nagios, OpenNMS, etc. 
+•Bash Shell scripting 
+•Back-up &amp; Restore solutions. 
+•Effective governance practices. 
+•Ongoing capacity planning. 
+•Feasibility analysis on potential future projects and present it to management. 
+•Technical correctness and completeness of the integrated system design, including the work of others. 
+•Expert Technical Support company wide 
+•Continuously monitor new technology and enhancements in the marketplace 
+•Negotiate and help manage relationships with 3rd party vendors supplying hardware, software, systems, or services. 
+•Providing technical support to the Executive team (writing proposals, presentations etc.) 
+•Document and present formal reports (assessments and recommendations) 
+</p><p>Education and Training Required 
+•University degree in Computer Science, Information Technology or related discipline. 
+•Additional technical certifications are desired. 
+</p>
+<ul><li>Scope of responsibilities for this particular opportunity may change and will include, but not be limited to the above mentioned. 
+</li></ul>
+<p>The opportunity is here if you're ready for it: work with the industry's top talent on dynamic, challenging projects for the North American mortgage industry. 
+</p><p>We take great pride in the work we do and the talented people who work with us. We're always looking for highly skilled, driven people who value a collaborative, open environment and a flexible, professional culture. 
+</p><p>Please send your resume to careers@solidifi.com and make sure to include the JOB TITLE “Senior Network Engineer (Linux)” in the subject of your message. 
+We thank you for your interest and look forward to hearing from you! 
+</p>
+<ul><li>Please note that ONLY QUALIFIED CANDIDATES will be contacted for this particular opportunity. 
+</li></ul>
+<p><br />
+<b>Senior Systems Administrator </b>
+<br /><br />
+Our client located in Mississauga requires the services of a highly skilled Red Hat Linux Administrator to assist its Linux administration team responsible for managing a mixed Red Hat Linux Enterprise network. The role of the Red Hat Linux Administrator is set to partly responsible for a 150 server and workstation environment and work on all aspects of administering a mission critical 24x7 Credit Card transaction network. The Red Hat Linux Administrator will work closely with R&amp;D and Q/A Analysts and will be responsible for traditional administration responsibilities, data warehousing, BCP environment testing and maintenance and implementing best security practices.
+<br /><br />
+</p>
+The ideal candidate for this project engagement as Red Hat Linux Administrator will have 8+ years of hands-on Unix experience supporting sophisticated mission critical environments.  The Red Hat Linux Administrator will also have 2+ years hands-on Linux experience supporting sophisticated mission critical environments. Given the mission critical nature of our client's applications, the successful candidate will prove effective in working well under pressure and tight deadlines. Additional requirements include a University Degree as well as exposure to Java, PHP and Perl scripting languages. A strong background knowledge of cryptographic protocols is also highly desired. <p>
+If you feel the above description matches your skill set and you are looking for an exciting and dynamic work opportunity, please email your application to mississauga@rht.com quoting Job Order #501-030543 or please call us directly at (905) 273-4092.
+<br /><br />
+
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/web/20100114134724/http://tlug.ss.org/mediawiki/index.php?title=Classifieds&amp;action=edit&amp;section=3" title="Classifieds">edit</a>]</div><a name="System_Integration_Engineer_for_Downtown_Toronto_Company"></a><h2> System Integration Engineer for Downtown Toronto Company </h2>
+<p><b>Why OANDA?</b>
+</p><p>OANDA is a unique company.  It's not a Web upstart or a bank.  It’s a technology company that innovates both in computer engineering and financial modeling for the Foreign Currency Exchange Trade market.  OANDA has experienced continued growth since its founding in 1996, and opportunities for employees remain unprecedented as the company creates new products that redefine the forex market.  With a daily capitalization of $3 trillion, the forex market dwarfs both the US bond and equity markets.<br /><br /> 
+</p><p>What's at the root of OANDA's success?  The Employees.  As an employee you will constantly develop innovative technology in an almost lab-like environment.  You will develop and challenge your skills every day.  You will have the ability to be self-directed in your work within a collaborative team structure.  You’ll enjoy the immediacy of a small company, but use the most advanced tools/technologies that a large firm can offer.  And to maintain that community feel at OANDA we offer flexibility &amp; sociability with things like catered lunches, on-site massage therapists, Friday @ 4 gatherings and more.  You will contribute to the growth and direction of OANDA, and your contributions to the success of the company will be recognized and rewarded.<br /><br /> 
+</p><p>Located in downtown Toronto, the OANDA development office provides convenient access to public transit and other downtown amenities.  For more information about OANDA, visit our website at: www.oanda.com<br /><br />
+</p><p><b>The Integration Engineer:</b>
+</p><p>At OANDA the Integration Engineer can be described as an Architect, System Administrator, Developer, and QA – all in one role.  This is a person who is passionate about the big picture since every decision is made by taking into account what would be best for the whole system.  The Integration Engineer is someone who takes a holistic approach to technology and is excited about tackling issues that pose a multi-layered challenge.<br /><br />
+</p><p>Being an Integration Engineer means that you are involved early in the design process to give a holistic perspective.  You are the gatekeeper of the entire development process.  You look for ways that the infrastructure might fail, as well as ways to optimize the system.  You will do light feature testing to ensure that new/upgraded code doesn’t interrupt existing resources.  You will write scripts to help automate things.  You work closely with others and help guide them to the most appropriate solutions.  Essentially you are a key member of a team that ensures OANDA’s continued success.<br /><br />
+</p><p>The Integration Engineer is also an excellent role to get a complete understanding of all the technology positions in both the Development and Operations parts of OANDA.  This allows for a wide range of continued career growth opportunities within the company and beyond.<br /><br />
+</p><p><b>The Skills You Bring:</b>
+</p><p>•	A University degree in computer science, computer engineering, or a related field.<br />
+•	Demonstrated knowledge, passion and experience (either professional or personal) of system architecture including communication protocols, intra-system dependencies, hardware and software configuration.<br />
+•	Extensive experience with UNIX / Linux / Solaris operating systems.<br />
+•	Preferred development experience using Perl and mod Perl (or other script languages).<br />
+•	Sound knowledge of Object Oriented Programming concepts and experience with languages such as C++ and Java.<br />
+•	Knowledge of build tools (make, Ant).<br />
+•	Experience or knowledge of Database programming (particularly DB2).<br />
+•	Ability to effectively communicate ideas and enjoy working with teams.<br />
+</p><p><br />
+<b>To Apply:
+</p><p>Please forward your resume and cover letter in confidence to jbrind@oanda.com.</b>
+</p><p><br />
+</p>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/web/20100114134724/http://tlug.ss.org/mediawiki/index.php?title=Classifieds&amp;action=edit&amp;section=4" title="Classifieds">edit</a>]</div><a name="Solaris.2FLinux_Administrator_Required"></a><h2> Solaris/Linux Administrator Required </h2>
+<p>Our client, a leader in the financial services industry is looking for a strong intermediate Unix Administrator to join their growing team.
+</p><p><br /> 
+</p><p>. As part of a group of highly skilled individuals, you will be responsible for all aspects of the administration of the distributed UNIX and Linux environment consisting mainly of Sun Solaris,Redhat Linux  and some HP-UX  servers. Your duties will include a wide variety of day-to-day administration activities as well as project participation including:
+</p><p><br /> 
+</p><p><br /> 
+</p>
+<ul><li>          Maintenance, performance and capacity planning/monitoring, availability monitoring of administered systems, maintaining establish baselines and reporting on variances.
+</li></ul>
+<ul><li>          Third level technical support for operating systems and related systems software (including 7/24 pager support).
+</li></ul>
+<ul><li>          Working with the systems management team and with systems management architects to develop a systems management infrastructure capable of delivering operable distributed systems.  
+</li></ul>
+<ul><li>          Participating as part of the project team to install, test and document new servers/software. Provide implementation support throughout all phases of the project.
+</li></ul>
+<ul><li>          Assisting with the preparation and maintenance of systems design documentation. 
+</li></ul>
+<ul><li>          Providing research and development to ensure that the systems infrastructure is well positioned to support current and emerging distributed systems solutions.
+</li></ul>
+<ul><li>          Communication with application developers and systems integrators, outlining the distributed systems engineering standards.
+</li></ul>
+<ul><li>          Maintenance of systems administration documentation outlining the current systems administration policies and practices as applied to the administered system.
+</li></ul>
+<p><br /> 
+</p><p>Must Have Skills:
+</p><p>The ideal candidate will be a self-starter that likes to see things done through completion. Attention to detail is important, as is the keen desire and ability to learn new technologies. Some key skills include:
+</p><p><br /> 
+</p>
+<ul><li>          5+ years of progressive experience in system administration in a distributed UNIX environment.
+</li></ul>
+<ul><li>          A College diploma or University degree or relevant job experience in computer science or engineering is a definite asset.
+</li></ul>
+<ul><li>          Fluency in UNIX/Linux scripting (Perl, Korn Shell, Bourne Shell) and the ability to design and write operating system and platform utilities.
+</li></ul>
+<ul><li>          Expert technical knowledge of Linux System Administration.
+</li></ul>
+<ul><li>          Senior technical understanding of Solaris and Enterprise class servers
+</li></ul>
+<ul><li>          Hands-on experience with one or more of Veritas suite of products, Oracle
+</li></ul>
+<ul><li>          Strong TCP/IP internetworking knowledge is a must.
+</li></ul>
+<ul><li>          Hands-on experience with various SAN technologies that include Brocade Switches and Hitachi disk arrays is essential. 
+</li></ul>
+<ul><li>          Excellent technical documentation skills.
+</li></ul>
+<ul><li>          Proactive approach to system maintenance and problem avoidance.
+</li></ul>
+<ul><li>          Demonstrated problem solving skills.
+</li></ul>
+<ul><li>          A well-developed understanding of the need for operational policies and procedures.  
+</li></ul>
+<ul><li>          Demonstrated ability to be an active contributor in a team work environment and be willing to take on problem ownership within the team.
+</li></ul>
+<ul><li>          Excellent communication, organizational and teamwork skills.
+</li></ul>
+<ul><li>          The ability to work under pressure and tight deadlines.
+</li></ul>
+<ul><li>          Strong, demonstrated team leadership skills, willing to mentor team members.
+</li></ul>
+<ul><li>          Windows experience would be an asset.
+</li></ul>
+<p>Interested applicants please send resumes to Lsresume@kbits.com
+</p>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/web/20100114134724/http://tlug.ss.org/mediawiki/index.php?title=Classifieds&amp;action=edit&amp;section=5" title="Classifieds">edit</a>]</div><a name=".3D.3DTSM.2FTivoli_Storage_Specialist_.3D.3D"></a><h2> ==TSM/Tivoli Storage Specialist == </h2>
+<p><br />
+<b>Sapphire Technologies</b>, Canada's largest IT staffing company, is looking for a contract TSM/Tivoli Storage Specialist for their client in Toronto, Canada. This contract is initially 12-months with a high probability of renewal. <br />
+<b></b>
+</p><p>Candidates with  experience with the following technologies will be considered:<b><br /></b>
+- Tivoli Storage Manager UNIX<br />
+- TSM Server administration for TSM 5.4 and higher <br />
+- 3584 Tape Library experience <br />
+- TSM Client and TDP knowledge <br />
+- EMC Storage Subsystems (incl Powerpath) <br />
+- Storage Area Network (SAN) Products &amp; Admin<br />
+- Manage System Change <br />
+</p><p><b>Would be beneficial to also have:</b> <br />
+- Lanfree and OS backup knowledge <br />
+- Backup Tape Encryption experience <br />
+- preferrably some AIX skills <br />
+</p><p>Qualified candidates who can legally work in Canada, and are available to start by July 15th, are invited to email resumes to <a href="mailto:cparker@sapphireca.com" class='external free' title="mailto:cparker@sapphireca.com" rel="nofollow">mailto:cparker@sapphireca.com</a>.
+</p>
+<hr />
+<p><br />
+<b>SENIOR LINUX SYSTEM ADMINISTRATOR</b><br />
+<b>Waterfront International Ltd</b> is a Toronto-based financial consulting firm, specializing in developing computer based statistical trading strategies.  Waterfront International Ltd. seeks a bright, experienced individual to support and develop our sophisticated technical infrastructure.  The environment is cutting edge with high up-time dependency, and your role will be all encompassing.  You will provide a critical role in systems support and provide technical expertise in systems integration and implementation.<br />
+</p><p>Overview: Join a 2 member Linux administration team responsible for managing a mixed Solaris/Redhat Linux network - 300 Sun and HP servers/workstations.  Work on all aspects of administering a mixed Solaris/Linux mission critical 24x7 trading environment.  Work closely with the research and quantitative analysts and developers. Responsibilities include traditional administration responsibilities to advanced data warehousing, BCP environment testing and maintenance, and implementing best security practices.<br />
+</p><p><b>PRIMARY RESPONSIBILITIES:</b><br />
+</p>
+<li>Administer Redhat ES3.x/ES4.x and Sun Solaris 8/Solaris 10x86 workstations/servers running in a 24x7 environment.
+<li>Monitor, identify, and resolve production capacity, contention, and resource deficiencies.
+<li>Configure and install new hardware – AMD dual-core, Intel quad-core, and Intel Xeon
+<li>Basic Linux/Unix administration – kickstart/jumpstart server builds, nfs, nis, shell scripting, performance tuning, proactive monitoring, patch management, and Linux workstation end-user support.
+<li>Implement software and hardware RAID solutions, including Veritas Volume Manager, Solaris Volume Manager, Compaq smart arrays, StorEdge 3510 and Hitachi AMS200 FC storage arrays.
+<li>Administer Linux/Solaris to Windows connectivity using Samba and Exceed.
+<li>Support Sybase DBA’s system requirements, currently utilizing 50+ Terabytes of disk space.
+<li>Maintain BCP and grid computing environments.
+<li>Research, test, and implement new hardware and software.<br />
+
+<b>Company Technology Profile:<br /></b>
+<li>Legato Networker and Veritas Netbackup enterprise backup systems using SpectraLogic 20K AIT4 and T-950 LTO4 tape libraries.
+<li>Multiple Cisco and Checkpoint firewalls running in HA configurations.
+<li>10/100/Gig/10G Cisco Network architecture.
+<li>TIBCO and Wombat real-time financial data and trade message distribution infrastructure.<br />
+
+<b>REQUIREMENTS OF THE CANDIDATE:</b><br />
+<li>3+ years of hands-on Unix experience supporting sophisticated mission critical environments.
+<li>2+ years of hand-on Linux experience supporting sophisticated mission critical environments.
+<li>Given the mission critical nature of our applications, you must work very well under pressure, problem solve efficiently, and keep abreast of current technology.
+<li>University degree required.   
+<li>Exposure to networking, Windows, Sybase, SAN Technology, SunGrid Computing, Java, and Perl would be assets.
+<li>TIBCO/Rendezvous, Wombat and Veritas experience would be a strong plus.<br />
+
+This is a linux administration position.  We are not looking for a Solaris admin with a few months of Linux experience.<br />
+
+Waterfront International Ltd. is a fast-paced, demanding environment and only seasoned Linux Admins with a commanding understanding of the technology listed will be considered for this role.  Waterfront's selective hiring process considers only highly talented individuals with a history of exceptional professional and academic achievement, combined with solid real-world experience, to deploy and administer leading edge technology.<br />
+
+<b>If you are interested in this job opportunity, please email me your resume.<br /></b>
+Name: Gagan Dhanjal (Recruiter)<br />
+Waterfront International Ltd<br />
+gagand@wil.com<b></b>
+
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/web/20100114134724/http://tlug.ss.org/mediawiki/index.php?title=Classifieds&amp;action=edit&amp;section=6" title="Classifieds">edit</a>]</div><a name="Systems_Administrator"></a><h2><b>Systems Administrator</b></h2>
+<p>Tucows is a dynamic and growing Internet services company based in the trendy Liberty Village area of Toronto.  As the largest Internet services provider for hosting companies and ISPs, we provide millions of email boxes and manage over seven million domains.  We also maintain one of the popular software download sites on the Internet at Tucows.com. 
+</p><p><br />
+At Tucows, we seek to make the Internet easier and more effective for passionate Internet users. Our goal is to reduce complexity for our customers as they acquire, deliver or use Internet services. And we do it all in a funky, fun and casual environment. 
+When you come to Tucows you leave the concrete jungle behind and join a bunch of creative, passionate professionals who truly love the Internet and technology.  We value creativity, innovation and people who look to make a difference and drive results.
+</p><p><br />
+We know that people are what count the most.  And we have great people with different skill sets, work experiences, from all over the world and right next door on our team.  Our success is the sum of all our efforts. 
+</p><p><br />
+Sound like your dream job is at Tucows?  Check out our latest opening:
+</p><p><b>UNIX ADMINISTRATOR</b>
+</p><p>Leverage your technical expertise in Tucows’ 24/7 production remote data centers, where you’ll be responsible for capacity management, version management, server deployment, O/S and application installation and maintenance, performing hardware and software upgrades, backup infrastructure management, ensuring high availability, problem investigation and resolution, as well as architecting Tucows’ systems. 
+</p><p>You’ll be working as part of a dynamic team of Systems Administrators and Network Engineers and will participate in cross-functional project teams.
+</p><p><b>Qualified applicants must possess the following:</b><br />
+·	Successful completion of post-secondary education in computer science or engineering a must<br />
+·	A minimum 5 years of supporting production UNIX environments (Solaris 8 and 9, HPUX 11-11i, Red Hat Enterprise class, Debian)<br />
+·	A very good understanding of IP based protocols and services<br />
+·	Good verbal and written skills<br />
+·	Ability to work in a faced paced production environment<br />
+·	Excellent time management skills<br />
+·	Ability to work as part of cross-functional teams<br /> 
+</p><p><br />
+Think you have what it takes to succeed in this challenging role?  Email us your resume along with a covering letter telling us your story at work@tucows.com.  Be sure to include <b>SYSTEMS ADMINISTRATOR</b> in your email subject line.  Please do not apply online.
+</p><p><br />
+<b>IMPORTANT:  We have recently implemented a new email system.  Should you have any problems in submitting your resume, please send your application by fax to 416-531-1257 or contact our offices at 416-535-0123 ext. 1368.</b>
+</p><p><br />
+We thank all applicants for their interest; however only those considered for an interview will be contacted.
+</p>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/web/20100114134724/http://tlug.ss.org/mediawiki/index.php?title=Classifieds&amp;action=edit&amp;section=7" title="Classifieds">edit</a>]</div><a name="Operations_Manager"></a><h2>Operations Manager</h2>
+<p>Tucows is a dynamic and growing Internet services company based in the trendy Liberty Village area of Toronto.  As the largest Internet services provider for hosting companies and ISPs, we provide millions of email boxes and manage over seven million domains.  We also maintain one of the popular software download sites on the Internet at Tucows.com. 
+</p><p><br />
+At Tucows, we seek to make the Internet easier and more effective for passionate Internet users. Our goal is to reduce complexity for our customers as they acquire, deliver or use Internet services. And we do it all in a funky, fun and casual environment. 
+When you come to Tucows you leave the concrete jungle behind and join a bunch of creative, passionate professionals who truly love the Internet and technology.  We value creativity, innovation and people who look to make a difference and drive results.
+</p><p><br />
+We know that people are what count the most.  And we have great people with different skill sets, work experiences, from all over the world and right next door on our team.  Our success is the sum of all our efforts. 
+</p><p><br />
+Sound like your dream job is at Tucows?  Check out our latest opening:
+</p><p><b>OPERATIONS MANAGER</b>
+</p><p>Leverage your leadership and technical skills in leading Tucows highly talented UNIX professionals.  The successful candidate will manage staff activities; perform analytical, technical, and administrative work in the planning, design, installation, and on-going administration of computer systems and local area networks, as well as liaise with our equipment and service vendors.
+</p><p>Candidate must be flexible regarding working hours as this position may require occasional extra hours during the week/weekend/holidays. 
+</p><p><b>What you’ll need to succeed:</b><br />
+·Successful completion of post-secondary education in Computer Sciences or Engineering<br />
+·ITIL certifications a strong asset<br />
+·	Minimum of 8 years hands-on experience in managing UNIX production servers in 24x7 service provider environment.  In particular extensive experience with Debian Linux or Solaris<br />
+·	Proven leadership abilities in managing and coaching highly skilled technical professionals <br />
+·	Extensive experience in system trending and proactive capacity planning<br />
+·	Extensive practical knowledge for operating NAS/SAN storage systems and data center LAN environments<br />
+·	Strong project management experience with ability to work in high demand environment<br />
+·	Extensive practical knowledge of IT Systems Management processes.  Knowledge of ITIL framework  and Agile methodologies considered a strong asset<br />
+·	Superior communication skills<br />
+·	Demonstrated ability to effectively organize and prioritize workload<br />
+·	Excellent analytical and judgment skills with demonstrated ability to make sound business decisions<br />
+·	Self motivator with ability to work in a fast paced, collaborative environment<br />
+·	Highly adaptable, organized and efficient<br />
+·	Collaborative ability to work effectively in a cross-functional organization<br />
+</p><p><br />
+Think you have what it takes to succeed in this challenging role?  Email us your resume along with a covering letter telling us your story at work@tucows.com.  Be sure to include <b>OPERATIONS MANAGER</b> in your email subject line.  Please do not apply online.
+</p><p><br />
+<b>IMPORTANT:  We have recently implemented a new email system. Should you have any problems in submitting your resume, please send your application by fax to 416-531-1257 or contact our offices at 416-535-0123 ext. 1368.</b>
+</p><p><br />
+We thank all applicants for their interest; however only those considered for an interview will be contacted.
+</p><p><br />
+</p>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/web/20100114134724/http://tlug.ss.org/mediawiki/index.php?title=Classifieds&amp;action=edit&amp;section=8" title="Classifieds">edit</a>]</div><a name="Integration_Engineer"></a><h2><b>Integration Engineer</b></h2>
+<p>Tucows is a dynamic and growing Internet services company based in the trendy Liberty Village area of Toronto.  As the largest Internet services provider for hosting companies and ISPs, we provide millions of email boxes and manage over seven million domains.  We also maintain one of the popular software download sites on the Internet at Tucows.com. 
+</p><p><br />
+At Tucows, we seek to make the Internet easier and more effective for passionate Internet users. Our goal is to reduce complexity for our customers as they acquire, deliver or use Internet services. And we do it all in a funky, fun and casual environment. 
+When you come to Tucows you leave the concrete jungle behind and join a bunch of creative, passionate professionals who truly love the Internet and technology.  We value creativity, innovation and people who look to make a difference and drive results.
+</p><p><br />
+We know that people are what count the most.  And we have great people with different skill sets, work experiences, from all over the world and right next door on our team.  Our success is the sum of all our efforts. 
+</p><p><br />
+Sound like your dream job is at Tucows?  Check out our latest opening:
+</p><p><b>INTEGRATION ENGINEER</b>
+</p><p>Join our dynamic team of Integration Engineers where you’ll participate on cross-functional project teams, while developing, deploying and maintaining several components that form a large scale hosted messaging platform.  Tucows’ platform is a high availability system spread across multiple data centers, servers, operating systems, and is vast and complex.  
+</p><p>This position also requires flexibility for after hours on call and holiday coverage
+</p><p><b>What you’ll need to succeed:</b><br />
+·	Minimum 3 years development experience in a large scale server environment related to messaging preferred<br />
+·	Successful completion of post-secondary studies in computer science or engineering is a must<br />
+·	Excellent UNIX skills, especially Solaris, Red Hat Linux and HPUX to system administrator level<br />
+·	2+ years experience with software development and test processes<br />
+·	Familiarity with process implementation and improvement<br />
+·	3+ years commercial experience in Shell Scripting, Perl<br />
+·	Knowledge/experience of C/Java is a plus<br />
+·	2+ years experience working with messaging and web protocols and languages, such as SMTP, POP3, IMAP4, LDAP, HTTP, WML, HTML<br />
+·	Good verbal and written skills<br />
+·	Able to multitask effectively<br />
+·	Able to work under pressure to meet tight deadlines in a fast paced environment<br />
+·	Ability to work with multiple cross functional teams<br />
+·	Excellent time management skills<br />
+</p><p><br />
+Think you have what it takes to succeed in this challenging role?  Email us your resume along with a covering letter telling us your story at work@tucows.com.  Be sure to include <b>INTEGRATION ENGINEER</b> in your email subject line.  Please do not apply online. 
+</p><p><br />
+<b>IMPORTANT:  We have recently implemented a new email system. Should you have any problems in submitting your resume, please send your application by fax to 416-531-1257 or contact our offices at 416-535-0123 ext. 1368.</b>
+</p><p><br />
+We thank all applicants for their interest; however only those considered for an interview will be contacted.
+</p><p><br />
+</p>
+<table id='toc' class='toc'><tr><td><div id='toctitle'><h2>Contents</h2></div>
+<ul>
+<li class='toclevel-1'><a href="#Sr._System_Engineer_.28Linux.29"><span class="tocnumber">1</span> <span class="toctext">Sr. System Engineer (Linux)</span></a></li>
+<li class='toclevel-1'><a href="#Senior_Network_Engineer_.28Linux.29"><span class="tocnumber">2</span> <span class="toctext">Senior Network Engineer (Linux)</span></a></li>
+<li class='toclevel-1'><a href="#System_Integration_Engineer_for_Downtown_Toronto_Company"><span class="tocnumber">3</span> <span class="toctext">System Integration Engineer for Downtown Toronto Company</span></a></li>
+<li class='toclevel-1'><a href="#Solaris.2FLinux_Administrator_Required"><span class="tocnumber">4</span> <span class="toctext">Solaris/Linux Administrator Required</span></a></li>
+<li class='toclevel-1'><a href="#.3D.3DTSM.2FTivoli_Storage_Specialist_.3D.3D"><span class="tocnumber">5</span> <span class="toctext">==TSM/Tivoli Storage Specialist ==</span></a></li>
+<li class='toclevel-1'><a href="#Systems_Administrator"><span class="tocnumber">6</span> <span class="toctext">Systems Administrator</span></a></li>
+<li class='toclevel-1'><a href="#Operations_Manager"><span class="tocnumber">7</span> <span class="toctext">Operations Manager</span></a></li>
+<li class='toclevel-1'><a href="#Integration_Engineer"><span class="tocnumber">8</span> <span class="toctext">Integration Engineer</span></a></li>
+<li class='toclevel-1'><a href="#Free_Training_on_Qt_.2F_Qtopia_from_Trolltech"><span class="tocnumber">9</span> <span class="toctext">Free Training on Qt / Qtopia from Trolltech</span></a></li>
+<li class='toclevel-1'><a href="#NOC_Analyst"><span class="tocnumber">10</span> <span class="toctext">NOC Analyst</span></a></li>
+<li class='toclevel-1'><a href="#System_Administrator"><span class="tocnumber">11</span> <span class="toctext">System Administrator</span></a></li>
+<li class='toclevel-1'><a href="#System_Administrator_2"><span class="tocnumber">12</span> <span class="toctext">System Administrator</span></a></li>
+</ul>
+</td></tr></table>
+<p><script type="text/javascript"> if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script>
+</p><p><br />
+This is a place to put your announcements, ads, or post items that may be of interest to the GTALUG community.  Please remember that if people don't like your content, they will probably remove it!
+</p><p>If you have a lot to say, you can also create a sub-page by editing this page and creating a link [[/like this]].  Then save this page, follow the link and add your content.
+</p>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/web/20100114134724/http://tlug.ss.org/mediawiki/index.php?title=Classifieds&amp;action=edit&amp;section=9" title="Classifieds">edit</a>]</div><a name="Free_Training_on_Qt_.2F_Qtopia_from_Trolltech"></a><h2> Free Training on Qt / Qtopia from Trolltech </h2>
+<p>[www.staikos.net/quickstart]
+Quickstarts are a great opportunity to spend half a day with experts in Qt from Trolltech and STAIKOS, learning how to use Qt 4 to its full potential and network with other Qt developers in your area.  The afternoon session will focus on Qtopia, the leading application framework for single-application devices powered by embedded Linux. 
+</p>
+<hr />
+<p>Where and When
+</p><p>July 25th, 2007
+</p><p>Courtyard by Marriott Toronto Airport 
+231 Carlingview Drive 
+Toronto, Ontario M9W5E8 Canada 
+Phone:  1 416 675 0411
+</p><p>There will be two QuickStart sessions:
+</p>
+<hr />
+<p>Qt Registration:			8:30 a.m. - 9:00 a.m.
+Qt QuickStart:			        9:00 a.m. - 12:00 noon
+</p><p>Qtopia Registration:		 	12:30 p.m. - 1:00 p.m.
+Qtopia QuickStart:			1:00 p.m. - 4:00 p.m.
+</p><p><br />
+Register Today!
+</p>
+<hr />
+<p>Registration is free, but seating is limited, so reserve today!
+To register, go to [www.Staikos.net/QuickStart] 
+</p>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/web/20100114134724/http://tlug.ss.org/mediawiki/index.php?title=Classifieds&amp;action=edit&amp;section=10" title="Classifieds">edit</a>]</div><a name="NOC_Analyst"></a><h2>NOC Analyst</h2>
+<p>Tucows is a dynamic and growing Internet services company based in the trendy Liberty Village area of Toronto.  As the largest Internet services provider for hosting companies and ISPs, we provide millions of email boxes and manage over seven million domains.  We also maintain one of the popular software download sites on the Internet at Tucows.com. 
+</p><p>At Tucows, we seek to make the Internet easier and more effective for passionate Internet users. Our goal is to reduce complexity for our customers as they acquire, deliver or use Internet services. And we do it all in a funky, fun and casual environment. 
+</p><p>When you come to Tucows you leave the concrete jungle behind and join a bunch of creative, passionate professionals who truly love the Internet and technology.  We value creativity, innovation and people who look to make a difference and drive results.
+</p><p>We know that people are what count the most.  And we have great people with different skill sets, work experiences, from all over the world and right next door on our team.  Our success is the sum of all our efforts. 
+</p><p>Sound like your dream job is at Tucows?  Check out our latest opening: 
+</p><p>As a member of the Network Operations Center the overall focus is monitoring, analyzing and resolving network troubles.
+</p><p><b>The successful incumbent will report to the NOC Manager and will be responsible for the following:</b>
+</p>
+<ul><li> Monitor Tucows productions service environment
+</li><li> Act as communication center for Operations, Engineering, and Technical Support.  Provide groups outside of operations accurate feedback on problems that may occur in production
+</li><li> Troubleshoot and help solve technical issues escalated from technical support.  Perform 1st level troubleshooting on all production UNIX/Linux hosts
+</li><li> Maintain documentation of production environment such as troubleshooting guide, operations guide and data center and network maps
+</li><li> Assist operations with rollouts of upgrades and new products
+</li><li> Additional projects as required 
+</li></ul>
+<p><b>Qualified applicants must possess the following:</b>
+</p>
+<ul><li> 1-2 years of experience in the installation, configuration and troubleshooting of UNIX systems
+</li><li> Solid understanding of basic Unix Commands
+</li><li> 1-2 years experience in customer support
+</li><li> General understanding of TCP/IP, trace route, ping, and other basic networking concept and tools
+</li><li> Excellent problem solving and analytical skills
+</li><li> Familiarity with shell scripting
+</li><li> Successful completion of post-secondary education in information technology 
+</li><li> Unix/Linux Certification
+</li><li> Good communication skills 
+</li><li> Good time management skills
+</li><li> Ability to work in a faced paced production environment
+</li></ul>
+<p><b>Special Requirements:</b>
+</p>
+<ul><li> Available in short notice to cover shift
+</li><li> Must be able to work weekends, holidays, and graveyard shift 
+</li></ul>
+<p>Interested applicants should email a Word-formatted resume, referencing <b>NOC ANALYST</b> in the email subject line, to work@tucows.com.  <b>Please do not apply online.</b>
+</p><p>We thank all applicants for their interest; however only those considered for an interview will be contacted.
+</p><p><b>Tundra Technical Solutions</b> is looking for a <b>Linux Administrator</b> for a large client in Toronto.  If interested, and if your qualifications match the following job description, please contact Bree Walsh at bwalsh@tundratechnical.ca
+</p><p><b>Job Description – Unix / Linux Administrator</b>
+</p><p>The Unix/Linux Administrator will be responsible for the deployment, configuration, and ongoing management of all Unix/Linux hardware and Operating Systems. Additionally, the Administrator will ensure compliance to all corporate policies departmental standards and procedures. They will also be responsible to ensure a high level of performance, functionality and availability is maintained.
+</p><p>Responsibilities include:
+•	Assess and implement ongoing audit and security requirements through the utilization of standard Change Management processes
+•	Develop, document and maintain Linux departmental standards and best practices
+•	Maintain Configuration Management Database for all Linux/Unix related hardware software
+•	Provide technical support to developers, customers and other system support personnel as required
+•	Perform required configuration, maintenance
+</p>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/web/20100114134724/http://tlug.ss.org/mediawiki/index.php?title=Classifieds&amp;action=edit&amp;section=11" title="Classifieds">edit</a>]</div><a name="System_Administrator"></a><h2><b>System Administrator</b></h2>
+<p>Clearcable Networks requires an experienced System Administrator in the Hamilton area. This position will be responsible for the ongoing deployment and maintenance of Solaris and Linux server farms.
+</p><p>Requirements for this role include; Linux or Solaris background, ability to work effectively on multiple simultaneous tasks within a fast paced team, good exposure to open source systems, shell/Perl scripting experience, and a solid understanding of TCP/IP.
+</p><p>Please email resumes to info@clearcable.ca or fax to 905-667-3210.
+</p>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/web/20100114134724/http://tlug.ss.org/mediawiki/index.php?title=Classifieds&amp;action=edit&amp;section=12" title="Classifieds">edit</a>]</div><a name="System_Administrator_2"></a><h2><b>System Administrator</b></h2>
+<p>VerticalScope (www.verticalscope.com), one of Canada’s most dynamic media companies, requires a driven, dedicated and highly skilled Systems Administrator to enhance and to help manage our growing production environment. 
+</p><p>Technical Skills
+</p>
+<ul><li>	5+ years as Unix System Administration - involving complex customization
+</li><li>	5+ years experience using Apache 
+</li><li>	Experience using Nagios, Cacti
+</li><li>	Experience with SQL-Server and MySQL databases
+</li><li>	5+ years of Shell, Perl scripting experiences
+</li><li>	Experienced in implementing large, high-availability systems
+</li><li>	Experienced in database clustering would be a plus
+</li><li>	Networking experience (including SNMP monitoring, load balancers)
+</li><li>	Experience with Global Caching Solutions would be beneficial
+</li><li>	ITIL experience is an asset
+</li></ul>
+<p>Please forward your detailed resume and cover letter in confidence to:
+</p>
+jobs _ AT _ verticalscope.com</p>
+
+<!-- Saved in parser cache with key gtalug_mediawiki:pcache:idhash:2021-0!1!0!0!!en!2 and timestamp 20100113220803 -->
+<div class="printfooter">
+Retrieved from "<a href="/web/20100114134724/http://tlug.ss.org/wiki/Classifieds">http://tlug.ss.org/wiki/Classifieds</a>"</div>
+	    	    <!-- end content -->
+	    <div class="visualClear"></div>
+	  </div>
+	</div>
+      </div>
+      <div id="column-one">
+	<div id="p-cactions" class="portlet">
+	  <h5>Views</h5>
+	  <ul>
+	    <li id="ca-nstab-main"
+	       class="selected"	       ><a href="/web/20100114134724/http://tlug.ss.org/wiki/Classifieds">Article</a></li><li id="ca-talk"
+	       	       ><a href="/web/20100114134724/http://tlug.ss.org/wiki/Talk:Classifieds">Discussion</a></li><li id="ca-edit"
+	       	       ><a href="/web/20100114134724/http://tlug.ss.org/mediawiki/index.php?title=Classifieds&amp;action=edit">Edit</a></li><li id="ca-history"
+	       	       ><a href="/web/20100114134724/http://tlug.ss.org/mediawiki/index.php?title=Classifieds&amp;action=history">History</a></li>	  </ul>
+	</div>
+	<div class="portlet" id="p-personal">
+	  <h5>Personal tools</h5>
+	  <div class="pBody">
+	    <ul>
+	    <li id="pt-login"><a href="/web/20100114134724/http://tlug.ss.org/mediawiki/index.php?title=Special:Userlogin&amp;returnto=Classifieds">Create an account or log in</a></li>	    </ul>
+	  </div>
+	</div>
+	<div class="portlet" id="p-logo">
+	  <a style="background-image: url(/web/20100114134724im_/http://tlug.ss.org/wiki/upload/wiki.png);"
+	    href="/web/20100114134724/http://tlug.ss.org/wiki/Main_Page"
+	    title="Main Page"></a>
+	</div>
+	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+		<div class='portlet' id='p-navigation'>
+	  <h5>Navigation</h5>
+	  <div class='pBody'>
+	    <ul>
+	    	      <li id="n-mainpage"><a href="/web/20100114134724/http://tlug.ss.org/wiki/Main_Page">Main Page</a></li>
+	     	      <li id="n-smap"><a href="/web/20100114134724/http://tlug.ss.org/wiki/Sitemap">Sitemap</a></li>
+	     	      <li id="n-recentchanges"><a href="/web/20100114134724/http://tlug.ss.org/wiki/Special:Recentchanges">Recent changes</a></li>
+	     	      <li id="n-randompage"><a href="/web/20100114134724/http://tlug.ss.org/wiki/Special:Random">Random page</a></li>
+	     	      <li id="n-admin"><a href="/web/20100114134724/http://tlug.ss.org/wiki/Site_Administration">gtalug.org Administration</a></li>
+	     	    </ul>
+	  </div>
+	</div>
+		<div class='portlet' id='p-community'>
+	  <h5>community</h5>
+	  <div class='pBody'>
+	    <ul>
+	    	      <li id="n-portal"><a href="/web/20100114134724/http://tlug.ss.org/wiki/GTALUG:Community_Portal">Resources</a></li>
+	     	      <li id="n-mailing-lists"><a href="/web/20100114134724/http://tlug.ss.org/wiki/Mailing_lists">Mailing lists</a></li>
+	     	      <li id="n-currentevents"><a href="/web/20100114134724/http://tlug.ss.org/wiki/Current_events">Current events</a></li>
+	     	      <li id="n-groups"><a href="/web/20100114134724/http://tlug.ss.org/wiki/Toronto_opensource_computing_groups">Other groups</a></li>
+	     	      <li id="n-classifieds"><a href="/web/20100114134724/http://tlug.ss.org/wiki/Classifieds">Bulletin Board/Classifieds</a></li>
+	     	    </ul>
+	  </div>
+	</div>
+		<div class='portlet' id='p-editsidebar-title'>
+	  <h5>Customize</h5>
+	  <div class='pBody'>
+	    <ul>
+	    	      <li id="n-editsidebar"><a href="/web/20100114134724/http://tlug.ss.org/mediawiki/index.php?title=MediaWiki:Sidebar&amp;action=edit">Edit sidebar</a></li>
+	     	    </ul>
+	  </div>
+	</div>
+		<div id="p-search" class="portlet">
+	  <h5><label for="searchInput">Search</label></h5>
+	  <div class="pBody">
+	    <form name="searchform" action="/web/20100114134724/http://tlug.ss.org/wiki/Special:Search" id="searchform">
+	      <input id="searchInput" name="search" type="text"
+	        accesskey="f" value="" />
+	      <input type='submit' name="go" class="searchButton" id="searchGoButton"
+	        value="Go"
+	        />&nbsp;<input type='submit' name="fulltext"
+	        class="searchButton"
+	        value="Search" />
+	    </form>
+	  </div>
+	</div>
+	<div class="portlet" id="p-tb">
+	  <h5>Toolbox</h5>
+	  <div class="pBody">
+	    <ul>
+		  		  <li id="t-whatlinkshere"><a href="/web/20100114134724/http://tlug.ss.org/wiki/Special:Whatlinkshere/Classifieds">What links here</a></li>
+		  		  <li id="t-recentchangeslinked"><a href="/web/20100114134724/http://tlug.ss.org/wiki/Special:Recentchangeslinked/Classifieds">Related changes</a></li>
+		                	      	      	      	      	      	      	      <li id="t-upload"><a href="/web/20100114134724/http://tlug.ss.org/wiki/Special:Upload">Upload file</a></li>	      	      <li id="t-specialpages"><a href="/web/20100114134724/http://tlug.ss.org/wiki/Special:Specialpages">Special pages</a></li>	      	      	      <li id="t-print"><a href="/web/20100114134724/http://tlug.ss.org/mediawiki/index.php?title=Classifieds&amp;printable=yes">Printable version</a></li>
+	      	    </ul>
+	  </div>
+	</div>
+	      </div><!-- end of the left (by default at least) column -->
+      <div class="visualClear"></div>
+      <div id="footer">
+    <div id="f-poweredbyico"><a href="/web/20100114134724/http://www.mediawiki.org/"><img src="/web/20100114134724im_/http://tlug.ss.org/mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="MediaWiki" /></a></div>	<div id="f-copyrightico"><a href="/web/20100114134724/http://www.gnu.org/copyleft/fdl.html"><img src="/web/20100114134724im_/http://tlug.ss.org/mediawiki/skins/common/images/gnu-fdl.png" alt='GNU Free Documentation License 1.2' /></a></div>	<ul id="f-list">
+	  <li id="f-lastmod"> This page was last modified 12:44, 8 October 2009.</li>	  <li id="f-viewcount">This page has been accessed 53,410 times.</li>	  	  	  <li id="f-copyright">Content is available under <a href="/web/20100114134724/http://www.gnu.org/copyleft/fdl.html" class='external ' title="http://www.gnu.org/copyleft/fdl.html" rel="nofollow">GNU Free Documentation License 1.2</a>.</li>	  <li id="f-about"><a href="/web/20100114134724/http://tlug.ss.org/wiki/GTALUG:About" title="GTALUG:About">About GTALUG</a></li>	  <li id="f-disclaimer"><a href="/web/20100114134724/http://tlug.ss.org/wiki/GTALUG:General_disclaimer" title="GTALUG:General disclaimer">Disclaimers</a></li>	  	</ul>
+      </div>
+    </div>
+    <!-- Served by gold.ss.org in 0.20 secs. -->  </body>
+</html>
+
+
+
+
+
+<!--
+     FILE ARCHIVED ON 13:47:24 Jan 14, 2010 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 20:31:45 Oct 30, 2015.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->

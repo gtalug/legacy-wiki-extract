@@ -1,0 +1,465 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+  <head>
+
+
+<script type="text/javascript" src="/static/js/analytics.js"></script>
+<script type="text/javascript">archive_analytics.values.server_name="wwwb-app1.us.archive.org";archive_analytics.values.server_ms=155;</script>
+<link type="text/css" rel="stylesheet" href="/static/css/banner-styles.css"/>
+
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="KEYWORDS" content="Toronto opensource computing groups" />
+<meta name="robots" content="index,follow" />
+<link rel="shortcut icon" href="/web/20100103155339im_/http://tlug.ss.org/favicon.ico" />
+<link title="Creative Commons" type="application/rdf+xml" href="/mediawiki/index.php?title=Toronto_opensource_computing_groups&amp;action=creativecommons" rel="meta" />
+<link rel="copyright" href="http://www.gnu.org/copyleft/fdl.html" />
+    <title>Toronto opensource computing groups - GTALUG</title>
+    <style type="text/css" media="screen,projection">/*<![CDATA[*/ @import "/web/20100103155339cs_/http://tlug.ss.org/mediawiki/skins/gtalug/main.css"; /*]]>*/</style>
+    <link rel="stylesheet" type="text/css" media="print" href="/web/20100103155339cs_/http://tlug.ss.org/mediawiki/skins/common/commonPrint.css" />
+    <!--[if lt IE 5.5000]><style type="text/css">@import "/mediawiki/skins/gtalug/IE50Fixes.css";</style><![endif]-->
+    <!--[if IE 5.5000]><style type="text/css">@import "/mediawiki/skins/gtalug/IE55Fixes.css";</style><![endif]-->
+    <!--[if gte IE 6]><style type="text/css">@import "/mediawiki/skins/gtalug/IE60Fixes.css";</style><![endif]-->
+    <!--[if IE]><script type="text/javascript" src="/mediawiki/skins/common/IEFixes.js"></script>
+    <meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+    <script type="text/javascript" src="/web/20100103155339js_/http://tlug.ss.org/mediawiki/index.php?title=-&amp;action=raw&amp;gen=js"></script>    <script type="text/javascript" src="/web/20100103155339js_/http://tlug.ss.org/mediawiki/skins/common/wikibits.js"></script>
+    <style type="text/css">/*<![CDATA[*/
+@import "/web/20100103155339cs_/http://tlug.ss.org/mediawiki/index.php?title=MediaWiki:Gtalug.css&action=raw&ctype=text/css&smaxage=18000";
+@import "/web/20100103155339cs_/http://tlug.ss.org/mediawiki/index.php?title=-&action=raw&gen=css&maxage=18000";
+/*]]>*/</style>              </head>
+  <body                 class="ns-0">
+
+
+<!-- BEGIN WAYBACK TOOLBAR INSERT -->
+<script type="text/javascript" src="/static/js/disclaim-element.js" ></script>
+<script type="text/javascript" src="/static/js/graph-calc.js" ></script>
+<script type="text/javascript">//<![CDATA[
+var __wm = (function(imgWidth,imgHeight,yearImgWidth,monthImgWidth){
+var wbPrefix = "/web/";
+var wbCurrentUrl = "http://tlug.ss.org/wiki/Toronto_opensource_computing_groups";
+
+var firstYear = 1996;
+var displayDay = "3";
+var displayMonth = "Jan";
+var displayYear = "2010";
+var prettyMonths = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+var $D=document,$=function(n){return document.getElementById(n)};
+var trackerVal,curYear = -1,curMonth = -1;
+var yearTracker,monthTracker;
+function showTrackers(val) {
+  if (val===trackerVal) return;
+  var $ipp=$("wm-ipp");
+  var $y=$("displayYearEl"),$m=$("displayMonthEl"),$d=$("displayDayEl");
+  if (val) {
+    $ipp.className="hi";
+  } else {
+    $ipp.className="";
+    $y.innerHTML=displayYear;$m.innerHTML=displayMonth;$d.innerHTML=displayDay;
+  }
+  yearTracker.style.display=val?"inline":"none";
+  monthTracker.style.display=val?"inline":"none";
+  trackerVal = val;
+}
+function trackMouseMove(event,element) {
+  var eventX = getEventX(event);
+  var elementX = getElementX(element);
+  var xOff = Math.min(Math.max(0, eventX - elementX),imgWidth);
+  var monthOff = xOff % yearImgWidth;
+
+  var year = Math.floor(xOff / yearImgWidth);
+  var monthOfYear = Math.min(11,Math.floor(monthOff / monthImgWidth));
+  // 1 extra border pixel at the left edge of the year:
+  var month = (year * 12) + monthOfYear;
+  var day = monthOff % 2==1?15:1;
+  var dateString = zeroPad(year + firstYear) + zeroPad(monthOfYear+1,2) +
+    zeroPad(day,2) + "000000";
+
+  $("displayYearEl").innerHTML=year+firstYear;
+  $("displayMonthEl").innerHTML=prettyMonths[monthOfYear];
+  // looks too jarring when it changes..
+  //$("displayDayEl").innerHTML=zeroPad(day,2);
+  var url = wbPrefix + dateString + '/' +  wbCurrentUrl;
+  $("wm-graph-anchor").href=url;
+
+  if(curYear != year) {
+    var yrOff = year * yearImgWidth;
+    yearTracker.style.left = yrOff + "px";
+    curYear = year;
+  }
+  if(curMonth != month) {
+    var mtOff = year + (month * monthImgWidth) + 1;
+    monthTracker.style.left = mtOff + "px";
+    curMonth = month;
+  }
+}
+function hideToolbar() {
+  $("wm-ipp").style.display="none";
+}
+function bootstrap() {
+  var $spk=$("wm-ipp-sparkline");
+  yearTracker=$D.createElement('div');
+  yearTracker.className='yt';
+  with(yearTracker.style){
+    display='none';width=yearImgWidth+"px";height=imgHeight+"px";
+  }
+  monthTracker=$D.createElement('div');
+  monthTracker.className='mt';
+  with(monthTracker.style){
+    display='none';width=monthImgWidth+"px";height=imgHeight+"px";
+  }
+  $spk.appendChild(yearTracker);
+  $spk.appendChild(monthTracker);
+
+  var $ipp=$("wm-ipp");
+  $ipp&&disclaimElement($ipp);
+}
+return{st:showTrackers,mv:trackMouseMove,h:hideToolbar,bt:bootstrap};
+})(500, 27, 25, 2);//]]>
+</script>
+<style type="text/css">
+body {
+  margin-top:0 !important;
+  padding-top:0 !important;
+  min-width:800px !important;
+}
+</style>
+<div id="wm-ipp" lang="en" style="display:none;">
+
+<div style="position:fixed;left:0;top:0;width:100%!important">
+<div id="wm-ipp-inside">
+   <table style="width:100%;"><tbody><tr>
+   <td id="wm-logo">
+       <a href="/web/" title="Wayback Machine home page"><img src="/static/images/toolbar/wayback-toolbar-logo.png" alt="Wayback Machine" width="110" height="39" border="0" /></a>
+   </td>
+   <td class="c">
+       <table style="margin:0 auto;"><tbody><tr>
+       <td class="u" colspan="2">
+       <form target="_top" method="get" action="/web/form-submit.jsp" name="wmtb" id="wmtb"><input type="text" name="url" id="wmtbURL" value="http://tlug.ss.org/wiki/Toronto_opensource_computing_groups" style="width:400px;" onfocus="this.focus();this.select();" /><input type="hidden" name="type" value="replay" /><input type="hidden" name="date" value="20100103155339" /><input type="submit" value="Go" /><span id="wm_tb_options" style="display:block;"></span></form>
+       </td>
+       <td class="n" rowspan="2">
+           <table><tbody>
+           <!-- NEXT/PREV MONTH NAV AND MONTH INDICATOR -->
+           <tr class="m">
+           	<td class="b" nowrap="nowrap">
+		
+		    <a href="/web/20091203072728/http://tlug.ss.org/wiki/Toronto_opensource_computing_groups" title="3 Dec 2009">DEC</a>
+		
+		</td>
+		<td class="c" id="displayMonthEl" title="You are here: 15:53:39 Jan 3, 2010">JAN</td>
+		<td class="f" nowrap="nowrap">
+		
+		    Feb
+		
+                </td>
+	    </tr>
+           <!-- NEXT/PREV CAPTURE NAV AND DAY OF MONTH INDICATOR -->
+           <tr class="d">
+               <td class="b" nowrap="nowrap">
+               
+                   <a href="/web/20091203072728/http://tlug.ss.org/wiki/Toronto_opensource_computing_groups" title="7:27:28 Dec 3, 2009"><img src="/static/images/toolbar/wm_tb_prv_on.png" alt="Previous capture" width="14" height="16" border="0" /></a>
+               
+               </td>
+               <td class="c" id="displayDayEl" style="width:34px;font-size:24px;" title="You are here: 15:53:39 Jan 3, 2010">3</td>
+	       <td class="f" nowrap="nowrap">
+               
+                   <img src="/static/images/toolbar/wm_tb_nxt_off.png" alt="Next capture" width="14" height="16" border="0"/>
+               
+	       </td>
+           </tr>
+           <!-- NEXT/PREV YEAR NAV AND YEAR INDICATOR -->
+           <tr class="y">
+	       <td class="b" nowrap="nowrap">
+               
+                   <a href="/web/20081230042829/http://tlug.ss.org/wiki/Toronto_opensource_computing_groups" title="30 Dec 2008"><strong>2008</strong></a>
+               
+               </td>
+               <td class="c" id="displayYearEl" title="You are here: 15:53:39 Jan 3, 2010">2010</td>
+	       <td class="f" nowrap="nowrap">
+               
+                   2011
+               
+	       </td>
+           </tr>
+           </tbody></table>
+       </td>
+       </tr>
+       <tr>
+       <td class="s">
+           <a class="t" href="/web/20100103155339*/http://tlug.ss.org/wiki/Toronto_opensource_computing_groups" title="See a list of every capture for this URL">23 captures</a>
+           <div class="r" title="Timespan for captures of this URL">23 Feb 06 - 3 Jan 10</div>
+       </td>
+       <td class="k">
+       <a href="" id="wm-graph-anchor">
+       <div id="wm-ipp-sparkline" title="Explore captures for this URL">
+	 <img id="sparklineImgId" alt="sparklines"
+		 onmouseover="__wm.st(1)" onmouseout="__wm.st(0)"
+		 onmousemove="__wm.mv(event,this)"
+		 width="500"
+		 height="27"
+		 border="0"
+		 src="/web/jsp/graph.jsp?graphdata=500_27_1996:-1:000000000000_1997:-1:000000000000_1998:-1:000000000000_1999:-1:000000000000_2000:-1:000000000000_2001:-1:000000000000_2002:-1:000000000000_2003:-1:000000000000_2004:-1:000000000000_2005:-1:000000000000_2006:-1:010010000100_2007:-1:010001020000_2008:-1:000011200201_2009:-1:010111111001_2010:0:100000000000_2011:-1:000000000000_2012:-1:000000000000_2013:-1:000000000000_2014:-1:000000000000_2015:-1:000000000000" />
+       </div>
+       </a>
+       </td>
+       </tr></tbody></table>
+   </td>
+   <td class="r">
+       <a href="#close" onclick="__wm.h();return false;" style="background-image:url(/static/images/toolbar/wm_tb_close.png);top:5px;" title="Close the toolbar">Close</a>
+       <a href="http://faq.web.archive.org/" style="background-image:url(/static/images/toolbar/wm_tb_help.png);bottom:5px;" title="Get some help using the Wayback Machine">Help</a>
+   </td>
+   </tr></tbody></table>
+</div>
+</div>
+</div>
+<script type="text/javascript">__wm.bt();</script>
+<!-- END WAYBACK TOOLBAR INSERT -->
+
+    <div id="globalWrapper">
+      <div id="column-content">
+	<div id="content">
+	  <a name="top" id="top"></a>
+	  	  <h1 class="firstHeading">Toronto opensource computing groups</h1>
+	  <div id="bodyContent">
+	    <h3 id="siteSub">From GTALUG</h3>
+	    <div id="contentSub"></div>
+	    	    	    <!-- start content -->
+	    <p><a href="/web/20100103155339/http://tlug.ss.org/wiki/Sitemap" title="Sitemap">Sitemap</a> > <a href="/web/20100103155339/http://tlug.ss.org/wiki/Computing" title="Computing">Computing</a> > <a href="/web/20100103155339/http://tlug.ss.org/wiki/Toronto" title="Toronto">Toronto</a> > <a href="/web/20100103155339/http://tlug.ss.org/wiki/Resources" title="Resources">Resources</a> >  Toronto opensource computing groups
+</p><p>Note that this is obsoleted by <a href="/web/20100103155339/http://tlug.ss.org/wiki/Category:Toronto_User_Groups" title="Category:Toronto User Groups">Category:Toronto User Groups</a> and <a href="/web/20100103155339/http://tlug.ss.org/wiki/Category:Ontario_Linux_User_Groups" title="Category:Ontario Linux User Groups">Category:Ontario Linux User Groups</a>
+</p>
+<dl><dt> See also</dt><dd>
+</dd></dl>
+<ul><li> <a href="/web/20100103155339/http://tlug.ss.org/wiki/Linux" title="Linux">Linux</a>
+</li><li> <a href="/web/20100103155339/http://en.wikipedia.org/wiki/LUGs_in_Canada" class='external text' title="http://en.wikipedia.org/wiki/LUGs in Canada" rel="nofollow">WikiPedia - LUGs in Canada</a>
+</li></ul>
+<hr />
+<dl><dd><dl><dt> <a href="/web/20100103155339/http://tlug.ss.org/wiki/NewTLUG" title="NewTLUG">NewTLUG</a> -- <i>New Toronto Linux User Group</i>
+</dt><dd> Chapter of GTALUG meets 4th Tuesday of the Month, Normally meets at Seneca College at York University.
+</dd></dl>
+</dd></dl>
+<dl><dd><dl><dt> Python GTA -- <i>All sorts of Python stuff, meet at the <a href="/web/20100103155339/http://tlug.ss.org/wiki/Linuxcaffe" title="Linuxcaffe">Linuxcaffe</a> Q&amp;A the typically off to an Ice Cream place.</i>
+</dt><dd> Meets every third tuesday of the month.  (see <a href="/web/20100103155339/http://www.engcorp.com/pygta/wiki/NextMeeting" class='external text' title="http://www.engcorp.com/pygta/wiki/NextMeeting" rel="nofollow">next meeting</a>)
+</dd><dd> <a href="/web/20100103155339/http://web.engcorp.com/pygta" class='external text' title="http://web.engcorp.com/pygta" rel="nofollow">PyGTA Front Page</a>
+</dd><dd> <a href="/web/20100103155339/http://web.engcorp.com/pygta/wiki/FrontPage" class='external text' title="http://web.engcorp.com/pygta/wiki/FrontPage" rel="nofollow">Wiki</a>
+</dd></dl>
+</dd></dl>
+<dl><dd><dl><dt> TAUG -- <i>Toronto Asterisk Users Group</i> -- VOIP and PBX software
+</dt><dd> Group usually meets on various Wednesdays of the month at the North York Civic Centre, 5100 Yonge St. (short walk from the North York Centre subway station)
+</dd><dd> <a href="/web/20100103155339/http://taug.ca/" class='external text' title="http://taug.ca/" rel="nofollow">Toronto Asterisk Users Group</a>
+</dd></dl>
+</dd></dl>
+<dl><dd><dl><dt> TRUG -- <i>Toronto Ruby User Group</i>
+</dt><dd> Meets are second Sunday of the month.
+</dd><dd> <a href="/web/20100103155339/http://www.trug.ca/" class='external text' title="http://www.trug.ca" rel="nofollow">Main Site</a>
+</dd><dd> <a href="/web/20100103155339/http://www.trug.ca/Meetings" class='external text' title="http://www.trug.ca/Meetings" rel="nofollow">Meetings</a>
+</dd></dl>
+</dd></dl>
+<dl><dd><dl><dt> Perl Mongers Toronto - <i>Talk about perl</i>
+</dt><dd> Group usually meets on last Thursday of every month @ 2 Bloor Street West, 8th or 16th floor
+</dd><dd> <a href="/web/20100103155339/http://to.pm.org/" class='external text' title="http://to.pm.org/" rel="nofollow">Main site</a>
+</dd></dl>
+</dd></dl>
+<dl><dd><dl><dt> GTA SAGE - <i>Greater Toronto System Administrators Guild</i>
+</dt><dd> <a href="/web/20100103155339/http://www.gtasage.org/" class='external text' title="http://www.gtasage.org/" rel="nofollow">Main Site</a>
+</dd></dl>
+</dd></dl>
+<dl><dd><dl><dt> <a href="/web/20100103155339/http://tlug.ss.org/wiki/Unix_Unanimous" title="Unix Unanimous">Unix Unanimous</a>
+</dt><dd> Meetings on every 2nd Wednesday of the month
+</dd><dd> <a href="/web/20100103155339/http://unixunanimous.org/" class='external text' title="http://unixunanimous.org/" rel="nofollow">Main Site</a>
+</dd></dl>
+</dd></dl>
+<dl><dd><dl><dt> TorWUG - <i>Toronto Wireless Group</i>
+</dt><dd> <a href="/web/20100103155339/http://www.torwug.org/" class='external text' title="http://www.torwug.org/" rel="nofollow">Main Site</a>
+</dd></dl>
+</dd></dl>
+<dl><dd><dl><dt> TorPUG - <i>Toronto PHP Users Group</i>
+</dt><dd> <a href="/web/20100103155339/http://torpug.widgetapps.com/" class='external text' title="http://torpug.widgetapps.com/" rel="nofollow">Main Site</a>
+</dd><dd> <a href="/web/20100103155339/http://torpug.widgetapps.com/index.php?module=xarbb&amp;func=viewforum&amp;fid=1" class='external text' title="http://torpug.widgetapps.com/index.php?module=xarbb&amp;func=viewforum&amp;fid=1" rel="nofollow">Meeting Dates &amp; Information</a>
+</dd><dd> Group usually meets the first week of each month.
+</dd></dl>
+</dd></dl>
+<dl><dd><dl><dt> Toronto Area Security Klatch - TASK 
+</dt><dd> Deals with security issues on ALL platforms, from the *BSDs to Linux to Windows. Membership is free.
+</dd><dd> <a href="/web/20100103155339/http://www.task.to/" class='external free' title="http://www.task.to/" rel="nofollow">http://www.task.to/</a>
+</dd><dd> Meetings are the last Wednesday of each month at 6:00 PM, see website for location.
+</dd></dl>
+</dd></dl>
+<dl><dd><dl><dt> Toronto Atari Federation - <i>Bring you XL800s!</i>
+</dt><dd> welcome.to/taf/
+</dd><dd> alas, our spam filter forbids URLs in the .to TLD
+</dd></dl>
+</dd></dl>
+<dl><dd><dl><dt> WestTLUG - West Toronto Linux User Group
+</dt><dd> Meetings every first Tuesday of the month.
+</dd><dd> <a href="/web/20100103155339/http://ca.groups.yahoo.com/group/WestTLUG/" class='external free' title="http://ca.groups.yahoo.com/group/WestTLUG/" rel="nofollow">http://ca.groups.yahoo.com/group/WestTLUG/</a>
+</dd></dl>
+</dd></dl>
+<dl><dd><dl><dt> Wireless Toronto
+</dt><dd> <a href="/web/20100103155339/http://wirelesstoronto.ca/" class='external free' title="http://wirelesstoronto.ca/" rel="nofollow">http://wirelesstoronto.ca/</a>
+</dd></dl>
+</dd></dl>
+<dl><dd><dl><dt> Wireless Nomad ISP Co-op
+</dt><dd> Home and business DSL/WiFi mesh connections (OpenWRT, OLSR, OpenVPN) + shared local WiFi across Ontario. Escape the Telcos!  Unlimited downloads, run a server, P2P encouraged, full access for members at all WiFi locations, 100% open/free software-based.  
+</dd><dd> <a href="/web/20100103155339/http://wirelessnomad.com/" class='external free' title="http://wirelessnomad.com/" rel="nofollow">http://wirelessnomad.com/</a>
+</dd></dl>
+</dd></dl>
+<dl><dd><dl><dt> Toronto WiFi Meetup
+</dt><dd> WiFi networking second Wednesday of each month, usually at Linux Caffe- bring  your WiFi gear
+</dd><dd> <a href="/web/20100103155339/http://wifi.meetup.com/36/" class='external free' title="http://wifi.meetup.com/36/" rel="nofollow">http://wifi.meetup.com/36/</a>
+</dd></dl>
+</dd></dl>
+<dl><dd><dl><dt> Toronto PostgreSQL Users Group
+</dt><dd> The Toronto PostgreSQL Users Group is a regular meetup for people to talk, discuss and share stories about PostgreSQL. New users looking for more information are welcome!
+</dd><dd> <a href="/web/20100103155339/http://pugs.postgresql.org/torontopug" class='external free' title="http://pugs.postgresql.org/torontopug" rel="nofollow">http://pugs.postgresql.org/torontopug</a>
+</dd></dl>
+</dd></dl>
+<dl><dd><dl><dt> Django Toronto
+</dt><dd> This is a group for meeting other Toronto-based Django developers and other people who love Django and Python.
+</dd><dd> <a href="/web/20100103155339/http://groups.google.com/group/django-toronto" class='external text' title="http://groups.google.com/group/django-toronto" rel="nofollow">Mailing List</a>
+</dd></dl>
+</dd></dl>
+<dl><dd><dl><dt> <a href="/web/20100103155339/http://tlug.ss.org/wiki/MUMU" title="MUMU">MUMU</a> - Mississauga Ubuntu MeetUp
+</dt><dd> A group of Ubuntu users that meet once a month in a pub in Mississauga to share a beer, exchange information and talk just about anything.
+</dd><dd> Group site: <a href="/web/20100103155339/http://tech.groups.yahoo.com/group/mumu-ca/" class='external free' title="http://tech.groups.yahoo.com/group/mumu-ca/" rel="nofollow">http://tech.groups.yahoo.com/group/mumu-ca/</a>
+</dd><dd> Wiki: <a href="/web/20100103155339/https://wiki.ubuntu.com/mlug" class='external free' title="https://wiki.ubuntu.com/mlug" rel="nofollow">https://wiki.ubuntu.com/mlug</a> 
+</dd></dl>
+</dd></dl>
+<hr />
+<dl><dd><dl><dt> Surrounding area groups
+</dt><dd> Some wonderful groups surrounding Toronto welcome GTALUG visitors.  On a business trip and you can't make it back to the city without hours of traffic?  Why not visit an area LUG before you head home?  
+</dd></dl>
+</dd></dl>
+<dl><dd><dl><dt> Kitchener-Waterloo Linux User Group
+</dt><dd> First non-holiday Monday of the month.  Check the site for dates, location and topics.  
+</dd><dd><a href="/web/20100103155339/http://kwlug.org/" class='external text' title="http://kwlug.org/" rel="nofollow">Kitchener - Waterloo LUG</a>
+</dd></dl>
+</dd></dl>
+<dl><dd><dl><dt> Cambridge Linux User Group
+</dt><dd> Third Monday of the month.  Check the site for dates, location and topics.  
+</dd><dd><a href="/web/20100103155339/http://cambridgelug.org/" class='external text' title="http://cambridgelug.org/" rel="nofollow">Cambridge LUG</a>
+</dd></dl>
+</dd></dl>
+<dl><dd><dl><dt> Hamilton Linux User Group
+</dt><dd> Meetings alternate between McMaster University and Mohawk College.  Check before you go!
+</dd><dd><a href="/web/20100103155339/http://hlug.ca/" class='external autonumber' title="http://hlug.ca/" rel="nofollow">[1]</a>
+</dd></dl>
+</dd></dl>
+<dl><dd><dl><dt> Hamilton Open Source User Group
+</dt><dd> Linux and Open Source featured.  Very newbie-friendly. 
+</dd><dd><a href="/web/20100103155339/http://hosug.org/" class='external autonumber' title="http://hosug.org/" rel="nofollow">[2]</a>
+</dd></dl>
+</dd></dl>
+<dl><dd><dl><dt> Niagara Penninsula Linux User Group
+</dt><dd> Meetings announced via Facebook, Twitter, LinkedIn
+</dd><dd><a href="/web/20100103155339/http://www.facebook.com/group.php?gid=115990519465" class='external text' title="http://www.facebook.com/group.php?gid=115990519465" rel="nofollow">NPLUG Facebook Page</a>
+</dd></dl>
+</dd></dl>
+
+<!-- Saved in parser cache with key gtalug_mediawiki:pcache:idhash:1956-0!1!0!0!!en!2 and timestamp 20100103120735 -->
+<div class="printfooter">
+Retrieved from "<a href="/web/20100103155339/http://tlug.ss.org/wiki/Toronto_opensource_computing_groups">http://tlug.ss.org/wiki/Toronto_opensource_computing_groups</a>"</div>
+	    	    <!-- end content -->
+	    <div class="visualClear"></div>
+	  </div>
+	</div>
+      </div>
+      <div id="column-one">
+	<div id="p-cactions" class="portlet">
+	  <h5>Views</h5>
+	  <ul>
+	    <li id="ca-nstab-main"
+	       class="selected"	       ><a href="/web/20100103155339/http://tlug.ss.org/wiki/Toronto_opensource_computing_groups">Article</a></li><li id="ca-talk"
+	       	       ><a href="/web/20100103155339/http://tlug.ss.org/wiki/Talk:Toronto_opensource_computing_groups">Discussion</a></li><li id="ca-edit"
+	       	       ><a href="/web/20100103155339/http://tlug.ss.org/mediawiki/index.php?title=Toronto_opensource_computing_groups&amp;action=edit">Edit</a></li><li id="ca-history"
+	       	       ><a href="/web/20100103155339/http://tlug.ss.org/mediawiki/index.php?title=Toronto_opensource_computing_groups&amp;action=history">History</a></li>	  </ul>
+	</div>
+	<div class="portlet" id="p-personal">
+	  <h5>Personal tools</h5>
+	  <div class="pBody">
+	    <ul>
+	    <li id="pt-login"><a href="/web/20100103155339/http://tlug.ss.org/mediawiki/index.php?title=Special:Userlogin&amp;returnto=Toronto_opensource_computing_groups">Create an account or log in</a></li>	    </ul>
+	  </div>
+	</div>
+	<div class="portlet" id="p-logo">
+	  <a style="background-image: url(/web/20100103155339im_/http://tlug.ss.org/wiki/upload/wiki.png);"
+	    href="/web/20100103155339/http://tlug.ss.org/wiki/Main_Page"
+	    title="Main Page"></a>
+	</div>
+	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+		<div class='portlet' id='p-navigation'>
+	  <h5>Navigation</h5>
+	  <div class='pBody'>
+	    <ul>
+	    	      <li id="n-mainpage"><a href="/web/20100103155339/http://tlug.ss.org/wiki/Main_Page">Main Page</a></li>
+	     	      <li id="n-smap"><a href="/web/20100103155339/http://tlug.ss.org/wiki/Sitemap">Sitemap</a></li>
+	     	      <li id="n-recentchanges"><a href="/web/20100103155339/http://tlug.ss.org/wiki/Special:Recentchanges">Recent changes</a></li>
+	     	      <li id="n-randompage"><a href="/web/20100103155339/http://tlug.ss.org/wiki/Special:Random">Random page</a></li>
+	     	      <li id="n-admin"><a href="/web/20100103155339/http://tlug.ss.org/wiki/Site_Administration">gtalug.org Administration</a></li>
+	     	    </ul>
+	  </div>
+	</div>
+		<div class='portlet' id='p-community'>
+	  <h5>community</h5>
+	  <div class='pBody'>
+	    <ul>
+	    	      <li id="n-portal"><a href="/web/20100103155339/http://tlug.ss.org/wiki/GTALUG:Community_Portal">Resources</a></li>
+	     	      <li id="n-mailing-lists"><a href="/web/20100103155339/http://tlug.ss.org/wiki/Mailing_lists">Mailing lists</a></li>
+	     	      <li id="n-currentevents"><a href="/web/20100103155339/http://tlug.ss.org/wiki/Current_events">Current events</a></li>
+	     	      <li id="n-groups"><a href="/web/20100103155339/http://tlug.ss.org/wiki/Toronto_opensource_computing_groups">Other groups</a></li>
+	     	      <li id="n-classifieds"><a href="/web/20100103155339/http://tlug.ss.org/wiki/Classifieds">Bulletin Board/Classifieds</a></li>
+	     	    </ul>
+	  </div>
+	</div>
+		<div class='portlet' id='p-editsidebar-title'>
+	  <h5>Customize</h5>
+	  <div class='pBody'>
+	    <ul>
+	    	      <li id="n-editsidebar"><a href="/web/20100103155339/http://tlug.ss.org/mediawiki/index.php?title=MediaWiki:Sidebar&amp;action=edit">Edit sidebar</a></li>
+	     	    </ul>
+	  </div>
+	</div>
+		<div id="p-search" class="portlet">
+	  <h5><label for="searchInput">Search</label></h5>
+	  <div class="pBody">
+	    <form name="searchform" action="/web/20100103155339/http://tlug.ss.org/wiki/Special:Search" id="searchform">
+	      <input id="searchInput" name="search" type="text"
+	        accesskey="f" value="" />
+	      <input type='submit' name="go" class="searchButton" id="searchGoButton"
+	        value="Go"
+	        />&nbsp;<input type='submit' name="fulltext"
+	        class="searchButton"
+	        value="Search" />
+	    </form>
+	  </div>
+	</div>
+	<div class="portlet" id="p-tb">
+	  <h5>Toolbox</h5>
+	  <div class="pBody">
+	    <ul>
+		  		  <li id="t-whatlinkshere"><a href="/web/20100103155339/http://tlug.ss.org/wiki/Special:Whatlinkshere/Toronto_opensource_computing_groups">What links here</a></li>
+		  		  <li id="t-recentchangeslinked"><a href="/web/20100103155339/http://tlug.ss.org/wiki/Special:Recentchangeslinked/Toronto_opensource_computing_groups">Related changes</a></li>
+		                	      	      	      	      	      	      	      <li id="t-upload"><a href="/web/20100103155339/http://tlug.ss.org/wiki/Special:Upload">Upload file</a></li>	      	      <li id="t-specialpages"><a href="/web/20100103155339/http://tlug.ss.org/wiki/Special:Specialpages">Special pages</a></li>	      	      	      <li id="t-print"><a href="/web/20100103155339/http://tlug.ss.org/mediawiki/index.php?title=Toronto_opensource_computing_groups&amp;printable=yes">Printable version</a></li>
+	      	    </ul>
+	  </div>
+	</div>
+	      </div><!-- end of the left (by default at least) column -->
+      <div class="visualClear"></div>
+      <div id="footer">
+    <div id="f-poweredbyico"><a href="/web/20100103155339/http://www.mediawiki.org/"><img src="/web/20100103155339im_/http://tlug.ss.org/mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="MediaWiki" /></a></div>	<div id="f-copyrightico"><a href="/web/20100103155339/http://www.gnu.org/copyleft/fdl.html"><img src="/web/20100103155339im_/http://tlug.ss.org/mediawiki/skins/common/images/gnu-fdl.png" alt='GNU Free Documentation License 1.2' /></a></div>	<ul id="f-list">
+	  <li id="f-lastmod"> This page was last modified 15:07, 11 November 2009.</li>	  <li id="f-viewcount">This page has been accessed 27,341 times.</li>	  	  	  <li id="f-copyright">Content is available under <a href="/web/20100103155339/http://www.gnu.org/copyleft/fdl.html" class='external ' title="http://www.gnu.org/copyleft/fdl.html" rel="nofollow">GNU Free Documentation License 1.2</a>.</li>	  <li id="f-about"><a href="/web/20100103155339/http://tlug.ss.org/wiki/GTALUG:About" title="GTALUG:About">About GTALUG</a></li>	  <li id="f-disclaimer"><a href="/web/20100103155339/http://tlug.ss.org/wiki/GTALUG:General_disclaimer" title="GTALUG:General disclaimer">Disclaimers</a></li>	  	</ul>
+      </div>
+    </div>
+    <!-- Served by gold.ss.org in 0.22 secs. -->  </body>
+</html>
+
+
+
+
+
+<!--
+     FILE ARCHIVED ON 15:53:39 Jan 3, 2010 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 20:32:15 Oct 30, 2015.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->
