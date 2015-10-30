@@ -1,0 +1,341 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+  <head>
+
+
+<script type="text/javascript" src="/static/js/analytics.js"></script>
+<script type="text/javascript">archive_analytics.values.server_name="wwwb-app14.us.archive.org";archive_analytics.values.server_ms=920;</script>
+<link type="text/css" rel="stylesheet" href="/static/css/banner-styles.css"/>
+
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="KEYWORDS" content="Sean Godsell,Template:Person,Template:Presenter,Meetings:2003-02,People,Sitemap,Thanks" />
+<meta name="robots" content="index,follow" />
+<link rel="shortcut icon" href="/web/20061013090330im_/http://tlug.ss.org/favicon.ico" />
+<link title="Creative Commons" type="application/rdf+xml" href="/index.php?title=Sean_Godsell&amp;action=creativecommons" rel="meta" />
+<link rel="copyright" href="http://www.gnu.org/copyleft/fdl.html" />
+    <title>Sean Godsell - GTALUG</title>
+    <style type="text/css" media="screen,projection">/*<![CDATA[*/ @import "/web/20061013090330cs_/http://tlug.ss.org/skins/gtalug/main.css"; /*]]>*/</style>
+    <link rel="stylesheet" type="text/css" media="print" href="/web/20061013090330cs_/http://tlug.ss.org/skins/common/commonPrint.css" />
+    <!--[if lt IE 5.5000]><style type="text/css">@import "/skins/gtalug/IE50Fixes.css";</style><![endif]-->
+    <!--[if IE 5.5000]><style type="text/css">@import "/skins/gtalug/IE55Fixes.css";</style><![endif]-->
+    <!--[if gte IE 6]><style type="text/css">@import "/skins/gtalug/IE60Fixes.css";</style><![endif]-->
+    <!--[if IE]><script type="text/javascript" src="/skins/common/IEFixes.js"></script>
+    <meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+    <script type="text/javascript" src="/web/20061013090330js_/http://tlug.ss.org/index.php?title=-&amp;action=raw&amp;gen=js"></script>    <script type="text/javascript" src="/web/20061013090330js_/http://tlug.ss.org/skins/common/wikibits.js"></script>
+    <style type="text/css">/*<![CDATA[*/
+@import "/web/20061013090330cs_/http://tlug.ss.org/index.php?title=MediaWiki:Gtalug.css&action=raw&ctype=text/css&smaxage=18000";
+@import "/web/20061013090330cs_/http://tlug.ss.org/index.php?title=-&action=raw&gen=css&maxage=18000";
+/*]]>*/</style>              </head>
+  <body                 class="ns-0">
+
+
+<!-- BEGIN WAYBACK TOOLBAR INSERT -->
+<script type="text/javascript" src="/static/js/disclaim-element.js" ></script>
+<script type="text/javascript" src="/static/js/graph-calc.js" ></script>
+<script type="text/javascript">//<![CDATA[
+var __wm = (function(imgWidth,imgHeight,yearImgWidth,monthImgWidth){
+var wbPrefix = "/web/";
+var wbCurrentUrl = "http://tlug.ss.org/wiki/Sean_Godsell";
+
+var firstYear = 1996;
+var displayDay = "13";
+var displayMonth = "Oct";
+var displayYear = "2006";
+var prettyMonths = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+var $D=document,$=function(n){return document.getElementById(n)};
+var trackerVal,curYear = -1,curMonth = -1;
+var yearTracker,monthTracker;
+function showTrackers(val) {
+  if (val===trackerVal) return;
+  var $ipp=$("wm-ipp");
+  var $y=$("displayYearEl"),$m=$("displayMonthEl"),$d=$("displayDayEl");
+  if (val) {
+    $ipp.className="hi";
+  } else {
+    $ipp.className="";
+    $y.innerHTML=displayYear;$m.innerHTML=displayMonth;$d.innerHTML=displayDay;
+  }
+  yearTracker.style.display=val?"inline":"none";
+  monthTracker.style.display=val?"inline":"none";
+  trackerVal = val;
+}
+function trackMouseMove(event,element) {
+  var eventX = getEventX(event);
+  var elementX = getElementX(element);
+  var xOff = Math.min(Math.max(0, eventX - elementX),imgWidth);
+  var monthOff = xOff % yearImgWidth;
+
+  var year = Math.floor(xOff / yearImgWidth);
+  var monthOfYear = Math.min(11,Math.floor(monthOff / monthImgWidth));
+  // 1 extra border pixel at the left edge of the year:
+  var month = (year * 12) + monthOfYear;
+  var day = monthOff % 2==1?15:1;
+  var dateString = zeroPad(year + firstYear) + zeroPad(monthOfYear+1,2) +
+    zeroPad(day,2) + "000000";
+
+  $("displayYearEl").innerHTML=year+firstYear;
+  $("displayMonthEl").innerHTML=prettyMonths[monthOfYear];
+  // looks too jarring when it changes..
+  //$("displayDayEl").innerHTML=zeroPad(day,2);
+  var url = wbPrefix + dateString + '/' +  wbCurrentUrl;
+  $("wm-graph-anchor").href=url;
+
+  if(curYear != year) {
+    var yrOff = year * yearImgWidth;
+    yearTracker.style.left = yrOff + "px";
+    curYear = year;
+  }
+  if(curMonth != month) {
+    var mtOff = year + (month * monthImgWidth) + 1;
+    monthTracker.style.left = mtOff + "px";
+    curMonth = month;
+  }
+}
+function hideToolbar() {
+  $("wm-ipp").style.display="none";
+}
+function bootstrap() {
+  var $spk=$("wm-ipp-sparkline");
+  yearTracker=$D.createElement('div');
+  yearTracker.className='yt';
+  with(yearTracker.style){
+    display='none';width=yearImgWidth+"px";height=imgHeight+"px";
+  }
+  monthTracker=$D.createElement('div');
+  monthTracker.className='mt';
+  with(monthTracker.style){
+    display='none';width=monthImgWidth+"px";height=imgHeight+"px";
+  }
+  $spk.appendChild(yearTracker);
+  $spk.appendChild(monthTracker);
+
+  var $ipp=$("wm-ipp");
+  $ipp&&disclaimElement($ipp);
+}
+return{st:showTrackers,mv:trackMouseMove,h:hideToolbar,bt:bootstrap};
+})(500, 27, 25, 2);//]]>
+</script>
+<style type="text/css">
+body {
+  margin-top:0 !important;
+  padding-top:0 !important;
+  min-width:800px !important;
+}
+</style>
+<div id="wm-ipp" lang="en" style="display:none;">
+
+<div style="position:fixed;left:0;top:0;width:100%!important">
+<div id="wm-ipp-inside">
+   <table style="width:100%;"><tbody><tr>
+   <td id="wm-logo">
+       <a href="/web/" title="Wayback Machine home page"><img src="/static/images/toolbar/wayback-toolbar-logo.png" alt="Wayback Machine" width="110" height="39" border="0" /></a>
+   </td>
+   <td class="c">
+       <table style="margin:0 auto;"><tbody><tr>
+       <td class="u" colspan="2">
+       <form target="_top" method="get" action="/web/form-submit.jsp" name="wmtb" id="wmtb"><input type="text" name="url" id="wmtbURL" value="http://tlug.ss.org/wiki/Sean_Godsell" style="width:400px;" onfocus="this.focus();this.select();" /><input type="hidden" name="type" value="replay" /><input type="hidden" name="date" value="20061013090330" /><input type="submit" value="Go" /><span id="wm_tb_options" style="display:block;"></span></form>
+       </td>
+       <td class="n" rowspan="2">
+           <table><tbody>
+           <!-- NEXT/PREV MONTH NAV AND MONTH INDICATOR -->
+           <tr class="m">
+           	<td class="b" nowrap="nowrap">
+		
+		    Sep
+		
+		</td>
+		<td class="c" id="displayMonthEl" title="You are here: 9:03:30 Oct 13, 2006">OCT</td>
+		<td class="f" nowrap="nowrap">
+		
+		    Nov
+		
+                </td>
+	    </tr>
+           <!-- NEXT/PREV CAPTURE NAV AND DAY OF MONTH INDICATOR -->
+           <tr class="d">
+               <td class="b" nowrap="nowrap">
+               
+                       <img src="/static/images/toolbar/wm_tb_prv_off.png" alt="Previous capture" width="14" height="16" border="0" />
+               
+               </td>
+               <td class="c" id="displayDayEl" style="width:34px;font-size:24px;" title="You are here: 9:03:30 Oct 13, 2006">13</td>
+	       <td class="f" nowrap="nowrap">
+               
+                   <img src="/static/images/toolbar/wm_tb_nxt_off.png" alt="Next capture" width="14" height="16" border="0"/>
+               
+	       </td>
+           </tr>
+           <!-- NEXT/PREV YEAR NAV AND YEAR INDICATOR -->
+           <tr class="y">
+	       <td class="b" nowrap="nowrap">
+               
+                   2005
+               
+               </td>
+               <td class="c" id="displayYearEl" title="You are here: 9:03:30 Oct 13, 2006">2006</td>
+	       <td class="f" nowrap="nowrap">
+               
+                   2007
+               
+	       </td>
+           </tr>
+           </tbody></table>
+       </td>
+       </tr>
+       <tr>
+       <td class="s">
+           <a class="t" href="/web/20061013090330*/http://tlug.ss.org/wiki/Sean_Godsell" title="See a list of every capture for this URL">1 captures</a>
+           <div class="r" title="Timespan for captures of this URL">13 Oct 06 - 13 Oct 06</div>
+       </td>
+       <td class="k">
+       <a href="" id="wm-graph-anchor">
+       <div id="wm-ipp-sparkline" title="Explore captures for this URL">
+	 <img id="sparklineImgId" alt="sparklines"
+		 onmouseover="__wm.st(1)" onmouseout="__wm.st(0)"
+		 onmousemove="__wm.mv(event,this)"
+		 width="500"
+		 height="27"
+		 border="0"
+		 src="/web/jsp/graph.jsp?graphdata=500_27_1996:-1:000000000000_1997:-1:000000000000_1998:-1:000000000000_1999:-1:000000000000_2000:-1:000000000000_2001:-1:000000000000_2002:-1:000000000000_2003:-1:000000000000_2004:-1:000000000000_2005:-1:000000000000_2006:9:000000000100_2007:-1:000000000000_2008:-1:000000000000_2009:-1:000000000000_2010:-1:000000000000_2011:-1:000000000000_2012:-1:000000000000_2013:-1:000000000000_2014:-1:000000000000_2015:-1:000000000000" />
+       </div>
+       </a>
+       </td>
+       </tr></tbody></table>
+   </td>
+   <td class="r">
+       <a href="#close" onclick="__wm.h();return false;" style="background-image:url(/static/images/toolbar/wm_tb_close.png);top:5px;" title="Close the toolbar">Close</a>
+       <a href="http://faq.web.archive.org/" style="background-image:url(/static/images/toolbar/wm_tb_help.png);bottom:5px;" title="Get some help using the Wayback Machine">Help</a>
+   </td>
+   </tr></tbody></table>
+</div>
+</div>
+</div>
+<script type="text/javascript">__wm.bt();</script>
+<!-- END WAYBACK TOOLBAR INSERT -->
+
+    <div id="globalWrapper">
+      <div id="column-content">
+	<div id="content">
+	  <a name="top" id="top"></a>
+	  	  <h1 class="firstHeading">Sean Godsell</h1>
+	  <div id="bodyContent">
+	    <h3 id="siteSub">From GTALUG</h3>
+	    <div id="contentSub"></div>
+	    	    	    <!-- start content -->
+	    <p><a href="/web/20061013090330/http://tlug.ss.org/wiki/Sitemap" title="Sitemap">Sitemap</a> > <a href="/web/20061013090330/http://tlug.ss.org/wiki/People" title="People">People</a> > Sean Godsell
+</p><p>GTALUG would like to convey our sincerest <a href="/web/20061013090330/http://tlug.ss.org/wiki/Thanks" title="Thanks">thanks</a> for presenting to us.  See <a href="/web/20061013090330/http://tlug.ss.org/wiki/Special:Whatlinkshere/Template:Presenter" title="Special:Whatlinkshere/Template:Presenter">the list of presenters</a>.
+</p>
+<hr />
+<dl><dt> Presentations</dt><dd>
+</dd></dl>
+<ul><li> <a href="/web/20061013090330/http://tlug.ss.org/wiki/Meetings:2003-02" title="Meetings:2003-02">Meetings:2003-02</a> -- Linux on PDAs.
+</li></ul>
+<div class="printfooter">
+Retrieved from "<a href="/web/20061013090330/http://tlug.ss.org/wiki/Sean_Godsell">http://tlug.ss.org/wiki/Sean_Godsell</a>"</div>
+	    	    <!-- end content -->
+	    <div class="visualClear"></div>
+	  </div>
+	</div>
+      </div>
+      <div id="column-one">
+	<div id="p-cactions" class="portlet">
+	  <h5>Views</h5>
+	  <ul>
+	    <li id="ca-nstab-main"
+	       class="selected"	       ><a href="/web/20061013090330/http://tlug.ss.org/wiki/Sean_Godsell">Article</a></li><li id="ca-talk"
+	       class="new"	       ><a href="/web/20061013090330/http://tlug.ss.org/index.php?title=Talk:Sean_Godsell&amp;action=edit">Discussion</a></li><li id="ca-edit"
+	       	       ><a href="/web/20061013090330/http://tlug.ss.org/index.php?title=Sean_Godsell&amp;action=edit">Edit</a></li><li id="ca-history"
+	       	       ><a href="/web/20061013090330/http://tlug.ss.org/index.php?title=Sean_Godsell&amp;action=history">History</a></li>	  </ul>
+	</div>
+	<div class="portlet" id="p-personal">
+	  <h5>Personal tools</h5>
+	  <div class="pBody">
+	    <ul>
+	    <li id="pt-anonuserpage"><a href="/web/20061013090330/http://tlug.ss.org/wiki/User:72.20.99.46" class="new">72.20.99.46</a></li><li id="pt-anontalk"><a href="/web/20061013090330/http://tlug.ss.org/wiki/User_talk:72.20.99.46" class="new">Talk for this IP</a></li><li id="pt-anonlogin"><a href="/web/20061013090330/http://tlug.ss.org/index.php?title=Special:Userlogin&amp;returnto=Sean_Godsell">Create an account or log in</a></li>	    </ul>
+	  </div>
+	</div>
+	<div class="portlet" id="p-logo">
+	  <a style="background-image: url(/web/20061013090330im_/http://tlug.ss.org/wiki/upload/wiki.png);"
+	    href="/web/20061013090330/http://tlug.ss.org/wiki/Main_Page"
+	    title="Main Page"></a>
+	</div>
+	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+		<div class='portlet' id='p-navigation'>
+	  <h5>Navigation</h5>
+	  <div class='pBody'>
+	    <ul>
+	    	      <li id="n-mainpage"><a href="/web/20061013090330/http://tlug.ss.org/wiki/Main_Page">Main Page</a></li>
+	     	      <li id="n-smap"><a href="/web/20061013090330/http://tlug.ss.org/wiki/Sitemap">Sitemap</a></li>
+	     	      <li id="n-recentchanges"><a href="/web/20061013090330/http://tlug.ss.org/wiki/Special:Recentchanges">Recent changes</a></li>
+	     	      <li id="n-randompage"><a href="/web/20061013090330/http://tlug.ss.org/wiki/Special:Random">Random page</a></li>
+	     	      <li id="n-admin"><a href="/web/20061013090330/http://tlug.ss.org/wiki/Site_Administration">gtalug.org Administration</a></li>
+	     	    </ul>
+	  </div>
+	</div>
+		<div class='portlet' id='p-community'>
+	  <h5>community</h5>
+	  <div class='pBody'>
+	    <ul>
+	    	      <li id="n-portal"><a href="/web/20061013090330/http://tlug.ss.org/wiki/GTALUG:Community_Portal">Resources</a></li>
+	     	      <li id="n-mailing-lists"><a href="/web/20061013090330/http://tlug.ss.org/wiki/Mailing_lists">Mailing lists</a></li>
+	     	      <li id="n-currentevents"><a href="/web/20061013090330/http://tlug.ss.org/wiki/Current_events">Current events</a></li>
+	     	      <li id="n-groups"><a href="/web/20061013090330/http://tlug.ss.org/wiki/Toronto_opensource_computing_groups">Other groups</a></li>
+	     	      <li id="n-classifieds"><a href="/web/20061013090330/http://tlug.ss.org/wiki/Classifieds">Bulletin Board/Classifieds</a></li>
+	     	    </ul>
+	  </div>
+	</div>
+		<div class='portlet' id='p-editsidebar-title'>
+	  <h5>Customize</h5>
+	  <div class='pBody'>
+	    <ul>
+	    	      <li id="n-editsidebar"><a href="/web/20061013090330/http://tlug.ss.org/index.php?title=MediaWiki:Sidebar&amp;action=edit">Edit sidebar</a></li>
+	     	    </ul>
+	  </div>
+	</div>
+		<div id="p-search" class="portlet">
+	  <h5><label for="searchInput">Search</label></h5>
+	  <div class="pBody">
+	    <form name="searchform" action="/web/20061013090330/http://tlug.ss.org/wiki/Special:Search" id="searchform">
+	      <input id="searchInput" name="search" type="text"
+	        accesskey="f" value="" />
+	      <input type='submit' name="go" class="searchButton" id="searchGoButton"
+	        value="Go"
+	        />&nbsp;<input type='submit' name="fulltext"
+	        class="searchButton"
+	        value="Search" />
+	    </form>
+	  </div>
+	</div>
+	<div class="portlet" id="p-tb">
+	  <h5>Toolbox</h5>
+	  <div class="pBody">
+	    <ul>
+		  		  <li id="t-whatlinkshere"><a href="/web/20061013090330/http://tlug.ss.org/wiki/Special:Whatlinkshere/Sean_Godsell">What links here</a></li>
+		  		  <li id="t-recentchangeslinked"><a href="/web/20061013090330/http://tlug.ss.org/wiki/Special:Recentchangeslinked/Sean_Godsell">Related changes</a></li>
+		                	      	      	      	      	      	      	      <li id="t-upload"><a href="/web/20061013090330/http://tlug.ss.org/wiki/Special:Upload">Upload file</a></li>	      	      <li id="t-specialpages"><a href="/web/20061013090330/http://tlug.ss.org/wiki/Special:Specialpages">Special pages</a></li>	      	      	      <li id="t-print"><a href="/web/20061013090330/http://tlug.ss.org/index.php?title=Sean_Godsell&amp;printable=yes">Printable version</a></li>
+	      	    </ul>
+	  </div>
+	</div>
+	      </div><!-- end of the left (by default at least) column -->
+      <div class="visualClear"></div>
+      <div id="footer">
+    <div id="f-poweredbyico"><a href="/web/20061013090330/http://www.mediawiki.org/"><img src="/web/20061013090330im_/http://tlug.ss.org/skins/common/images/poweredby_mediawiki_88x31.png" alt="MediaWiki" /></a></div>	<div id="f-copyrightico"><a href="/web/20061013090330/http://www.gnu.org/copyleft/fdl.html"><img src="/web/20061013090330im_/http://tlug.ss.org/skins/common/images/gnu-fdl.png" alt='GNU Free Documentation License 1.2' /></a></div>	<ul id="f-list">
+	  <li id="f-lastmod"> This page was last modified 23:49, 14 May 2005.</li>	  <li id="f-viewcount">This page has been accessed 503 times.</li>	  	  	  <li id="f-copyright">Content is available under <a href="/web/20061013090330/http://www.gnu.org/copyleft/fdl.html" class='external ' title="http://www.gnu.org/copyleft/fdl.html" rel="nofollow">GNU Free Documentation License 1.2</a>.</li>	  <li id="f-about"><a href="/web/20061013090330/http://tlug.ss.org/wiki/GTALUG:About" title="GTALUG:About">About GTALUG</a></li>	  <li id="f-disclaimer"><a href="/web/20061013090330/http://tlug.ss.org/wiki/GTALUG:General_disclaimer" title="GTALUG:General disclaimer">Disclaimers</a></li>	  	</ul>
+      </div>
+    </div>
+    <!-- Served by sapphire.gtalug.org in 0.32 secs. -->  </body>
+</html>
+
+
+
+
+
+<!--
+     FILE ARCHIVED ON 9:03:30 Oct 13, 2006 AND RETRIEVED FROM THE
+     INTERNET ARCHIVE ON 21:02:08 Oct 30, 2015.
+     JAVASCRIPT APPENDED BY WAYBACK MACHINE, COPYRIGHT INTERNET ARCHIVE.
+
+     ALL OTHER CONTENT MAY ALSO BE PROTECTED BY COPYRIGHT (17 U.S.C.
+     SECTION 108(a)(3)).
+-->
