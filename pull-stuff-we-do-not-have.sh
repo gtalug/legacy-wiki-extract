@@ -1,5 +1,5 @@
 #!/bin/bash
-TARGET=legacy-pages
+TARGET=legacy-pages-raw
 
 # Revise set of pages based on current state
 (echo "Main_page"; cat ${TARGET}/*.html | ./scrape-pages-from-wiki.sh | sort | uniq) > all_pages
