@@ -8,8 +8,9 @@ Requirments:
 
 TODO:
 
-* Rewrite links
+* Rewrite intrnal links to point to itself
 * Filter out MediaWiki stuff
+* Write to a Assemble like page syntax
 """
 
 import os
