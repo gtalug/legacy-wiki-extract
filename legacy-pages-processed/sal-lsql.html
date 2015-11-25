@@ -1,0 +1,178 @@
+<div id="bodyContent">
+<h3 id="siteSub">From GTALUG</h3>
+<div id="contentSub"></div>
+<!-- start content -->
+<p><a href="/web/20081122023952/http://tlug.ss.org/wiki/Sitemap" title="Sitemap">Sitemap</a> &gt; <a href="/web/20081122023952/http://tlug.ss.org/wiki/Culture" title="Culture">Culture</a> &gt; <a href="/web/20081122023952/http://tlug.ss.org/wiki/Psema4" title="Psema4">Psema4</a> &gt; <a href="/web/20081122023952/http://tlug.ss.org/wiki/SAL" title="SAL">SAL</a> &gt; SAL-LSQL
+</p>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/web/20081122023952/http://tlug.ss.org/index.php?title=SAL-LSQL&amp;action=edit&amp;section=1" title="SAL-LSQL">edit</a>]</div><a name="LSQL_-_A_lite_SQLite_Database_Shell"></a><h2> LSQL - A lite SQLite Database Shell </h2>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/web/20081122023952/http://tlug.ss.org/index.php?title=SAL-LSQL&amp;action=edit&amp;section=2" title="SAL-LSQL">edit</a>]</div><a name="Sample_Session"></a><h3> Sample Session </h3>
+<pre>
+LSQL - Lite SQLite Shell
+
+This program is licensed under the Free Documentation License v1.2
+(http://www.gnu.org/copyleft/fdl.html)
+
+[lsql] &gt; create table test (name varchar(20), comments varchar(20));
+[lsql] &gt; go
+
+Executing: create table test (name varchar(20), comments varchar(20));
+(0E0 rows affected)
+
+[lsql] &gt; insert into test values ('dl33t','this is a test!');
+[lsql] &gt; go
+
+Executing: insert into test values ('dl33t','this is a test!');
+(1 rows affected)
+
+[lsql] &gt; select * from test;
+[lsql] &gt; go
+
+Executing: select * from test;
+
+dl33t, this is a test!
+
+(1 rows affected)
+
+[lsql] &gt; quit
+</pre>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/web/20081122023952/http://tlug.ss.org/index.php?title=SAL-LSQL&amp;action=edit&amp;section=3" title="SAL-LSQL">edit</a>]</div><a name="Source"></a><h3> Source </h3>
+<pre>
+#!/usr/bin/perl
+
+# Lite SQLite Database Shell
+
+# This script is licensed under the FDL (Free Documentataion License)
+# The complete license text can be found at http://www.gnu.org/copyleft/fdl.html
+#
+# A really quick and dirty sqlite shell using SAL
+
+use strict;
+use CGI;
+use SAL::DBI;
+
+# Set up the CGI object, get any parameters, and initialize some vars
+my $q = new CGI;
+my $db = $q-&gt;param('db') || ':memory:';
+
+# Set up the database
+my $dbo_factory = new SAL::DBI;
+my $dbo_data = $dbo_factory-&gt;spawn_sqlite($db);
+
+print "\nLSQL - Lite SQLite Shell\n\nThis program is licensed under the Free Documentation License v1.2\n(http://www.gnu.org/copyleft/fdl.html)\n\n";
+
+my $query;
+my @params = ();
+while (1) {
+	print "[lsql] &gt; ";
+	my $line = &lt;STDIN&gt;;
+	chomp($line);
+	$line =~ s/^\s+//;
+	$line =~ s/\s+$//;
+	if ($line !~ /^quit$/i) {
+		if ($line =~ /^go$/i) {
+			print "\nExecuting: $query\n";
+			my $num_rows = 0;
+			my $num_cols = 0;
+			my $query_type;
+
+			$query_type = dbGetQueryType($query);
+
+			if ($query_type =~ /^select$/i) {
+				($num_rows, $num_cols) = dbEXECUTE($query);
+				displayTable($num_rows, $num_cols);
+
+			} elsif ($query_type =~ /^insert$/i) {
+				$num_rows = dbDO($query);
+
+			} elsif ($query_type =~ /^update$/i) {
+				$num_rows = dbDO($query);
+
+			} elsif ($query_type =~ /^create table$/i) {
+				$num_rows = dbDO($query);
+
+			} elsif ($query_type =~ /^pragma$/i) {
+				($num_rows, $num_cols) = dbEXECUTE($query);
+				displayTable($num_rows, $num_cols);
+
+			} elsif ($query_type =~ /^cmdversion$/i) {
+				my $eng_ver = $dbo_data-&gt;{connection}{dbh}-&gt;sqlite_version();
+				print "SQLite Engine Version:  $eng_ver\n";
+
+			} elsif ($query_type =~ /^cmdhelp$/i) {
+				print "Help\n";
+				print "----\n";
+
+			} else {
+				print "Syntax Error.\n\n";
+			}
+
+			print "($num_rows rows affected)\n\n";
+			$query = '';
+
+		} else {
+			$query .= $line . ' ';
+		}
+	} else {
+		last;
+	}
+}
+print "\n";
+
+sub dbGetQueryType {
+	my $query = shift;
+
+	$query =~ s/^\s+//;
+	$query =~ s/\s+$//;
+	if ($query =~ /^select /i) {
+		return 'SELECT';
+	} elsif ($query =~ /^insert /) {
+		return 'INSERT';
+	} elsif ($query =~ /^update /) {
+		return 'UPDATE';
+	} elsif ($query =~ /^create table /) {
+		return 'CREATE TABLE';
+	} elsif ($query =~ /^pragma /) {
+		return 'PRAGMA';
+	} elsif ($query =~ /^version/) {
+		return 'CMDVersion';
+	} elsif ($query =~ /^help/) {
+		return 'CMDHelp';
+	} else {
+		return 'UNKNOWN';
+	}
+}
+
+sub dbEXECUTE {
+	my $query = shift;
+	my ($w, $h) = $dbo_data-&gt;execute($query);
+	return ($h, $w);
+}
+
+sub dbDO {
+	my $query = shift;
+	my ($h) = $dbo_data-&gt;do($query);
+	return $h;
+}
+
+sub displayTable {
+	my $rows = shift;
+	my $cols = shift;
+
+	for (my $r=0; $r &lt; $rows; $r++) {
+		print "\n";
+		my $record;
+		for (my $c=0; $c &lt;= $cols; $c++) {
+			my $v = $dbo_data-&gt;{data}-&gt;[$r][$c];
+			$record .= "$v, ";
+		}
+		$record =~ s/,\s+$//;
+		print $record;
+	}
+	print "\n\n";
+}
+</pre>
+<div class="printfooter">
+Retrieved from "<a href="/web/20081122023952/http://tlug.ss.org/wiki/SAL-LSQL">http://tlug.ss.org/wiki/SAL-LSQL</a>"</div>
+<!-- end content -->
+<div class="visualClear"></div>
+</div>

@@ -1,0 +1,90 @@
+<div id="bodyContent">
+<h3 id="siteSub">From GTALUG</h3>
+<div id="contentSub"></div>
+<!-- start content -->
+<p><a href="/web/20081122044530/http://tlug.ss.org/wiki/Sitemap" title="Sitemap">Sitemap</a> &gt; <a href="/web/20081122044530/http://tlug.ss.org/wiki/Culture" title="Culture">Culture</a> &gt; <a href="/web/20081122044530/http://tlug.ss.org/wiki/Psema4" title="Psema4">Psema4</a> &gt; <a href="/web/20081122044530/http://tlug.ss.org/wiki/SAL" title="SAL">SAL</a> &gt; SAL-Base
+</p>
+<pre>
+package SAL::Base;
+
+# This script is licensed under the FDL (Free Document License)
+# The complete license text can be found at http://www.gnu.org/copyleft/fdl.html
+# Contains excerpts from various man pages, tutorials and books on perl
+# BOILER-PLATE FOR NEW MODULES
+
+use strict;
+use Carp;
+
+BEGIN {
+	use Exporter ();
+	our ($VERSION, @ISA, @EXPORT, @EXPORT_OK, %EXPORT_TAGS);
+	$VERSION = 3.0;
+	@ISA = qw(Exporter);
+	@EXPORT = qw();
+	%EXPORT_TAGS = ();
+	@EXPORT_OK = qw();
+}
+our @EXPORT_OK;
+
+END { }
+
+our %Base = (
+######################################
+######################################
+);
+
+# Setup accessors via closure (from perltooc manpage)
+sub _classobj {
+	my $obclass = shift || __PACKAGE__;
+	my $class = ref($obclass) || $obclass;
+	no strict "refs";
+	return \%$class;
+}
+ 
+for my $datum (keys %{ _classobj() }) {
+	no strict "refs";
+	*$datum = sub {
+		my $self = shift-&gt;_classobj();
+		$self-&gt;{$datum} = shift if @_;
+		return $self-&gt;{$datum};
+	}
+}
+ 
+
+############################################################################
+# Constructors (Public)
+sub new {
+	my $obclass = shift || __PACKAGE__;
+	my $class = ref($obclass) || $obclass;
+	my $self = {};
+ 
+	bless($self, $class);
+ 
+	# Set default object properties
+ 
+	return $self;
+}
+
+
+############################################################################
+# Destructor (Public)
+sub destruct {
+	my $self = shift;
+}
+
+ 
+############################################################################
+# Public Methods
+
+
+############################################################################
+# Private Methods
+
+ 
+1;
+</pre>
+<div class="printfooter">
+Retrieved from "<a href="/web/20081122044530/http://tlug.ss.org/wiki/SAL-Base">http://tlug.ss.org/wiki/SAL-Base</a>"</div>
+<!-- end content -->
+<div class="visualClear"></div>
+</div>

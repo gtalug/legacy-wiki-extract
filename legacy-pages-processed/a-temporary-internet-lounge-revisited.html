@@ -1,0 +1,150 @@
+<div id="bodyContent">
+<h3 id="siteSub">From GTALUG</h3>
+<div id="contentSub"></div>
+<!-- start content -->
+<p>The following article originally appeared in LinuxJournal.com at: <a class="external free" href="/web/20080908080320/http://www.linuxjournal.com/article/8081" rel="nofollow" title="http://www.linuxjournal.com/article/8081">http://www.linuxjournal.com/article/8081</a>
+</p>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/web/20080908080320/http://tlug.ss.org/index.php?title=A_Temporary_Internet_Lounge_Revisited&amp;action=edit&amp;section=1" title="A Temporary Internet Lounge Revisited">edit</a>]</div><a name="A_Temporary_Internet_Lounge_Revisited"></a><h2>A Temporary Internet Lounge Revisited</h2>
+<p>By <a href="/web/20080908080320/http://tlug.ss.org/wiki/Colin_McGregor" title="Colin McGregor">Colin McGregor</a>
+</p><p>Back in 2003 I put together a temporary Internet lounge for the World Science Fiction Convention using a customized <a href="/web/20080908080320/http://tlug.ss.org/wiki/Knoppix" title="Knoppix">Knoppix</a> 3.4, which worked out well. I then wrote about what I had done, and that article appeared in the February 2005 issue of Linux Journal. Of course, time and software wait for no person, so the question now has become how to build a temporary Internet lounge using used/bargain hardware with Knoppix 3.7. 
+</p><p>To re-cap, <a href="/web/20080908080320/http://tlug.ss.org/wiki/Knoppix" title="Knoppix">Knoppix</a> is a <a href="/web/20080908080320/http://tlug.ss.org/wiki/Debian" title="Debian">Debian</a>-based <a class="new" href="/web/20080908080320/http://tlug.ss.org/index.php?title=Linux_distribution&amp;action=edit" title="Linux distribution">Linux distribution</a> that boots and runs off the CD-ROM drive. By default Knoppix never touches the hard drive--you don't have to install it, you simply have to tell a PC to boot from the CD-ROM drive. Because of Knoppix's excellent hardware detection system, one could, in theory at least, put together a dozen different makes and models of PCs with a dozen identical Knoppix disks, and in five minutes have all of them up, running and browsing the Internet. With Knoppix, there are in essence two filesystems on the disk--a conventional ISO 9660 system that is used while Knoppix boots and a compressed filesystem that is used after the system boots. This complicates things, but it also allows Knoppix to store significantly more than 700MB of software on a conventional 700MB CD-ROM. 
+</p><p>Knoppix gets us out of paying the license fees associated with commercial operating systems. Knoppix also gets us away from the hard disk install time requirements of conventional free and commercial operating systems, such as Microsoft, <a href="/web/20080908080320/http://tlug.ss.org/wiki/Debian" title="Debian">Debian</a>, SuSE, Fedora, FreeBSD and so on. With Knoppix, we have the freedom to tailor exactly what the user sees, be it screen wallpaper that shows the name of the event or browser bookmarks that show the names of the event sponsors. 
+</p><p>So, what things might you want to change or control for a temporary Internet lounge at an event? First, the default screen resolution of Knoppix is 1024 x 768. Many 15-inch monitors do not support a resolution greater than 800 x 600, however. So, if you know that you're getting 15-inch monitors, you should adjust the resolution down to 800 x 600. Second, the default window manager is KDE. If you don't know what sort of PCs you are getting for your event or if know they will have less than 128MB of memory and/or less than a Pentium II 350 CPU, you should use a lighter-weight window manager, such as IceWM. Third, the default home page in the browsers would have to be set to something that reflects your event. Similarly, the browser bookmarks likely should be set to event-related information and/or local tourist information. Fourth, the startup screen and wallpaper may need to note the event and/or event sponsors. Fifth, you likely want to add Macromedia Flash support. Sixth, to stay focused on the event, extras can be removed. Finally, you likely want to enable automatic timeserver updates. 
+</p><p>Begin your project by downloading and burning a copy of Knoppix. What is described here works with Knoppix 3.7; other versions of Knoppix may not work with what is described below. 
+</p><p>You need to assemble a development machine; a machine as modest as a Pentium II 350MHz, with 256MB of RAM, a 52x CD-ROM and a blank 6GB hard drive is sufficient. You could do with less RAM and a slower CD-ROM, but this is about as modest a machine as you would want for this sort of customization. To supplement this development machine, elsewhere on your network you need one or more support boxes to act as the FTP server, a CD burner and the DHCP server. 
+</p><p>Next, boot the development box under Knoppix and start a shell. The first steps are to set up a new filesystem, create the necessary directories and create a swap file. Some of this stuff requires just over 1GB of memory, RAM plus swap, so for a machine with 256MB of RAM, a 750MB swap file is needed. Here are the commands for setting up the drive for the first time: 
+</p>
+<pre> su 
+ mkfs.ext2 /dev/hda1 
+ mount -o rw /dev/hda1 /mnt/hda1 
+ mkdir /mnt/hda1/master 
+ mkdir /mnt/hda1/source 
+ mkdir /mnt/hda1/knx 
+ cd /mnt/hda1/knx 
+ dd if=/dev/zero of=swap bs=1M count=750 
+ cd ~ umount 
+ /dev/hda1 
+ exit 
+</pre>
+<p>In the above commands, the master directory is used to store the conventional filesystem, source was used to store what is going to be the compressed filesystem and knx was used to store the swap file plus the finished CD image. The above steps should need to be taken only once. You probably are going to take the next set of steps several times, so you may want to turn it into a small script to automate this part of the disk creation task. This way you can burn a draft CD-R, show it to others associated with the event, get feedback and adapt it based on feedback. Here we erase past work, set up swap space and then copy from the current CD image to the hard drive. 
+</p>
+<pre> su
+ mount -o rw /dev/hda1 /mnt/hda1 
+ cd /mnt/hda1/source 
+ rm -rf * 
+ cd /mnt/hda1/master 
+ rm -rf * 
+ cd /mnt/hda1/knx 
+ rm knoppix.iso 
+ mkswap swap 
+ swapon swap 
+ cp -Rp /KNOPPIX/* /mnt/hda1/source 
+ cp /cdrom/index.html /mnt/hda1/master 
+ cd /cdrom 
+ mkdir /mnt/hda1/master/KNOPPIX 
+ find . -size -1000000 -type f -exec cp -p --parents {} /mnt/hda1/master/ \; 
+</pre>
+<p>You now are ready to start customizing your installation. The following steps are separated based on topic, so you may want to skip some sections. 
+</p><p>Start with artwork, namely the opening screen and the wallpaper. For the wallpaper, practically any PNG image the size of your screens--1024 x 768 or 800 x 600--is fine. A number of graphic programs enable you to convert easily from .jpg files to .png files, including the popular and free The <a href="/web/20080908080320/http://tlug.ss.org/wiki/GIMP" title="GIMP">GIMP</a>. Save this image on the support box as knoppix.png. The opening start-up screen needs to be in a special 640 x 400 16-color format. If you decide to use Macromedia's Flash program, you need to credit them as part of the boot screen. So, create a simple 640 x 400 image with less than 17 colors, and save it in .bmp format on the support box as startup.bmp. 
+</p><p>Next, download the image files from the support box and convert the start-up image to the format you are going to need later: 
+</p>
+<pre> cd ~knoppix 
+ lftp -u &lt;&lt;support box userid&gt;&gt;,&lt;&lt;support box password&gt;&gt; &lt;&lt;support box ip number&gt;&gt; 
+ get startup.bmp 
+ get knoppix.png 
+ exit 
+ bmptoppm startup.bmp | ppmtolss16 &gt;logo.16 
+</pre>
+<p>Next, get into the boot filesystem and issue these commands: 
+</p>
+<pre> cd /mnt/hda1/master/boot/isolinux 
+ mv ~knoppix/logo.16 . 
+ chmod 744 logo.16 
+</pre>
+<p>The next step is to edit the text that shows up under the logo in the file boot-en.msg. Ignore the first two lines--they contain the code to load the logo image--and make sure the third and fourth lines are less than 80 characters. Override the read-only warning, save the file and exit. To replace the wallpaper, enter: 
+</p>
+<pre> mv ~knoppix/knoppix.png /mnt/hda1/master/KNOPPIX/background.png 
+</pre>
+<p>You now are ready to edit /mnt/hda1/master/boot/isolinux/isolinux.cfg. Within isolinux.cfg, you need to edit the first and second APPEND lines. If you want an 800 x 600 default screen, change the VGA value to vga=788. After that, insert the command screen=800x600. If you want to use IceWM, then insert desktop=icewm after the vga= command. Finally, at the end of the file, delete a number of # characters so the final file is no larger than it was when you started. Override the read-only warning, save the file and exit. 
+</p><p>Due to the oddities of compression, you may have a situation where without adding or removing software you can find yourself with a too-large filesystem. So, remove unneeded software with these commands: 
+</p>
+<pre> chroot /mnt/hda1/source 
+ dpkg -P &lt;&lt;name of an unneeded package&gt;&gt; 
+</pre>
+<p>Easy targets to get rid of include games, <a href="/web/20080908080320/http://tlug.ss.org/wiki/KDE" title="KDE">KDE</a>, server and high-end office software, such as openoffice-de-en. Also easy to get rid of are selected language files, for example, kde-i18n-xx, where the xx represents an unneeded country code. Once done here, press Ctrl+D to leave chroot. If you need to add a software package, enter: 
+</p>
+<pre> chroot /mnt/hda1/source 
+ wget &lt;&lt;url and name of required package&gt;&gt; 
+ mv &lt;&lt;package name&gt;&gt; /mnt/hda1/source
+ dpkg -i &lt;&lt;name of previously downloaded required package&gt;&gt;
+ rm &lt;&lt;name of now installed package&gt;&gt;
+</pre>
+<p>Once done, press Ctrl+D to leave chroot. Keep in mind that for anything added, you must take away something larger. If you did anything while under chroot, you left a history file. To get rid of that history file, enter: 
+</p>
+<pre> rm /mnt/hda1/source/root/.bash_history
+ touch /mnt/hda1/source/root/.bash_history
+ chmod 600 /mnt/hda1/source/root/.bash_history
+</pre>
+<p>Now, start Mozilla, edit the bookmarks, set the default home to the event home page and tweak the default settings. These changes are stored on the RAM disk. To move them to the hard disk you enter: 
+</p>
+<pre> cp -r ~knoppix/.mozilla/knoppix/ujixazk6.slt/* /mnt/hda1/source/etc/skel/.mozilla/knoppix/ujixazk6.slt 
+ chmod -R 644 /mnt/hda1/source/etc/skel/.mozilla/knoppix/ujixazk6.slt/* 
+</pre>
+<p>Now it's time to add the Flash plugin. Subject to some conditions, noted here, you can distribute copies of Flash with your custom Knoppix disk. You need to credit Macromedia and send the company two copies of what you have done. Assuming you can live with Macromedia's conditions, here are the steps for installing Flash. After you have agreed to Macromedia's conditions, download the Linux install package to /home/knoppix. From there, enter: 
+</p>
+<pre> cd /mnt/hda1/knx 
+ mv /home/knoppix/install_flash_player_7_linux.tar.gz . 
+ tar -xvzf install_flash_player_7_linux.tar.gz 
+ cd install_flash_player_7_linux 
+ ./flashplayer-installer 
+</pre>
+<p>During the install program, you are asked where you want to install Flash. The answer is: /mnt/hda1/source/usr/lib/mozilla You now can delete the install package: 
+</p>
+<pre> rm * 
+ cd .. 
+ rmdir install_flash_player_7_linux 
+ rm install_flash_player_7_linux.tar.gz 
+</pre>
+<p>People attending your event most likely will check the time on the PCs and expect the PC clocks to be correct. Look around /usr/share/zoneinfo to find the name of the time zone in which you plan to hold the event. For example, if the event is planned for Winnipeg, Manitoba, the target time zone should be Canada/Central. If the event is to be in Seattle, Washington, the target time zone should be US/Pacific. Visit ntp.isc.org to get the IP number of a secondary timeserver close to the event that welcomes visitors. If your router has a built-in NTP server, set that router to use the timeserver, and set your planned timeserver below to the router's address. Regardless of where your timeserver is--the router or a site outside your event--create the file /mnt/hda1/source/etc/rc5.d/S99timesetup and insert the following: 
+</p>
+<pre> #!/bin/bash 
+ ln -sf /usr/share/zoneinfo/&lt;&lt;target time zone&gt;&gt; /etc/localtime 
+ ntpdate -s -u &lt;&lt;name of the planned timeserver&gt;&gt; 
+</pre>
+<p>To finish off the time server program, enter: 
+</p>
+<pre> chmod 755 /mnt/hda1/source/etc/rc5.d/S99timesetup 
+</pre>
+<p>If it's possible that the CD-ROMs you create might be dropped into machines running Windows, you may want to edit the file /mnt/hda1/master/index.html and replace Knoppix information with information about your event. Otherwise, enter: 
+</p>
+<pre> rm /mnt/hda1/master/autorun.* 
+ rm /mnt/hda1/master/index.html 
+</pre>
+<p>Now that the software is assembled, you can create the compressed filesystem: 
+</p>
+<pre> cd /mnt/hda1/source 
+ mkisofs -R -U -V "KNOPPIX.net filesystem" -publisher "KNOPPIX www.knoppix.net" -hide-rr-moved -cache-inodes -no-bak --pad /mnt/hda1/source | nice -5 /usr/bin/create_compressed_fs - 65536 &gt; /mnt/hda1/master/KNOPPIX/KNOPPIX 
+</pre>
+<p>During the above process, you are likely to receive and can ignore a warning message noting that the filesystem is not ISO-9660. This is the slow step; it takes about an hour on a Pentium III 450. A slightly better compression rate can be achieved by inserting a -b after the create_compressed_fs, at the expense of much longer compress times. 
+</p><p>Next, create the CD as a whole: 
+</p>
+<pre> mkisofs -pad -l -r -J -v -V "KNOPPIX" -no-emul-boot -boot-load-size 4 -boot-info-table -b boot/isolinux/isolinux.bin -c boot/isolinux/boot.cat -hide-rr-moved -o /mnt/hda1/knx/knoppix.iso /mnt/hda1/master 
+</pre>
+<p>From here use lftp to move the resulting file to the support box for burning onto CD-R. 
+</p><p>Beyond making the Knoppix CD-ROMs, other issues must be considered when creating the Internet lounge: disabilities, legalities, room layout, power, router setup, staffing and wireless connectivity. Talk to the senior event organizers about any special requirements for people with disabilities. 
+</p><p>A brief visit to a lawyer is wise idea to ask about people with disabilities and lounge rules. What provisions you legally are required to make to assist people with disabilities should be your first question. Between what the lawyer says and what the event organizers say, the highest denominator wins. Second, ask about room rules. You want it clearly spelled out that people are using the lounge at their own risk. If someone in the lounge does something illegal and/or immoral, you and the event people do not want to be held legally responsible. To limit the risk of machine damage, keep food and drink away from the machines. Further on your rules sheet, you likely want to reserve the right to remove any being (human, animal or other) that is causing what you consider to be a disruption. Wording the rules correctly easily could be worth the cost of a brief visit to a lawyer. 
+</p><p>If you have a choice about locations, choose the one that meets the needs of your disabled users, is as central as possible to the event, has easy access to power outlets and has some sort of high speed Internet connection already in place. If your event is spread out geographically, consider one or more satellite Internet lounges. 
+</p><p>For room layout, remember to keep cables as short as possible and safe. A large rectangle or other enclosed shape can work well, with the cables running on the inside of the tables and the lounge visitors on the outside. This keeps most cables from being a potential hazard. This design also keeps the switches away from mischief and leaves a fairly safe place for staff to store their backpacks/bags. Any cables that do have to cross the floor should be covered with heavy cloth tape, or some other arrangement must be made to make sure they do not become a hazard. 
+</p><p>You also need to check on power for your machines. In North America, you may be looking at 7.5A of power for a desktop PC plus a monitor--the information will be printed on the power supplies--or you may be looking at less than 1 amp for some laptop computers. In North America, a standard electrical circuit, which may be supporting several wall outlets, can offer up to 15A at 115 volts. So when you are looking at 7.5A per PC and monitor, you need one circuit for every two PCs. Or you could be looking at one outlet per 15 laptops. Make allowances for hubs, routers and other equipment you plan to have in the room and plan accordingly. If there isn't enough power, call an electrician and either bring in extra power or plan to cut back on the room power consumption by going to less power-hungry machines or by reducing the total number of machines. When planning, remember the electrician may need a fair bit of lead time to bring in the extra power you need, so talk to him/her as early in this process as possible. The last thing you want is people being cut off from sending e-mail because of a blown circuit breaker. 
+</p><p>It typically is not cost effective to build even a simple router, such as a Coyote Linux box. The problem with a homemade router is the time it takes away from other preparation work, and dealing with a failure requires more than running to a shop with a receipt for a warranty exchange. So, get a basic commercial router/DHCP server from a shop that has a generous exchange policy and long hours that is located near the event. If you are going to be located away from stores, get a second router and call it insurance.
+</p><p>Put together and then follow a packing list of what you are going to need at the event. Include mouse pads, power bars, electrical cords, signs and all the other little bits needed for the lounge. 
+</p><p>Once the event starts, you need to staff the Internet lounge, which may mean one person answering questions about how to start up the Mozilla browser. Do think about how you will keep the room covered when you need to step out for a meal or to use the bathroom and so on. The World Science Fiction Convention normally goes with the 6-2-1 rule for volunteers--everyone is required to get at least six hours of uninterrupted sleep, at least two solid meals and at least one shower/bath per 24 hours. That should be a good starting point for anyone working the lounge. 
+</p><p>With Knoppix you can have a five-minute training session for room monitors, during which you show them the basics. Tell them that in the event of problems or oddities, simply reset a machine because the hard drive isn't being used. Also, think about how visitors to the lounge will be able to identify room staff: name badge? special hat? special jacket? 
+</p><p>802.11B or 802.11G wireless access is worth considering for most events, as you likely are going to have some people with laptops who want this option. I suggest you set up a basic wireless hub, in which you set up WEP security, and then post the appropriate settings either in the lounge and/or in a publication given only to event attendees. This way your attendees can use wireless when they are in/near the lounge, but not everyone from the general public can access your network connectivity. 
+</p><p>Beyond that, Knoppix is a great solution for temporary Internet Lounges, so have fun with it. 
+</p><p>Colin McGregor (colin@mcgregor.org) works for a Toronto area charity, does consulting on the side and has served as President of the Toronto Free-Net. He also has made presentations at Toronto Linux User Group meetings. He enjoys attending, if not always working at, science fiction conventions.
+</p><div class="printfooter">
+Retrieved from "<a href="/web/20080908080320/http://tlug.ss.org/wiki/A_Temporary_Internet_Lounge_Revisited">http://tlug.ss.org/wiki/A_Temporary_Internet_Lounge_Revisited</a>"</div>
+<!-- end content -->
+<div class="visualClear"></div>
+</div>
