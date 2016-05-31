@@ -1,0 +1,94 @@
+<div id="bodyContent">
+<h3 id="siteSub">From GTALUG</h3>
+<div id="contentSub"></div>
+<!-- start content -->
+<p><a href="/web/20081122050357/http://tlug.ss.org/wiki/Sitemap" title="Sitemap">Sitemap</a> &gt; <a href="/web/20081122050357/http://tlug.ss.org/wiki/Culture" title="Culture">Culture</a> &gt; <a href="/web/20081122050357/http://tlug.ss.org/wiki/Psema4" title="Psema4">Psema4</a> &gt; <a href="/web/20081122050357/http://tlug.ss.org/wiki/SAL" title="SAL">SAL</a> &gt; SAL-SQUID
+</p>
+<pre>
+#!/usr/bin/perl
+
+# This script is licensed under the FDL (Free Documentataion License)
+# The complete license text can be found at http://www.gnu.org/copyleft/fdl.html
+#
+# SAL powered authentication support for Squid Proxy server
+# (Script assumes an RHL/FC, Apache + mod_auth_mysql setup...)
+
+use strict;
+use SAL::DBI;
+
+my $logfile = "/var/log/squid/salsquid.log";
+
+my $auth_server = 'localhost';
+my $auth_user = '';
+my $auth_pass = '';
+my $auth_db = 'HttpAuth';
+my $auth_table = 'users';
+
+my $UserCol = 0;
+my $PassCol = 1;
+
+my $dbo_factory = new SAL2::DBI;
+my $dbo_users = $dbo_factory-&gt;spawn_mysql($auth_server, $auth_user, $auth_pass, $auth_db);
+
+my $stdin = &lt;STDIN&gt;;
+chomp($stdin);
+my ($user, $pass) = split(/\s+/, $stdin);
+salsquidlog("USER: $user");
+
+my $query = qq[SELECT username, passwd FROM $auth_table WHERE username='$user']; $dbo_users-&gt;execute($query);
+my $uname = $dbo_users-&gt;{data}-&gt;[0][$UserCol];
+my $upass = $dbo_users-&gt;{data}-&gt;[0][$PassCol];
+
+my $result = validate_user($uname, $upass, $pass);
+log_and_reply($result);
+
+#################################################################
+# SUBS 'N FUNCS
+
+sub log_and_reply {
+	my $message = shift;
+
+	salsquidlog("REPLY: $message");
+
+	print "$message\n";
+}
+
+sub salsquidlog {
+	my $message = shift;
+
+	my $timestamp = localtime();
+
+	open(LOG, "&gt;&gt; $logfile");
+	print LOG "[salsquid] $timestamp $message\n";
+	close LOG;
+}
+
+sub validate_user {
+	my ($uname, $upass, $pass) = @_;
+	my $crypted;
+
+	# if authenticating against /etc/shadow, uncomment the following line
+	# $upass = get_pass($uname);
+
+	$crypted = crypt($pass, $upass);		# crypt(plaintext, salt)
+
+	if ($crypted eq $upass) {
+		return "OK";
+	} else {
+		return "ERR";
+	}
+}
+
+# for local users (in /etc/shadow)
+sub get_pass {
+	my $user = shift;
+	my $pass = `grep $user /etc/shadow`;
+	(undef, $pass, undef) = split(/:/, $pass);
+	return $pass;
+}
+</pre>
+<div class="printfooter">
+Retrieved from "<a href="/web/20081122050357/http://tlug.ss.org/wiki/SAL-SQUID">http://tlug.ss.org/wiki/SAL-SQUID</a>"</div>
+<!-- end content -->
+<div class="visualClear"></div>
+</div>

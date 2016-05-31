@@ -1,0 +1,258 @@
+<div id="bodyContent">
+<h3 id="siteSub">From GTALUG</h3>
+<div id="contentSub"></div>
+<!-- start content -->
+<p><a href="/web/20081122052937/http://tlug.ss.org/wiki/Sitemap" title="Sitemap">Sitemap</a> &gt; <a href="/web/20081122052937/http://tlug.ss.org/wiki/Culture" title="Culture">Culture</a> &gt; <a href="/web/20081122052937/http://tlug.ss.org/wiki/Psema4" title="Psema4">Psema4</a> &gt; <a href="/web/20081122052937/http://tlug.ss.org/wiki/SAL" title="SAL">SAL</a> &gt; SAL-WebApplication
+</p>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/web/20081122052937/http://tlug.ss.org/index.php?title=SAL-WebApplication&amp;action=edit&amp;section=1" title="SAL-WebApplication">edit</a>]</div><a name="Screenshots"></a><h2> Screenshots </h2>
+<p>From: <a href="/web/20081122052937/http://tlug.ss.org/wiki/SAL-SURVEY" title="SAL-SURVEY">SAL-SURVEY</a>:  <img alt="salsurvey.png" src="/web/20081122052937im_/http://psema4.gotdns.com/images/projects/screens/salsurvey.png"/>
+</p><p><br/>
+</p>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/web/20081122052937/http://tlug.ss.org/index.php?title=SAL-WebApplication&amp;action=edit&amp;section=2" title="SAL-WebApplication">edit</a>]</div><a name="Source"></a><h2> Source </h2>
+<pre>
+package SAL::WebApplication;
+
+# This script is licensed under the FDL (Free Document License)
+# The complete license text can be found at http://www.gnu.org/copyleft/fdl.html
+# Contains excerpts from various man pages, tutorials and books on perl
+# UNDER CONSTRUCTION
+
+use strict;
+use CGI;
+use CGI::Carp qw(warningsToBrowser fatalsToBrowser);
+use SAL::DBI;
+use SAL::WebDDR;
+
+BEGIN {
+	use Exporter ();
+	our ($VERSION, @ISA, @EXPORT, @EXPORT_OK, %EXPORT_TAGS);
+	$VERSION = 3.0;
+	@ISA = qw(Exporter);
+	@EXPORT = qw();
+	%EXPORT_TAGS = ();
+	@EXPORT_OK = qw();
+}
+our @EXPORT_OK;
+
+END { }
+
+our %WebApplication = (
+######################################
+	'dbi_factory'	=&gt; '',
+	'cgi'		=&gt; '',
+	'gui'		=&gt; '',
+	'canvas'	=&gt; '',
+	'modes'		=&gt; (),
+	'default_mode'	=&gt; '',
+	'build_toolbar'	=&gt; '',
+	'build_html_header'	=&gt; '',
+######################################
+);
+
+# Setup accessors via closure (from perltooc manpage)
+sub _classobj {
+	my $obclass = shift || __PACKAGE__;
+	my $class = ref($obclass) || $obclass;
+	no strict "refs";
+	return \%$class;
+}
+
+for my $datum (keys %{ _classobj() }) {
+	no strict "refs";
+	*$datum = sub {
+		my $self = shift-&gt;_classobj();
+		$self-&gt;{$datum} = shift if @_;
+		return $self-&gt;{$datum};
+	}
+}
+
+##########################################################################################################################
+# Constructors (Public)
+sub new {
+	my $obclass = shift || __PACKAGE__;
+	my $class = ref($obclass) || $obclass;
+	my $self = {};
+
+	bless($self, $class);
+
+	# Set default object properties
+
+	$self-&gt;{cgi} = new CGI;
+	$self-&gt;{dbo_factory} = new SAL::DBI;
+	$self-&gt;{gui} = new SAL::Web;
+#	$self-&gt;{default_mode} = \&amp;throw_error;
+
+	# Send the mime header
+	print "Content-type: text/html\n\n";
+
+	return $self;
+}
+
+##########################################################################################################################
+# Destructor (Public)
+sub destruct {
+	my $self = shift;
+
+}
+
+##########################################################################################################################
+# Public Methods
+sub register_default {
+	my $self = shift;
+	my $address = shift;
+
+	if (! $address) { return 0; }
+
+	$self-&gt;{default_mode} = $address;
+
+	return 1;
+}
+
+sub register_mode {
+	my $self = shift;
+	my $mode = shift;
+	my $address = shift;
+
+	if (! $mode) { return 0; }
+	if (! $address) { return 0; }
+
+	$self-&gt;{modes}{$mode} = $address;
+
+	return 1;
+}
+
+sub register_toolbar {
+	my $self = shift;
+	my $address = shift;
+
+	if (! $address) { return 0; }
+
+	$self-&gt;{build_toolbar} = $address;
+
+	return 1;
+}
+
+sub register_html_header {
+	my $self = shift;
+	my $address = shift;
+
+	if (! $address) { return 0; }
+
+	$self-&gt;{build_html_header} = $address;
+
+	return 1;
+}
+
+sub run {
+	my $self = shift;
+	my $mode = $self-&gt;{cgi}-&gt;param('mode') || '(unknown)';
+	my $address;
+
+	if ($mode ne '(unknown)') {
+		$address = $self-&gt;{modes}{$mode};
+	} else {
+		$address = $self-&gt;{default_mode};
+	}
+	&amp;$address();
+}
+
+sub throw_error {
+	my $self = shift;
+	my $message = shift || 'An unknown error has occurred.';
+	print qq[&lt;h2&gt;Error:&lt;/h2&gt;\n&lt;p align=left&gt;$message&lt;/p&gt;];
+	exit;
+}
+
+sub write {
+	my $self = shift;
+	my $data = shift;
+	$self-&gt;{canvas} .= $data;
+}
+
+sub paint {
+	my $self = shift;
+	my $title = shift;
+	my $canvas = $self-&gt;{canvas};
+	my $toolbar = ' ';
+	my $html_header = '&lt;!-- HTML HEADER --&gt;';
+
+	if ($self-&gt;{build_toolbar} ne '') {
+		my $toolbar_constructor = $self-&gt;{build_toolbar};
+		$toolbar = &amp;$toolbar_constructor();
+	}
+
+	if ($self-&gt;{build_html_header} ne '') {
+		my $html_header_constructor = $self-&gt;{build_html_header};
+		$html_header = &amp;$html_header_constructor();
+	}
+
+	print qq[
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;$title&lt;/title&gt;
+$html_header
+&lt;/head&gt;
+&lt;body&gt;
+&lt;table border=0 width=100% cellspacing=0 cellpadding=2&gt;
+&lt;tr&gt;
+&lt;td valign=top align=left style="border-bottom: 3px double #000;"&gt;$title&lt;/td&gt;
+&lt;td valign=top align=right style="border-bottom: 3px double #000;"&gt;$toolbar&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+$canvas
+&lt;/body&gt;
+&lt;/html&gt;
+];
+}
+
+##########################################################################################################################
+# Private Methods
+
+1;
+
+=pod
+
+=head1 Name
+
+SAL::WebApplication
+
+=head1 Synopsis
+
+=head1 Methods
+
+=head2 Constructor
+
+new()
+
+=head2 Eponymous Hash
+
+=head2 Public
+
+register_default()
+
+register_mode()
+
+register_toolbar()
+
+register_html_header()
+
+run()
+
+throw_error()
+
+write()
+
+paint()
+
+=head1 See Also
+
+SAL::DBI, SAL::Graph, SAL::WebDDR, SAL::WebApplication
+
+=cut
+
+</pre>
+<div class="printfooter">
+Retrieved from "<a href="/web/20081122052937/http://tlug.ss.org/wiki/SAL-WebApplication">http://tlug.ss.org/wiki/SAL-WebApplication</a>"</div>
+<!-- end content -->
+<div class="visualClear"></div>
+</div>

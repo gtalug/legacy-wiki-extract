@@ -1,0 +1,46 @@
+<div id="bodyContent">
+<h3 id="siteSub">From GTALUG</h3>
+<div id="contentSub"></div>
+<!-- start content -->
+<table class="toc" id="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1"><a href="#Virtualization"><span class="tocnumber">1</span> <span class="toctext">Virtualization</span></a></li>
+<li class="toclevel-1"><a href="#Approaches"><span class="tocnumber">2</span> <span class="toctext">Approaches</span></a></li>
+<li class="toclevel-1"><a href="#Technologies"><span class="tocnumber">3</span> <span class="toctext">Technologies</span></a></li>
+<li class="toclevel-1"><a href="#Local_Connections"><span class="tocnumber">4</span> <span class="toctext">Local Connections</span></a></li>
+</ul>
+</td></tr></table>
+<p><script type="text/javascript"> if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script>
+</p>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/web/20090812091033/http://tlug.ss.org/mediawiki/index.php?title=Virtualization&amp;action=edit&amp;section=1" title="Virtualization">edit</a>]</div><a name="Virtualization"></a><h3> Virtualization </h3>
+<p>Virtualization is broadly about the notion of abstracting computer resources.  Virtual memory is where what the system treats as memory can be a combination of physical RAM and space on disk.  RAID and volume management systems join disks together to provide "virtual disk."  Virtual machines provide some sort of emulation of a special purpose CPU.
+</p><p>Recently, a popular expression of it is about the notion of running multiple operating system instances on a single computer.  This is useful for a number of purposes, including:
+</p>
+<ul><li> Consolidating a bunch of servers onto one physical machine.  This can improve system utilization.
+</li><li> Providing a way of migrating processes across multiple physical systems.
+</li><li> Providing a way to ease QA efforts when you need to test an application on more kinds of systems than you have physical boxes.
+</li><li> Improving security by allowing colocated services to fairly deeply believe that they have their own machines.
+</li><li> Running software written for one OS on a computer running another OS.  Historically, IBM has frequently handled system upgrades by having emulators of earlier systems to run old applications.
+</li></ul>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/web/20090812091033/http://tlug.ss.org/mediawiki/index.php?title=Virtualization&amp;action=edit&amp;section=2" title="Virtualization">edit</a>]</div><a name="Approaches"></a><h3> Approaches </h3>
+<ul><li> Emulators - the VM simulates hardware to allow a guest OS to run
+</li><li> Paravirtualization - the VM doesn't simulate hardware; it provides an API to allow the guest OS to request special services
+</li><li> Jails - the system allows partitioning the real system into a series of independent systems called "jails".  (<a class="external text" href="/web/20090812091033/http://en.wikipedia.org/wiki/FreeBSD_Jail" rel="nofollow" title="http://en.wikipedia.org/wiki/FreeBSD Jail">FreeBSD Jails</a>)  Each "jail cell" has its own root, populated with the vital bits of a BSD system: some binaries, a proc filesystem, and whatever applications are to be running in that cell.  They are (at quite a deep level) unable to interfere with either one another or the "master" filesystem.  You only actually have one kernel running, but multiple instances of init...
+</li></ul>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/web/20090812091033/http://tlug.ss.org/mediawiki/index.php?title=Virtualization&amp;action=edit&amp;section=3" title="Virtualization">edit</a>]</div><a name="Technologies"></a><h3> Technologies </h3>
+<ul><li> <a class="external text" href="/web/20090812091033/http://en.wikipedia.org/wiki/Virtualization" rel="nofollow" title="http://en.wikipedia.org/wiki/Virtualization">Wikipedia on Virtualization in General</a>
+</li><li> <a class="external text" href="/web/20090812091033/http://user-mode-linux.sourceforge.net/" rel="nofollow" title="http://user-mode-linux.sourceforge.net/">UML - User Mode Linux</a>
+</li><li> <a class="external text" href="/web/20090812091033/http://www.cl.cam.ac.uk/research/srg/netos/xen/" rel="nofollow" title="http://www.cl.cam.ac.uk/research/srg/netos/xen/">Xen</a>
+</li><li> <a class="external text" href="/web/20090812091033/http://kvm.sourceforge.net/" rel="nofollow" title="http://kvm.sourceforge.net/">Linux KVM</a>
+</li><li> <a class="external text" href="/web/20090812091033/http://www.vmware.com/" rel="nofollow" title="http://www.vmware.com/">VMWare</a>
+</li><li> <a class="external text" href="/web/20090812091033/http://www.openvz.org/" rel="nofollow" title="http://www.openvz.org/">OpenVZ</a> - basis for <a class="external text" href="/web/20090812091033/http://www.swsoft.com/en/virtuozzo" rel="nofollow" title="http://www.swsoft.com/en/virtuozzo">Virtuozzo</a>
+</li><li> <a class="external text" href="/web/20090812091033/http://linux-vserver.org/" rel="nofollow" title="http://linux-vserver.org/">Linux VServer</a>
+</li></ul>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/web/20090812091033/http://tlug.ss.org/mediawiki/index.php?title=Virtualization&amp;action=edit&amp;section=4" title="Virtualization">edit</a>]</div><a name="Local_Connections"></a><h3> Local Connections </h3>
+<ul><li> The <a class="new" href="/web/20090812091033/http://tlug.ss.org/mediawiki/index.php?title=Meetings:2007-03_March_2007_Meeting&amp;action=edit" title="Meetings:2007-03 March 2007 Meeting">Meetings:2007-03 March 2007 Meeting</a> by <a href="/web/20090812091033/http://tlug.ss.org/wiki/David_Collier-Brown" title="David Collier-Brown">David_Collier-Brown</a> was on this topic
+</li></ul>
+<div class="printfooter">
+Retrieved from "<a href="/web/20090812091033/http://tlug.ss.org/wiki/Virtualization">http://tlug.ss.org/wiki/Virtualization</a>"</div>
+<!-- end content -->
+<div class="visualClear"></div>
+</div>

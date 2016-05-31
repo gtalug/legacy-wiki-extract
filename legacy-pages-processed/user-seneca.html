@@ -1,0 +1,46 @@
+<div id="bodyContent">
+<h3 id="siteSub">From GTALUG</h3>
+<div id="contentSub"></div>
+<!-- start content -->
+<p>Possessor of the 9-year-old <a class="external text" href="/web/20090422164323/http://opie.handhelds.org/" rel="nofollow" title="http://opie.handhelds.org">Opie</a>-running laptop and presentation slide collector.
+</p>
+<ul><li> <a href="/web/20090422164323/http://tlug.ss.org/wiki/GTALUG_Archaeology" title="GTALUG Archaeology">GTALUG Archaeology</a>, digging up the ghosts of activities' past.
+</li><li> <a class="external text" href="/web/20090422164323/http://www.utsc.utoronto.ca/~03cunnin/" rel="nofollow" title="http://www.utsc.utoronto.ca/~03cunnin/">Getting Opie to run on i386-based laptops</a>
+</li><li> <a class="external text" href="/web/20090422164323/http://www.astro.cf.ac.uk/cgi-bin/recipe/process?-M+choc-chip-2" rel="nofollow" title="http://www.astro.cf.ac.uk/cgi-bin/recipe/process?-M choc-chip-2">Chocolate chip cookies</a>, the recipe used for the cookies at the installfest (from <a class="external text" href="/web/20090422164323/http://www.astro.cf.ac.uk/misc/recipe/introduction.html" rel="nofollow" title="http://www.astro.cf.ac.uk/misc/recipe/introduction.html">The USENET Cookbook</a>)
+</li></ul>
+<a name="My_SoC_proposal"></a><h2> My SoC proposal </h2>
+<p>Not exactly the longest, but it was accepted.
+</p>
+<pre>
+Improving non-root Opie
+
+1) Fix opie-login
+   Currently, without manual intervention, opie-login can only successfully
+login root.  If the owner of /tmp/qtembedded-0/ and its contents are changed to
+the desired user after opie-login loads up, but before logging in as that user,
+the login acts as expected.  The owner of /tmp/qtembedded-0/ and its contents
+needs to be set back to root at some point during the logout, prior to
+opie-login attempting to display anything, or opie-login will die.
+
+2) System configuration
+   Some of Opie's applications, primarily those located in the "Settings" tab,
+need to be root for their changes to be written and take effect.  A small,
+non-graphical, suid application that allows users to alter specified files can
+be written and called as needed by libqpe's Config class and directly.
+
+3) Fix starting applications as non-root without opie-login
+   Most applications die with an error creating a semaphore if started as
+non-root from the console.  This used not to happen.  The applications do,
+however, start when run with strace or after another Opie application has
+successfully been run by that user.
+</pre>
+<a name="Awards"></a><h2> Awards </h2>
+<div class="thumb tright"><div style="width:82px;"><a class="new" href="/web/20090422164323/http://tlug.ss.org/index.php?title=Special:Upload&amp;wpDestFile=PresMedalFreedom.jpg" title="Image:PresMedalFreedom.jpg">Image:PresMedalFreedom.jpg</a> <div class="thumbcaption">The <a class="extiw" href="/web/20090422164323/http://en.wikipedia.org/wiki/Presidential_Medal_of_Freedom" title="Wikipedia:Presidential Medal of Freedom">Presidential Medal of Freedom</a></div></div></div>
+<p>For your archaeological efforts, I hereby award you the the <a class="extiw" href="/web/20090422164323/http://en.wikipedia.org/wiki/Presidential_Medal_of_Freedom" title="Wikipedia:Presidential Medal of Freedom">Presidential Medal of Freedom</a>. -- <a href="/web/20090422164323/http://tlug.ss.org/wiki/User:Sy" title="User:Sy">Sy</a> / <sup><a href="/web/20090422164323/http://tlug.ss.org/wiki/User_talk:Sy" title="User talk:Sy">(talk)</a></sup> 00:33, 18 Jun 2005 (EDT)
+</p>
+<!-- Saved in parser cache with key tlugwiki:pcache:idhash:1995-0!1!0!0!!en!2 and timestamp 20090422004917 -->
+<div class="printfooter">
+Retrieved from "<a href="/web/20090422164323/http://tlug.ss.org/wiki/User:Seneca">http://tlug.ss.org/wiki/User:Seneca</a>"</div>
+<!-- end content -->
+<div class="visualClear"></div>
+</div>

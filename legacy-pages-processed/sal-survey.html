@@ -1,0 +1,303 @@
+<div id="bodyContent">
+<h3 id="siteSub">From GTALUG</h3>
+<div id="contentSub"></div>
+<!-- start content -->
+<p><a href="/web/20081121225202/http://tlug.ss.org/wiki/Sitemap" title="Sitemap">Sitemap</a> &gt; <a href="/web/20081121225202/http://tlug.ss.org/wiki/Culture" title="Culture">Culture</a> &gt; <a href="/web/20081121225202/http://tlug.ss.org/wiki/Psema4" title="Psema4">Psema4</a> &gt; <a href="/web/20081121225202/http://tlug.ss.org/wiki/SAL" title="SAL">SAL</a> &gt; SAL-SURVEY
+</p><p>A basic poll script using the <a href="/web/20081121225202/http://tlug.ss.org/wiki/SAL" title="SAL">SAL modules</a>.
+</p>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/web/20081121225202/http://tlug.ss.org/index.php?title=SAL-SURVEY&amp;action=edit&amp;section=1" title="SAL-SURVEY">edit</a>]</div><a name="Screenshots"></a><h2> Screenshots </h2>
+<p><img alt="salsurvey.png" src="/web/20081121225202im_/http://psema4.gotdns.com/images/projects/screens/salsurvey.png"/>
+</p><p><img alt="salsurveyhelp.png" src="/web/20081121225202im_/http://psema4.gotdns.com/images/projects/screens/salsurveyhelp.png"/>
+</p><p><br/>
+</p>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/web/20081121225202/http://tlug.ss.org/index.php?title=SAL-SURVEY&amp;action=edit&amp;section=2" title="SAL-SURVEY">edit</a>]</div><a name="Source"></a><h2> Source </h2>
+<pre>
+#!/usr/bin/perl
+
+# This script is licensed under the FDL (Free Documentation License)
+# The complete license text can be found at http://www.gnu.org/copyleft/fdl.html
+
+use strict;
+use SAL::WebApplication;
+my $app = new SAL::WebApplication;
+my $q = $app-&gt;{cgi};
+my $self_url = $app-&gt;{cgi}-&gt;script_name();
+my $user_id = $app-&gt;{cgi}-&gt;remote_user();
+my $user_name = lookup_name($user_id);
+
+my $survey_question = '';
+my $survey_server = 'localhost';
+my $survey_user = '';
+my $survey_pass = '';
+my $survey_db = 'Survey';
+
+my $canvas;
+
+# Register our application's modes
+if (! $app-&gt;register_default(\&amp;start)) { $app-&gt;throw_error("Could not register default mode 'start'\n"); }
+if (! $app-&gt;register_mode('cast', \&amp;cast)) { $app-&gt;throw_error("Could not register mode 'cast'\n"); }
+if (! $app-&gt;register_mode('help', \&amp;help)) { $app-&gt;throw_error("Could not register mode 'help'\n"); }
+if (! $app-&gt;register_toolbar(\&amp;build_toolbar)) { $app-&gt;throw_error("Could not register toolbar\n"); }
+if (! $app-&gt;register_html_header(\&amp;build_html_header)) { $app-&gt;throw_error("Could not register html header\n"); }
+
+# Setup any databases
+my $dbo_data = $app-&gt;{dbo_factory}-&gt;spawn_mysql($survey_server, $survey_user, $survey_pass, $survey_db);
+my $dbo_results = $app-&gt;{dbo_factory}-&gt;spawn_mysql($survey_server, $survey_user, $survey_pass, $survey_db);
+
+# Run the application
+$app-&gt;run();
+
+#===========
+# Callbacks
+#===========
+
+###############################################################
+sub start {
+	my $sid = $q-&gt;param('sid') || '0';
+	my $is_ok_to_vote = 0;
+
+	my ($w, $h, $rh, $rw);
+
+	# Get the Question...
+	($w, $h) = $dbo_data-&gt;execute(qq[SELECT Question FROM SurveyQuestions WHERE SID=?], $sid);
+	$survey_question = $dbo_data-&gt;{data}-&gt;[0][0];
+
+	# Find out if this user's already voted...
+	($w, $h) = $dbo_data-&gt;execute(qq[SELECT * FROM SurveyData WHERE SID=? AND Name=?], $sid, $user_id);
+	if ($h &lt; 1) { $is_ok_to_vote = 1; }
+
+	# Get the Survey Choices...
+	($w, $h) = $dbo_data-&gt;execute(qq[SELECT * FROM SurveyChoices WHERE SID=? ORDER BY ChoiceNum], $sid);
+
+	# Calculate results
+	($rw, $rh) = $dbo_results-&gt;execute(qq[SELECT sum(if(SurveyData.Choice='0', 1, 0)) as a, sum(if(SurveyData.Choice='1', 1, 0)) as b, sum(if(SurveyData.Choice='2', 1, 0)) as c FROM SurveyData WHERE SID=?], $sid);
+
+	my $total_votes = $dbo_results-&gt;{data}-&gt;[0][0] + $dbo_results-&gt;{data}-&gt;[0][1] + $dbo_results-&gt;{data}-&gt;[0][2];
+	my @pctgs;
+	if ($dbo_results-&gt;{data}-&gt;[0][0] &gt; 0) {	$pctgs[0] = ($dbo_results-&gt;{data}-&gt;[0][0] / $total_votes) * 100; }
+	if ($dbo_results-&gt;{data}-&gt;[0][1] &gt; 0) {	$pctgs[1] = ($dbo_results-&gt;{data}-&gt;[0][1] / $total_votes) * 100; }
+	if ($dbo_results-&gt;{data}-&gt;[0][2] &gt; 0) {	$pctgs[2] = ($dbo_results-&gt;{data}-&gt;[0][2] / $total_votes) * 100; }
+	$pctgs[0] = sprintf("%.2f", $pctgs[0]);
+	$pctgs[1] = sprintf("%.2f", $pctgs[1]);
+	$pctgs[2] = sprintf("%.2f", $pctgs[2]);
+
+	my $canvas = qq[&lt;h3 align=center&gt;Survey Question:&lt;br/&gt;$survey_question&lt;/h3&gt;];
+
+	if ($is_ok_to_vote) {
+		$canvas .= qq[&lt;center&gt;&lt;form action=$self_url method=POST&gt;&lt;table border=0 width=300 cellpadding=2 cellspacing=0&gt;];
+		for (my $y = 0; $y &lt; $h; $y++) {
+			$canvas .= qq[&lt;tr&gt;&lt;td align=center&gt;&lt;input type="radio" name="choice" value="$y"&gt;&lt;/td&gt;&lt;td align=left&gt;$dbo_data-&gt;{data}-&gt;[$y][1]&lt;/td&gt;&lt;/tr&gt;];
+		}
+		$canvas .= qq[&lt;tr&gt;&lt;td&gt;&lt;input type="hidden" name="mode" value="cast"&gt;&lt;input type="hidden" name="sid" value="$sid"&gt;&lt;/td&gt;&lt;td&gt;&lt;input type="submit" value="Cast Vote"&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/form&gt;&lt;/center&gt;];
+	} else {
+######### User has already cast a vote, so display a message instead of displaying the form.
+		$canvas .= qq[&lt;p align=left&gt; &lt;/p&gt;&lt;p align=center&gt;You have already voted in this survey.&lt;/p&gt;];
+	}
+
+######### Display Results
+	$canvas .= qq[
+&lt;p align=center&gt; &lt;br/&gt;Survey Results ($total_votes Total Votes)&lt;/p&gt;
+&lt;center&gt;
+&lt;table width=600 border=0 cellpadding=0 cellspacing=0 style="border-right: 1px solid #000;"&gt;
+];
+	for (my $y = 0; $y &lt; $h; $y++) {
+		my $progress_width= $pctgs[$y] * 2;
+		my $style;
+		if ($y == 0) {
+			$style = "border-top: 1px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; background-color: #ddd;";
+		} else {
+			$style = "border-bottom: 1px solid #000; border-left: 1px solid #000; background-color: #ddd;";
+		}
+
+		$canvas .= qq[&lt;tr&gt;&lt;td align=left width=340&gt;$dbo_data-&gt;{data}-&gt;[$y][1]&lt;/td&gt;&lt;td align=right width=60&gt;$pctgs[$y]% &lt;/td&gt;&lt;td align=left width=200 style="$style"&gt;&lt;img src="/images/progress.png" width=$progress_width height=24&gt;&lt;/td&gt;&lt;/tr&gt;];
+	}
+
+	$canvas .= qq[
+&lt;/table&gt;
+&lt;/center&gt;
+];
+
+	$app-&gt;write($canvas);
+	$app-&gt;paint("User Feedback Survey");
+}
+###############################################################
+sub cast {
+	my $sid = $q-&gt;param('sid') || '0';
+	my $choice = $q-&gt;param('choice');
+
+	$dbo_data-&gt;do(qq[INSERT INTO SurveyData (SID, Name, Choice)  VALUES('$sid', '$user_id', '$choice')]);
+
+	my $canvas = qq[
+&lt;h3 align=left&gt;Your vote has been cast!&lt;/h3&gt;
+&lt;a href="$self_url?sid=$sid"&gt;Back to start&lt;/a&gt;
+];
+
+	$app-&gt;write($canvas);
+	$app-&gt;paint("User Feedback Survey");
+}
+###############################################################
+sub help {
+	my $pod_file = "/var/www$self_url";
+
+        # define some html tags we want to substitute in
+        my $hr_html = '';
+        my $titlebg_html = '&lt;h1 style="background-color: #ffd; font-family: times;"&gt;';
+        my $section_title_html = '&lt;h2 style="text-decoration: underline; font-family: times; page-break-before: always;"&gt;';
+        my $index_section_html = '&lt;h2 style="text-decoration: underline; font-family: times;"&gt;';
+                                                                                                                             
+        # get the html version of the pod
+        my $pod_contents = `pod2html --infile=$pod_file --index`;
+                                                                                                                             
+        # make it nicer
+        # remove extraneous simple tags
+        my @bad_tags = qw(&lt;html&gt; &lt;/html&gt; &lt;head&gt; &lt;/head&gt; &lt;body&gt; &lt;/body&gt;);
+        foreach my $tag (@bad_tags) {
+                $pod_contents =~ s/$tag//ig;
+        }
+                                                                                                                             
+        # remove the title tags seperately, so we can take out the text between them
+        $pod_contents =~ s/&lt;title&gt;.*&lt;\/title&gt;//ig;
+                                                                                                                             
+        # remove the link tag seperately so we can remove the text inside it
+        $pod_contents =~ s/&lt;link.*&gt;//ig;
+                                                                                                                             
+        # substitute our settings in
+        $pod_contents =~ s/&lt;hr.*\/&gt;/$hr_html/ig;
+        $pod_contents =~ s/&lt;h1&gt;/$titlebg_html/ig;
+        $pod_contents =~ s/&lt;h2&gt;/$section_title_html/ig;
+                                                                                                                             
+        # remove any multi-newlines
+        $pod_contents =~ s/\n+/\n/g;
+
+	$app-&gt;write($index_section_html . "Index&lt;/h2&gt;" . $pod_contents);
+	$app-&gt;paint("Help Files...");
+}
+###############################################################
+sub build_toolbar {
+	my $mode = $app-&gt;{cgi}-&gt;param('mode');
+
+	my $toolbar;
+	if ($mode ne 'help') {
+		$toolbar =  qq[
+&lt;a href="$self_url?mode=help" style="background-color: #fff;"&gt;&lt;img src="/icons/unknown.gif" alt="Help" border=0&gt;&lt;/a&gt;  
+];
+	} else {
+		$toolbar .= qq[
+&lt;a href="$self_url" style="background-color: #fff;"&gt;&lt;img src="/images/extra_icons/list.gif" alt="Back to Survey" border=0&gt;&lt;/a&gt;  
+];
+	}
+
+	return $toolbar
+}
+###############################################################
+sub build_html_header {
+	my $html_header = qq[
+&lt;script language="javascript"&gt;
+function isReady(form) {
+	for (var e = 0; e &lt; form.elements.length; e++) {
+		var el = form.elements[e];
+		if (el.name.toLowerCase().substring(0,3) == "opt") {
+			return true;
+		} else {
+			if (el.type == 'text' || el.type == 'textarea' || el.type == 'password' || el.type == 'file' ) {
+				if (el.value == '') {
+					alert('Please fill out the text field ' + el.name.toUpperCase());
+					el.focus();
+					return false;
+				}
+			}
+			if (el.type == 'checkbox') {
+				if (! el.checked) {
+					alert('Please fill in Required Checkbox ' + el.name.toUpperCase());
+					el.focus();
+					return false;
+				}
+			}
+		}
+	}
+}
+&lt;/script&gt;
+];
+
+	return $html_header
+}
+###############################################################
+
+
+#===============
+# Support Funcs
+#===============
+
+sub lookup_name {
+	my $id = shift;
+	my @record = split(/:/, `getent passwd | grep ^$id`);
+	return $record[4];
+}
+
+sub sql_build_value_list {
+	my @items = @_;
+	my @clean = sql_clean(@items);
+	my $value_list;
+
+	foreach my $item (@clean) {
+		$value_list .= qq['$item', ];
+	}
+
+	$value_list =~ s/,\s$//;
+	return $value_list;
+}
+
+sub sql_clean {
+	my @items = @_;
+	my @clean;
+
+	foreach my $item (@items) {
+		$item =~ s/'//g;
+		$item =~ s/"//g;
+		$item =~ s/;//g;
+		push (@clean, $item);
+	}
+	return @clean;
+}
+
+sub get_datetime {
+	my ($sec, $min, $hour, $mday, $mon, $year, $wday, $yday, $isdst) = localtime();
+	$mon++;
+	$year += 1900;
+
+	my $datetime = qq[$year-$mon-$mday $hour:$min:$sec];
+
+	return $datetime;
+}
+
+=pod
+
+=head1 SAL Surveys
+
+=head2 Requirements
+
+=item Apache
+ - Basic Auth authentication (mod_auth_mysql, mod_auth_external, etc)
+
+=item SAL
+
+=item MySQL Database "Surveys"
+
+   Tables:
+ - SurveyQuestions (SID int(11), Question varchar(255))
+ - SurveyChoices (SID int(11), Choice varchar(255), ChoiceNum int(11))
+ - SurveyData (SID int(11), Name varchar(16), Choice int(11))
+
+=item Images
+
+ - progress.png (a 1px wide image for the progress bar)
+ - unknown.gif for toolbar-link to help (image can be found in apache icon directory)
+ - list.gif for toolbar-link to back to the survey from help (or alternate from apache icon directory)
+
+=cut
+</pre>
+<div class="printfooter">
+Retrieved from "<a href="/web/20081121225202/http://tlug.ss.org/wiki/SAL-SURVEY">http://tlug.ss.org/wiki/SAL-SURVEY</a>"</div>
+<!-- end content -->
+<div class="visualClear"></div>
+</div>

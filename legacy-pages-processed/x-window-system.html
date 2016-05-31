@@ -1,0 +1,39 @@
+<div id="bodyContent">
+<h3 id="siteSub">From GTALUG</h3>
+<div id="contentSub"></div>
+<!-- start content -->
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/web/20080725053729/http://tlug.ss.org/index.php?title=X_Window_System&amp;action=edit&amp;section=1" title="X Window System">edit</a>]</div><a name="X_Window_System"></a><h3> X Window System </h3>
+<p>The <a class="external text" href="/web/20080725053729/http://www.x.org/" rel="nofollow" title="http://www.x.org">X Window System</a> is a graphical system intended to render windows (surprise!) and other graphical things on a computer display.  It is the typical graphics system used on <a class="new" href="/web/20080725053729/http://tlug.ss.org/index.php?title=Unix&amp;action=edit" title="Unix">Unix</a> systems and thus on <a href="/web/20080725053729/http://tlug.ss.org/wiki/Linux" title="Linux">Linux</a>.  It has also been used on other operating systems including VMS, Microsoft Windows, and IBM's OS/390.
+</p><p>Most graphical applications that run on Linux expect to run atop X.
+</p><p>One of the somewhat unique things about X is that it allows applications to be run remotely, that is, you may have an application running on one host (that may not even have any display connected to it) and displaying graphics via a network connection to another host where an "X server" is running.  This is how <a href="/web/20080725053729/http://tlug.ss.org/wiki/LTSP" title="LTSP">LTSP</a> works; in that system, applications run on one fairly powerful computer, and display output across the network on another (likely much less powerful) computer that may have little more connected to it than a graphics card and monitor.
+</p><p>The representation of "client" and "server" appears a little bit backwards from most client/server systems. Usually, people expect the "local" programs to be called a "client," and for the "server" to be something off in the back room. Which nicely represents the way database applications usually work, with many "clients" connecting to a central database "server."
+</p><p>X reverses these roles, which, as the locations of the hosts are reversed, is quite appropriate:
+</p>
+<ul><li> An X server is a program that manages a video system (and possibly other "interactive" I/O devices such as mice, keyboards, and some more unusual devices).
+</li></ul>
+<p>The X server thus typically runs on a user's desktop, typically a relatively non-powerful host that would commonly be termed a "client system." It is, in this context, nonetheless acting as a server as it provides graphics services.
+</p>
+<ul><li> On the other hand, an X client is typically an application program which must connect to an X Server in order to display things.
+</li></ul>
+<p>The client will often run on another host, often a powerful Unix box that would commonly be known as a "server." 
+</p><p>The X client might itself also be a "server process" from some other point of view; there is no contradiction here. (Although calling it such may be unwise as it will naturally result in further confusion.)
+</p><p>X nomenclature treats anything that provides display services as an X server. Which is not particularly different from someone saying that a program that provides database services is a database server. Or that a "transaction processor" is a "transaction server."
+</p><p>One unique and somewhat controversial thing about X is that it does not, a priori, define policies such as how windows are to be decorated.  That is left to be shared by other components.  The first such component is the window manager, which is a special X client that is given the responsibility of managing everything around the outsides of windows.  There are many window managers with widely varying policies and styles.  Responsibility for everything <b>inside</b> an X client's window is, not surprisingly, given to that client.  An interesting result (which is controversial!) is that if there are multiple applications with multiple UI styles, you may have multiple very different user interfaces active concurrently on the same screen.  There is likely to be something confusing about this...
+</p>
+<ul><li> <a class="external text" href="/web/20080725053729/http://www.x.org/" rel="nofollow" title="http://www.x.org">X.org</a> is the home of the project building the X servers commonly included in Linux distributions.
+</li></ul>
+<ul><li> <a class="external text" href="/web/20080725053729/http://www.xfree86.org/" rel="nofollow" title="http://www.xfree86.org">XFree86.org</a> is the home of the "X branch" that used to be commonly used.
+</li></ul>
+<ul><li> <a class="external text" href="/web/20080725053729/http://en.wikipedia.org/wiki/Xgl" rel="nofollow" title="http://en.wikipedia.org/wiki/Xgl">XGL</a> - this is a recent approach to X which tries to take advantage of the high speed 3D <a href="/web/20080725053729/http://tlug.ss.org/wiki/OpenGL" title="OpenGL">OpenGL</a> rendering supported by some recent graphics cards/drivers.
+</li></ul>
+<p><br/>
+</p>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/web/20080725053729/http://tlug.ss.org/index.php?title=X_Window_System&amp;action=edit&amp;section=2" title="X Window System">edit</a>]</div><a name="Local_Resources"></a><h3> Local Resources </h3>
+<ul><li> <a href="/web/20080725053729/http://tlug.ss.org/wiki/Meetings:1994-12" title="Meetings:1994-12">Meetings:1994-12</a>
+</li><li> <a href="/web/20080725053729/http://tlug.ss.org/wiki/Meetings:2007-07" title="Meetings:2007-07">Meetings:2007-07</a> on <a href="/web/20080725053729/http://tlug.ss.org/wiki/Category:Window_Managers" title="Category:Window Managers">Window Managers</a>
+</li></ul>
+<div class="printfooter">
+Retrieved from "<a href="/web/20080725053729/http://gtalug.org/wiki/X_Window_System">http://gtalug.org/wiki/X_Window_System</a>"</div>
+<!-- end content -->
+<div class="visualClear"></div>
+</div>

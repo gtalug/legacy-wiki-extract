@@ -1,0 +1,146 @@
+<div id="bodyContent">
+<h3 id="siteSub">From GTALUG</h3>
+<div id="contentSub"></div>
+<!-- start content -->
+<p><a href="/web/20081122055755/http://tlug.ss.org/wiki/Sitemap" title="Sitemap">Sitemap</a> &gt; <a href="/web/20081122055755/http://tlug.ss.org/wiki/Culture" title="Culture">Culture</a> &gt; <a href="/web/20081122055755/http://tlug.ss.org/wiki/Psema4" title="Psema4">Psema4</a> &gt; Psema4Topic General Programming
+</p>
+<table class="toc" id="toc"><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1"><a href="#ua-wrapper"><span class="tocnumber">1</span> <span class="toctext">ua-wrapper</span></a>
+<ul>
+<li class="toclevel-2"><a href="#Synopsis"><span class="tocnumber">1.1</span> <span class="toctext">Synopsis</span></a></li>
+<li class="toclevel-2"><a href="#Description"><span class="tocnumber">1.2</span> <span class="toctext">Description</span></a></li>
+<li class="toclevel-2"><a href="#Security_Notice"><span class="tocnumber">1.3</span> <span class="toctext">Security Notice</span></a></li>
+<li class="toclevel-2"><a href="#Installation"><span class="tocnumber">1.4</span> <span class="toctext">Installation</span></a></li>
+<li class="toclevel-2"><a href="#Script"><span class="tocnumber">1.5</span> <span class="toctext">Script</span></a></li>
+<li class="toclevel-2"><a href="#See_Also"><span class="tocnumber">1.6</span> <span class="toctext">See Also</span></a></li>
+<li class="toclevel-2"><a href="#Todo"><span class="tocnumber">1.7</span> <span class="toctext">Todo</span></a></li>
+</ul>
+</li>
+</ul>
+</td></tr></table>
+<p><script type="text/javascript"> if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script>
+</p>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/web/20081122055755/http://tlug.ss.org/index.php?title=Psema4Topic_General_Programming&amp;action=edit&amp;section=1" title="Psema4Topic General Programming">edit</a>]</div><a name="ua-wrapper"></a><h1> ua-wrapper </h1>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/web/20081122055755/http://tlug.ss.org/index.php?title=Psema4Topic_General_Programming&amp;action=edit&amp;section=2" title="Psema4Topic General Programming">edit</a>]</div><a name="Synopsis"></a><h2> Synopsis </h2>
+<p>As root:
+</p>
+<pre>ua-wrapper &lt;login&gt; "&lt;realname&gt;" &lt;pass&gt; &lt;prefs&gt;
+</pre>
+<p>Use 'none' for prefs - it's just here as an example.
+</p>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/web/20081122055755/http://tlug.ss.org/index.php?title=Psema4Topic_General_Programming&amp;action=edit&amp;section=3" title="Psema4Topic General Programming">edit</a>]</div><a name="Description"></a><h2> Description </h2>
+<p>ua-wrapper is a simple cover script for useradd on Red Hat / Fedora Core systems.
+</p><p>Also demonstrates shell executing commands from perl and a method for setting up databases and such.
+</p>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/web/20081122055755/http://tlug.ss.org/index.php?title=Psema4Topic_General_Programming&amp;action=edit&amp;section=4" title="Psema4Topic General Programming">edit</a>]</div><a name="Security_Notice"></a><h2> Security Notice </h2>
+<p>There are some security concerns with this example.  Namely:
+</p>
+<ul><li> Anyone with access to the user information in the database can get the users system password.
+</li><li> In this example, ALL USERS get access to ALL DATABASES on localhost - including the above table.
+<ul><li> This /needs/ to be fixed.
+</li></ul>
+</li><li> Installing the script without setting the proper file mode (chmod) would NOT be a good idea.
+</li></ul>
+<p><a href="/web/20081122055755/http://tlug.ss.org/wiki/Special:Whatlinkshere/Template:Fixme" title="Special:Whatlinkshere/Template:Fixme">~Fixme</a>:  <small>Need disclaimer or pull the script from the site.</small>
+</p>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/web/20081122055755/http://tlug.ss.org/index.php?title=Psema4Topic_General_Programming&amp;action=edit&amp;section=5" title="Psema4Topic General Programming">edit</a>]</div><a name="Installation"></a><h2> Installation </h2>
+<ul><li> Copy the script into an editor, and save as /tmp/ua-wrapper
+</li><li> As root:
+<ol><li> mv /tmp/ua-wrapper /usr/local/sbin/ua-wrapper
+</li><li> chown root.root /usr/local/sbin/ua-wrapper
+</li><li> chmod 740 /usr/local/sbin/ua-wrapper
+</li></ol>
+</li></ul>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/web/20081122055755/http://tlug.ss.org/index.php?title=Psema4Topic_General_Programming&amp;action=edit&amp;section=6" title="Psema4Topic General Programming">edit</a>]</div><a name="Script"></a><h2> Script </h2>
+<pre>
+#!/usr/bin/perl
+
+#
+# ua-wrapper  -  Wrapper script for useradd
+#
+
+# NOTE:  You MUST set the MySQL administrator info below before running!
+
+# There are better ways to handle parameters... and lots of other parts
+#  of this script.
+if (($#ARGV + 1) != 4) { usage_error() };
+
+# Get parameters (username, realname, pass, prefs)
+$user = shift;
+$realname = shift;
+$pass = shift;
+$prefs = shift;
+
+
+# Get envivronment info
+$cmd_useradd = `which useradd`;	chomp($cmd_useradd);
+$cmd_passwd = `which passwd`;	chomp($cmd_passwd);
+$cmd_mysql = `which mysql`;	chomp($cmd_mysql);
+$cmd_echo = `which echo`;	chomp($cmd_echo);
+
+
+# Set the MySQL administrator info
+$admin_user = 'REPLACE-ME';  #replace with your admin user
+$admin_pass = 'REPLACE-ME';  #replace with your admin pass
+
+# Create a database with the name of the user
+$sqldb = qq[CREATE DATABASE $user];
+
+# Create your default db structure here.
+$sqldb1 = qq[USE $user; CREATE TABLE users (name VARCHAR(8), realname VARCHAR(64), preferences VARCHAR(255))];
+$sqldb2 = qq[USE $user; INSERT INTO users VALUES('$user', '$realname', '$prefs')];
+
+# Grant *all privileges* on *all databases* to that user
+# * Read the docs thoroughly for security and adminstration info
+#   http://dev.mysql.com/doc/mysql/en/adding-users.html
+#
+$sqluser = qq[GRANT ALL PRIViLEGES ON *.* TO '$user'\@'localhost' IDENTIFIED BY '$pass'];
+
+
+# set some constants
+$no_trap = 0;
+$trap = 1;
+
+# execute the steps 
+shell_execute($trap,	qq[$cmd_useradd -c "$realname" -m $user]);
+shell_execute($no_trap,	qq[$cmd_echo "$pass" | $cmd_passwd --stdin $user]);
+shell_execute($trap,	qq[$cmd_mysql -u $admin_user --password=$admin_pass --exec="$sqldb"]);
+shell_execute($trap,	qq[$cmd_mysql -u $admin_user --password=$admin_pass --exec="$sqldb1"]);
+shell_execute($trap,	qq[$cmd_mysql -u $admin_user --password=$admin_pass --exec="$sqldb2"]);
+shell_execute($trap,	qq[$cmd_mysql -u $admin_user --password=$admin_pass --exec="$sqluser"]);
+
+# we're done.
+print "Finished.\n\n";
+exit;
+
+# Subs 'n funcs
+sub usage_error {
+	die qq[ usage: ua-wrapper &lt;login&gt; "&lt;realname&gt;" &lt;pass&gt; &lt;prefs&gt;] . "\n";
+}
+
+sub shell_execute {
+	$trap = shift;
+	$cmd = shift; 
+
+	print "-&gt; $cmd\n";
+	if ($trap) {
+		die if( `$cmd` );
+	} else {
+		`$cmd`;
+	}
+}
+</pre>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/web/20081122055755/http://tlug.ss.org/index.php?title=Psema4Topic_General_Programming&amp;action=edit&amp;section=7" title="Psema4Topic General Programming">edit</a>]</div><a name="See_Also"></a><h2> See Also </h2>
+<p><a class="external text" href="/web/20081122055755/http://dev.mysql.com/doc/mysql/en/index.html" rel="nofollow" title="http://dev.mysql.com/doc/mysql/en/index.html">MySQL Reference Manual</a>, <a class="external text" href="/web/20081122055755/http://man.linuxquestions.org/index.php?query=useradd&amp;section=0&amp;type=2" rel="nofollow" title="http://man.linuxquestions.org/index.php?query=useradd&amp;section=0&amp;type=2">man useradd</a>, <a class="external text" href="/web/20081122055755/http://man.linuxquestions.org/index.php?query=passwd&amp;section=0&amp;type=2" rel="nofollow" title="http://man.linuxquestions.org/index.php?query=passwd&amp;section=0&amp;type=2">man passwd</a>, <a class="external text" href="/web/20081122055755/http://man.linuxquestions.org/index.php?query=mysql&amp;section=0&amp;type=2" rel="nofollow" title="http://man.linuxquestions.org/index.php?query=mysql&amp;section=0&amp;type=2">man mysql</a>
+</p>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/web/20081122055755/http://tlug.ss.org/index.php?title=Psema4Topic_General_Programming&amp;action=edit&amp;section=8" title="Psema4Topic General Programming">edit</a>]</div><a name="Todo"></a><h2> Todo </h2>
+<ul><li> Bash version?
+</li><li> Other languages?
+</li></ul>
+<!-- Saved in parser cache with key tlugwiki:pcache:idhash:1356-0!1!0!0!!en!2 and timestamp 20081122132117 -->
+<div class="printfooter">
+Retrieved from "<a href="/web/20081122055755/http://tlug.ss.org/wiki/Psema4Topic_General_Programming">http://tlug.ss.org/wiki/Psema4Topic_General_Programming</a>"</div>
+<!-- end content -->
+<div class="visualClear"></div>
+</div>

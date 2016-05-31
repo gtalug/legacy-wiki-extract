@@ -1,0 +1,402 @@
+<div id="bodyContent">
+<h3 id="siteSub">From GTALUG</h3>
+<div id="contentSub"></div>
+<!-- start content -->
+<p><a href="/web/20081122061114/http://tlug.ss.org/wiki/Sitemap" title="Sitemap">Sitemap</a> &gt; <a href="/web/20081122061114/http://tlug.ss.org/wiki/Culture" title="Culture">Culture</a> &gt; <a href="/web/20081122061114/http://tlug.ss.org/wiki/Psema4" title="Psema4">Psema4</a> &gt; <a href="/web/20081122061114/http://tlug.ss.org/wiki/SAL" title="SAL">SAL</a> &gt; SAL-DBI
+</p>
+<pre>
+package SAL::DBI;
+
+# This script is licensed under the FDL (Free Document License)
+# The complete license text can be found at http://www.gnu.org/copyleft/fdl.html
+# Contains excerpts from various man pages, tutorials and books on perl
+# DBI ABSTRACTION
+
+use strict;
+use DBI;
+use Carp;
+
+BEGIN {
+	use Exporter ();
+	our ($VERSION, @ISA, @EXPORT, @EXPORT_OK, %EXPORT_TAGS);
+	$VERSION = 3.0;
+	@ISA = qw(Exporter);
+	@EXPORT = qw();
+	%EXPORT_TAGS = ();
+	@EXPORT_OK = qw();
+}
+our @EXPORT_OK;
+
+END { }
+
+our %DBI = (
+######################################
+ 'connection' =&gt; {
+   # Shared
+	'type'		=&gt; '',
+	'dbh'		=&gt; '',
+	'sth'		=&gt; '',
+	'user'		=&gt; '',
+	'passwd'	=&gt; '',
+    # For MySQL
+	'server'	=&gt; '',
+	'database'	=&gt; '',
+    # For ODBC
+	'dsn'		=&gt; '',
+    # For SQLite
+	'dbfile'	=&gt; ''
+  },
+######################################
+  'fields' =&gt; (
+    {
+	'name'		=&gt; '',
+	'label'		=&gt; '',
+	'type'		=&gt; '',
+	'visible'	=&gt;  0,
+	'header'	=&gt;  0,
+	'writeable'	=&gt;  0,
+	'css'		=&gt; '',
+	'precision'	=&gt; '',
+	'commify'	=&gt; '',
+	'align'		=&gt; '',
+	'prefix'	=&gt; '',
+	'postfix'	=&gt; '',
+    }
+  ),
+######################################
+  'data'		=&gt; [],
+######################################
+ 'internal' =&gt; {
+	'width'		=&gt; '',
+	'height'	=&gt; '',
+  },
+######################################
+);
+
+# Setup accessors via closure (from perltooc manpage)
+sub _classobj {
+	my $obclass = shift || __PACKAGE__;
+	my $class = ref($obclass) || $obclass;
+	no strict "refs";
+	return \%$class;
+}
+
+for my $datum (keys %{ _classobj() }) {
+	no strict "refs";
+	*$datum = sub {
+		my $self = shift-&gt;_classobj();
+		$self-&gt;{$datum} = shift if @_;
+		return $self-&gt;{$datum};
+	}
+}
+
+##########################################################################################################################
+# Constructors (Public)
+sub new {
+	my $obclass = shift || __PACKAGE__;
+	my $class = ref($obclass) || $obclass;
+	my $self = {};
+
+	bless($self, $class);
+
+	return $self;
+}
+
+sub spawn_mysql {
+	my $obclass = shift || __PACKAGE__;
+	my $class = ref($obclass) || $obclass;
+
+	my $db_type = 'mysql';
+	my $db_server = shift || '(undefined)';
+	my $db_user = shift || '(undefined)';
+	my $db_passwd = shift || '(undefined)';
+	my $db_database = shift || '(undefined)';
+
+	my $self = {};
+	$self-&gt;{connection}{type} = $db_type;
+	$self-&gt;{connection}{server} = $db_server;
+	$self-&gt;{connection}{user} = $db_user;
+	$self-&gt;{connection}{passwd} = $db_passwd;
+	$self-&gt;{connection}{database} = $db_database;
+
+	bless($self, $class);
+
+	# make the connection
+	$self-&gt;{connection}{dbh} = DBI-&gt;connect("DBI:mysql:$db_database:$db_server",$db_user,$db_passwd) || confess($DBI::errstr);
+
+	return $self;
+}
+
+sub spawn_odbc {
+	my $obclass = shift || __PACKAGE__;
+	my $class = ref($obclass) || $obclass;
+
+	my $db_type = 'odbc';
+	my $db_dsn = shift || '';
+	my $db_user = shift || '';
+	my $db_passwd = shift || '';
+
+
+	my $self = {};
+	$self-&gt;{connection}{type} = $db_type;
+	$self-&gt;{connection}{dsn} = $db_dsn;
+	$self-&gt;{connection}{user} = $db_user;
+	$self-&gt;{connection}{passwd} = $db_passwd;
+
+	bless($self, $class);
+
+	# make the connection
+	$self-&gt;{connection}{dbh} = DBI-&gt;connect("DBI:ODBC:$db_dsn",$db_user,$db_passwd) || confess($DBI::errstr);
+
+	return $self;
+}
+
+sub spawn_sqlite {
+	my $obclass = shift || __PACKAGE__;
+	my $class = ref($obclass) || $obclass;
+
+	my $db_type = 'sqlite';
+	my $db_server = '';
+	my $db_user = '';
+	my $db_passwd = '';
+	my $db_database = shift || '(undefined)';
+
+	my $self = {};
+	$self-&gt;{connection}{type} = $db_type;
+	$self-&gt;{connection}{server} = $db_server;
+	$self-&gt;{connection}{user} = $db_user;
+	$self-&gt;{connection}{passwd} = $db_passwd;
+	$self-&gt;{connection}{database} = $db_database;
+
+	bless($self, $class);
+
+	# make the connection
+	$self-&gt;{connection}{dbh} = DBI-&gt;connect("DBI:SQLite:dbname=$db_database",$db_user,$db_passwd) || confess($DBI::errstr);
+
+	return $self;
+}
+
+##########################################################################################################################
+# Destructor (Public)
+sub destruct {
+	my $self = shift;
+
+	if(defined($self-&gt;{connection}{dbh})) {
+		$self-&gt;{connection}{dbh}-&gt;disconnect();
+	}
+}
+
+##########################################################################################################################
+# Public Methods
+sub do {
+	my ($self, $statement) = @_;
+	my $rv = $self-&gt;{connection}{dbh}-&gt;do($statement);
+	return $rv;
+}
+
+sub execute {
+	my ($self, $statement, @params) = @_;
+
+	my $table = $self-&gt;_extract_table($statement);
+
+	# From the section "Outline Usage" of the DBI pod (http://search.cpan.org/~timb/DBI-1.43/DBI.pm)
+	# This should probably be it's own function...  Note also the way placeholders are used...
+	$self-&gt;{connection}{sth} = $self-&gt;{connection}{dbh}-&gt;prepare($statement) || confess("Can't Prepare SQL Statement: " . $self-&gt;{connection}{dbh}-&gt;errstr);
+	#
+
+	$self-&gt;{connection}{sth}-&gt;execute(@params) || confess("Can't Execute SQL Statement: " . $self-&gt;{connection}{sth}-&gt;errstr . "\n\nSQL Statement:\n$statement\nParams:\n@params\n\n");
+	$self-&gt;{data} = $self-&gt;{connection}{sth}-&gt;fetchall_arrayref();
+
+	# get the width and height (aka metrics) of the returned data set...
+	my $width = $#{$self-&gt;{data}[0]};
+	my $height = $self-&gt;{connection}{sth}-&gt;rows();
+	$self-&gt;{internal}{width} = $width;
+	$self-&gt;{internal}{height} = $height;
+
+	foreach my $column (0..$width) {
+		$self-&gt;{fields}[$column]{visible} = 1;
+		$self-&gt;{fields}[$column]{header} = 1;
+		$self-&gt;{fields}[$column]{writeable} = 0;
+	}
+
+	$self-&gt;_get_labels($table);
+	return ($width, $height);
+}
+
+sub get_column {
+	my $self = shift;
+	my $column = shift;
+	my @data;
+
+	for (my $i=0; $i &lt;= $self-&gt;{internal}{height}; $i++) {
+		push (@data, $self-&gt;{data}-&gt;[$i][$column]);
+	}
+
+	return @data;
+}
+
+sub get_row {
+	my $self = shift;
+	my $row = shift;
+	my @data;
+
+	for (my $i=0; $i &lt;= $self-&gt;{internal}{width}; $i++) {
+		push (@data, $self-&gt;{data}-&gt;[$row][$i]);
+	}
+
+	return @data;
+}
+
+sub get_labels {
+	my $self = shift;
+	my @data;
+
+	for (my $i=0; $i &lt;= $self-&gt;{internal}{width}; $i++) {
+		push (@data, $self-&gt;{fields}-&gt;[$i]-&gt;{label});
+	}
+
+	return @data;
+}
+
+sub clean_times {
+	my $self = shift;
+	my $col = shift || '0';
+
+	for (my $i=0; $i &lt; $self-&gt;{internal}{height}; $i++) {
+		$self-&gt;{data}-&gt;[$i][$col] =~ s/\s+\d\d:\d\d:\d\d.*$//;
+	}
+}
+
+sub short_dates {
+	my $self = shift;
+	my $col = shift || '0';
+
+	for (my $i=0; $i &lt; $self-&gt;{internal}{height}; $i++) {
+		$self-&gt;{data}-&gt;[$i][$col] =~ s/\d\d(\d\d)-(\d\d)-(\d\d)/$2-$3-$1/;
+	}
+}
+
+##########################################################################################################################
+# Private Methods
+sub _get_labels {
+	my $self = shift;
+	my $table = shift;
+	my $tmp;
+	my $query;
+	my @labels = ();
+
+	if ($self-&gt;{connection}{type} eq 'mysql') {
+		$query = "SHOW COLUMNS FROM $table";	# cant use ? placeholder (embeds in single quotes)
+		$self-&gt;{connection}{sth} = $self-&gt;{connection}{dbh}-&gt;prepare($query) || confess($self-&gt;{connection}{dbh}-&gt;errstr);
+		$self-&gt;{connection}{sth}-&gt;execute() || confess($self-&gt;{connection}{sth}-&gt;errstr);
+	} elsif ($self-&gt;{connection}{type} eq 'odbc') {
+		$query = 'SELECT column_name, data_type FROM information_schema.columns WHERE table_name=?';
+		$self-&gt;{connection}{sth} = $self-&gt;{connection}{dbh}-&gt;prepare($query) || confess($self-&gt;{connection}{dbh}-&gt;errstr);
+		$self-&gt;{connection}{sth}-&gt;execute($table) || confess($self-&gt;{connection}{sth}-&gt;errstr);
+	} elsif ($self-&gt;{connection}{type} eq 'sqlite') {
+		$query = "PRAGMA table_info($table)";
+		$self-&gt;{connection}{sth} = $self-&gt;{connection}{dbh}-&gt;prepare($query) || confess($self-&gt;{connection}{dbh}-&gt;errstr);
+		$self-&gt;{connection}{sth}-&gt;execute() || confess($self-&gt;{connection}{sth}-&gt;errstr);
+	}
+
+	$tmp = $self-&gt;{connection}{sth}-&gt;fetchall_arrayref();
+
+	if (defined($tmp)) {
+		my $num_rows = $#{$tmp};
+		my $column = 0;
+
+		for my $row (0..$num_rows) {
+			if ($self-&gt;{connection}{type} ne 'sqlite') {
+				my $name = $tmp-&gt;[$row][0];
+				my $type = $tmp-&gt;[$row][1];
+				$self-&gt;{fields}[$column]{label} = $name;
+				$self-&gt;{fields}[$column]{name} = $name;
+				$self-&gt;{fields}[$column]{type} = $type;
+				$column++;
+			} else {
+				my $name = $tmp-&gt;[$row][1];
+				my $type = $tmp-&gt;[$row][3];
+				$self-&gt;{fields}[$column]{label} = $name;
+				$self-&gt;{fields}[$column]{name} = $name;
+				$self-&gt;{fields}[$column]{type} = $type;
+				$column++;
+			}
+		}
+	}
+}
+
+sub _extract_table {
+	my $self = shift;
+	my $statement = shift;
+	my $table;
+
+	# Add a space so that the regex below does not fail on statements like:
+	# "SELECT * FROM some_table"
+
+	$statement .= ' ';
+
+	if ($statement =~ /^SELECT\s+(.*)\s+FROM\s+(\w+)\s+(.*)/) {
+		$table = $2;
+	} else {
+		$table = 'undefined_tablename';
+	}
+
+	return $table;
+}
+
+1;
+
+=pod
+
+=head1 Name
+
+SAL::DBI
+
+=head1 Synopsis
+
+=head1 Methods
+
+=head2 Constructors
+
+new()
+
+spawn_mysql()
+
+spawn_odbc()
+
+spawn_sqlite()
+
+=head2 Destructor
+
+destruct()
+
+=head2 Eponymous Hash
+
+=head2 Public
+
+do()
+
+execute()
+
+get_column()
+
+get_row()
+
+get_labels()
+
+clean_times()
+
+short_dates()
+
+=head1 See Also
+
+SAL::DBI, SAL::Graph, SAL::WebDDR, SAL::WebApplication
+
+=cut
+
+</pre>
+<div class="printfooter">
+Retrieved from "<a href="/web/20081122061114/http://tlug.ss.org/wiki/SAL-DBI">http://tlug.ss.org/wiki/SAL-DBI</a>"</div>
+<!-- end content -->
+<div class="visualClear"></div>
+</div>
