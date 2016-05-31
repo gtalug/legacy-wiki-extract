@@ -1,0 +1,1016 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="KEYWORDS" content="SAL-WebDDR,Culture,Psema4,SAL,SAL Reporting Examples,Sitemap" />
+<meta name="robots" content="index,follow" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link title="Creative Commons" type="application/rdf+xml" href="/mediawiki/index.php?title=SAL-WebDDR&amp;action=creativecommons" rel="meta" />
+<link rel="copyright" href="http://www.gnu.org/copyleft/fdl.html" />
+    <title>SAL-WebDDR - GTALUG</title>
+    <style type="text/css" media="screen,projection">/*<![CDATA[*/ @import "/mediawiki/skins/gtalug/main.css"; /*]]>*/</style>
+    <link rel="stylesheet" type="text/css" media="print" href="/mediawiki/skins/common/commonPrint.css" />
+    <!--[if lt IE 5.5000]><style type="text/css">@import "/mediawiki/skins/gtalug/IE50Fixes.css";</style><![endif]-->
+    <!--[if IE 5.5000]><style type="text/css">@import "/mediawiki/skins/gtalug/IE55Fixes.css";</style><![endif]-->
+    <!--[if gte IE 6]><style type="text/css">@import "/mediawiki/skins/gtalug/IE60Fixes.css";</style><![endif]-->
+    <!--[if IE]><script type="text/javascript" src="/mediawiki/skins/common/IEFixes.js"></script>
+    <meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+    <script type="text/javascript" src="/mediawiki/index.php?title=-&amp;action=raw&amp;gen=js"></script>    <script type="text/javascript" src="/mediawiki/skins/common/wikibits.js"></script>
+    <style type="text/css">/*<![CDATA[*/
+@import "/mediawiki/index.php?title=MediaWiki:Gtalug.css&action=raw&ctype=text/css&smaxage=18000";
+@import "/mediawiki/index.php?title=-&action=raw&gen=css&maxage=18000";
+/*]]>*/</style>              </head>
+  <body                 class="ns-0">
+    <div id="globalWrapper">
+      <div id="column-content">
+	<div id="content">
+	  <a name="top" id="top"></a>
+	  	  <h1 class="firstHeading">SAL-WebDDR</h1>
+	  <div id="bodyContent">
+	    <h3 id="siteSub">From GTALUG</h3>
+	    <div id="contentSub"></div>
+	    	    	    <!-- start content -->
+	    <p><a href="/wiki/Sitemap" title="Sitemap">Sitemap</a> > <a href="/wiki/Culture" title="Culture">Culture</a> > <a href="/wiki/Psema4" title="Psema4">Psema4</a> > <a href="/wiki/SAL" title="SAL">SAL</a> > SAL-WebDDR
+</p>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/mediawiki/index.php?title=SAL-WebDDR&amp;action=edit&amp;section=1" title="SAL-WebDDR">edit</a>]</div><a name="Screenshots"></a><h2> Screenshots </h2>
+<p>From: <a href="/wiki/SAL_Reporting_Examples" title="SAL Reporting Examples">SAL Reporting Examples</a>:&nbsp;&nbsp;<img src="http://psema4.gotdns.com/images/projects/screens/salreport.png" alt="salreport.png" />
+</p><p><br />
+</p>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/mediawiki/index.php?title=SAL-WebDDR&amp;action=edit&amp;section=2" title="SAL-WebDDR">edit</a>]</div><a name="Source"></a><h2> Source </h2>
+<pre>
+package SAL::WebDDR;
+
+# This script is licensed under the FDL (Free Document License)
+# The complete license text can be found at http://www.gnu.org/copyleft/fdl.html
+# Contains excerpts from various man pages, tutorials and books on perl
+# FUNCTIONAL, BUT NOT TERRIBLY EASY TO FOLLOW. LOTS OF THINGS TO FIX AND CLEAN OUT.
+
+use strict;
+use DBI;
+use Carp;
+use Data::Dumper;
+
+BEGIN {
+	use Exporter ();
+	our ($VERSION, @ISA, @EXPORT, @EXPORT_OK, %EXPORT_TAGS);
+	$VERSION = 3.0;
+	@ISA = qw(Exporter);
+	@EXPORT = qw();
+	%EXPORT_TAGS = ();
+	@EXPORT_OK = qw();
+}
+our @EXPORT_OK;
+
+END { }
+
+our %WebDDR = (
+######################################
+ 'datasource'		=&gt; '',
+######################################
+ 'data' =&gt; {
+	'th'		=&gt; '',
+	'td'		=&gt; '',
+	'table'		=&gt; '',
+  },
+######################################
+ 'window' =&gt; {
+	'border'	=&gt; '',
+	'titlebar'	=&gt; '',
+	'statusbar'	=&gt; '',
+	'canvas'	=&gt; '',
+	'decoration'	=&gt; '',
+  },
+######################################
+ 'misc' =&gt; {
+	'ucfirst'	=&gt; '',
+	'highlight'	=&gt; '',
+	'negatives'	=&gt; '',
+
+	'dfm_column'		=&gt; '',
+	'num_skip_fields'	=&gt; '',
+	'skip_fields'		=&gt; (),
+	'pf_flag'		=&gt; '',
+	'page_table_html'	=&gt; '',
+	'global_number_fields'	=&gt; '',
+	'global_number_records'	=&gt; '',
+	'first_page_break'	=&gt; '',
+	'default_font_style'	=&gt; '',
+
+	'block_commify'		=&gt; '',
+  },
+######################################
+);
+
+# Setup accessors via closure (from perltooc manpage)
+sub _classobj {
+	my $obclass = shift || __PACKAGE__;
+	my $class = ref($obclass) || $obclass;
+	no strict &quot;refs&quot;;
+	return \%$class;
+}
+
+for my $datum (keys %{ _classobj() }) {
+	no strict &quot;refs&quot;;
+	*$datum = sub {
+		my $self = shift-&gt;_classobj();
+		$self-&gt;{$datum} = shift if @_;
+		return $self-&gt;{$datum};
+	}
+}
+
+##########################################################################################################################
+# Constructors (Public)
+sub new {
+	my $obclass = shift || __PACKAGE__;
+	my $class = ref($obclass) || $obclass;
+	my $self = {};
+
+	bless($self, $class);
+
+	$self-&gt;{data}{table} = 'background-color: #fff;';
+	$self-&gt;{data}{th} = 'background-color: #ddd; border: 2px outset #fff; text-align: center; font-size: 12px;';
+	$self-&gt;{data}{td} = 'background-color: #fff; border-right: 1px solid #aaa; border-bottom: 1px solid #aaa; font-size: 10px;';
+
+	$self-&gt;{window}{border} = '';
+	$self-&gt;{window}{titlebar} = 'background-color: #337; border: 2px outset #fff; background-image: url(/images/window_top.png); background-repeat: no-repeat;';
+	$self-&gt;{window}{canvas} = 'background-color: #fff; border: 2px inset #fff;';
+	$self-&gt;{window}{statusbar} = 'background-color: #eee; border: 1px solid #aaa;';
+	$self-&gt;{window}{decoration} = 'background-color: #337; background-image: url(/images/window_side.png); background-repeat: repeat-x;';
+
+	$self-&gt;{misc}{highlight} = 'background-color: #aa0;';
+	$self-&gt;{misc}{negatives} = '#FF0000';
+
+	$self-&gt;{dfm_column} = '0',
+	$self-&gt;{num_skip_fields} = '0',
+	$self-&gt;{skip_fields} = qw(),
+	$self-&gt;{pf_flag} = '0',
+	$self-&gt;{page_table_html} = '&lt;table cellspacing=0 width=100% border=0&gt;',
+	$self-&gt;{global_number_fields} = '',
+	$self-&gt;{global_number_records} = '',
+	$self-&gt;{first_page_break} = '1',
+	$self-&gt;{default_font_style} = 'font-size: 10px;',
+
+	# Update formatting at the field level
+	my $w = $self-&gt;{datasource}-&gt;{internal}{width};
+	my $h = $self-&gt;{datasource}-&gt;{internal}{height};
+
+	for (my $field = 0; $field &lt; $w; $field++) {
+		$self-&gt;{datasource}-&gt;{fields}[$field]{'precision'} = '2';
+		$self-&gt;{datasource}-&gt;{fields}[$field]{'commify'} = '1';
+	}
+
+	return $self;
+}
+
+##########################################################################################################################
+# Destructor (Public)
+sub destruct {
+	my $self = shift;
+
+}
+
+##########################################################################################################################
+# Public Methods
+
+sub build_window {
+	my ($self, $titlebar, $canvas, $statusbar, $width) = @_;
+	if (! $width) { $width = '100%'; }
+
+	my $content = qq[
+&lt;center&gt;
+&lt;table width=$width border=0 cellspacing=0 cellpadding=2 style=&quot;border: 3px outset #fff;&quot;&gt;
+&lt;td width=32 style=&quot;$self-&gt;{window}{decoration}&quot;&gt;&nbsp;&lt;/td&gt;
+&lt;td&gt;
+ &lt;table width=100% border=0 cellpadding=5 cellspacing=0 style=&quot;$self-&gt;{window}{border}&quot;&gt;
+  &lt;tr&gt;
+   &lt;td style=&quot;$self-&gt;{window}{titlebar}&quot;&gt;$titlebar&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&quot;$self-&gt;{window}{canvas}&quot;&gt;$canvas&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&quot;$self-&gt;{window}{statusbar}&quot;&gt;$statusbar&lt;/td&gt;
+  &lt;/tr&gt;
+ &lt;/table&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/center&gt;
+];
+
+	return $content;
+}
+
+sub build_scroll_window {
+	my ($self, $titlebar, $canvas, $statusbar, $width) = @_;
+	if (! $width) { $width = '100%'; }
+
+	my @scrolling_content = split(/\n/, $canvas);
+
+	my $content = qq[
+&lt;center&gt;
+&lt;table width=$width border=0 cellspacing=0 cellpadding=2 style=&quot;border: 3px outset #fff;&quot;&gt;
+&lt;td width=32 style=&quot;$self-&gt;{window}{decoration}&quot;&gt;&nbsp;&lt;/td&gt;
+&lt;td&gt;
+ &lt;table width=100% border=0 cellpadding=5 cellspacing=0 style=&quot;$self-&gt;{window}{border}&quot;&gt;
+  &lt;tr&gt;
+   &lt;td style=&quot;$self-&gt;{window}{titlebar}&quot;&gt;$titlebar&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td&gt;&lt;iframe width=100% height=350 frameborder=1 marginwidth=2 marginheight=2 name=&quot;canvas&quot;&gt;$canvas&lt;/iframe&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&quot;$self-&gt;{window}{statusbar}&quot;&gt;$statusbar&lt;/td&gt;
+  &lt;/tr&gt;
+ &lt;/table&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/center&gt;
+&lt;!-- Copy canvas content into iframe --&gt;
+&lt;script language=&quot;JavaScript&quot;&gt;
+&lt;!--
+document.frames[0].document.open();
+document.frames[0].document.write('&lt;html&gt;');
+document.frames[0].document.write('&lt;head&gt;');
+document.frames[0].document.write('&lt;title&gt;Query Results&lt;/title&gt;');
+document.frames[0].document.write('&lt;/head&gt;');
+document.frames[0].document.write('&lt;body&gt;');
+];
+
+	foreach my $line (@scrolling_content) {
+		$content .= &quot;document.frames[0].document.write('$line');\n&quot;;
+	}
+
+	$content .= qq[
+document.frames[0].document.write('&lt;/body&gt;');
+document.frames[0].document.write('&lt;/html&gt;');
+document.frames[0].document.close();
+//--&gt;&lt;/script&gt;
+];
+
+	return $content;
+}
+
+sub build_iframe_window {
+	my ($self, $titlebar, $url, $statusbar, $width) = @_;
+	if (! $width) { $width = '100%'; }
+
+	my $content = qq[
+&lt;center&gt;
+&lt;table width=$width border=0 cellspacing=0 cellpadding=2 style=&quot;border: 3px outset #fff;&quot;&gt;
+&lt;td width=32 style=&quot;$self-&gt;{window}{decoration}&quot;&gt;&nbsp;&lt;/td&gt;
+&lt;td&gt;
+ &lt;table width=100% border=0 cellpadding=5 cellspacing=0 style=&quot;$self-&gt;{window}{border}&quot;&gt;
+  &lt;tr&gt;
+   &lt;td style=&quot;$self-&gt;{window}{titlebar}&quot;&gt;$titlebar&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td&gt;&lt;iframe width=100% height=350 frameborder=1 marginwidth=2 marginheight=2 src=&quot;$url&quot; name=&quot;canvas&quot;&gt;&lt;a href=&quot;$url&quot;&gt;$url&lt;/a&gt;&lt;/iframe&gt;&lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style=&quot;$self-&gt;{window}{statusbar}&quot;&gt;$statusbar&lt;/td&gt;
+  &lt;/tr&gt;
+ &lt;/table&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/center&gt;
+];
+
+	return $content;
+}
+
+sub build_data_table {
+	my ($self, $dbo, $commify, $highlight_negatives, $width) = @_;
+
+	if (! $width) { $width = '100%'; }
+
+	my $w = $dbo-&gt;{internal}{width};
+	my $h = $dbo-&gt;{internal}{height};
+
+	my $content = qq[&lt;table border=0 width=$width cellpadding=5 cellspacing=0 style=&quot;$self-&gt;{data}{table}&quot;&gt;&lt;tr&gt;];
+
+	for (my $field = 0; $field &lt;= $w; $field++) {
+
+		my $field_name = $dbo-&gt;{fields}-&gt;[$field]-&gt;{name};
+
+		# If the gui's misc setting for ucfirst is set, make sure all headers start with an uppercase letter
+		if ($self-&gt;{misc}{ucfirst}) { $field_name = ucfirst($field_name); }
+
+		# If the field is defined as being visible...
+		if ($dbo-&gt;{fields}-&gt;[$field]-&gt;{visible}) {
+
+			# And if the field's header is defined as being visible
+			if ($dbo-&gt;{fields}-&gt;[$field]-&gt;{header}) {
+				# Then display the header
+				$content .= qq[&lt;td style=&quot;$self-&gt;{data}{th}&quot;&gt;$field_name&lt;/td&gt;\n];
+			} else {
+				# Otherwise, add a blank cell
+				$content .= qq[&lt;td&gt;&nbsp;&lt;/td&gt;\n];
+			}
+		}
+	}
+
+	$content .= qq[&lt;/tr&gt;];
+
+	for (my $record = 0; $record &lt; $h; $record++) {
+		$content .= qq[&lt;tr&gt;];
+		for (my $field = 0; $field &lt;= $w; $field++) {
+
+			# Skip this field if it is defined as not being visible
+			if (! $dbo-&gt;{fields}-&gt;[$field]-&gt;{visible}) {
+				next;
+			}
+
+			my $cell_align = 'left';
+			my $cell_data = $dbo-&gt;{data}-&gt;[$record][$field];
+			my $cell_type = $dbo-&gt;{fields}-&gt;[$field]-&gt;{type};
+			my $cell_style = $self-&gt;{data}{td};
+
+			# Fix blank cells
+			if (! $cell_data) {
+				if ($cell_type =~ /char/i) {
+					$cell_data = '&nbsp;';
+				} else {
+					$cell_data = '0';
+				}
+			}
+
+			# Remove any 00:00:00 times
+			if ($cell_data =~ /(.*)\s+00:00:00/) {
+				$cell_data = $1;
+			}
+
+			# Set cell to right-aligned if cell data is numerical
+			if ($cell_type&nbsp;!~ /char/i) {
+				$cell_align = 'right';
+			}
+
+			# If the commify flag is set and the cell is numeric, commify the number
+			if ($commify) {
+				if (($cell_type&nbsp;!~ /time/i) or ($cell_type&nbsp;!~ /date/i)) {
+					$cell_data = commify($cell_data);
+				}
+			}
+
+			# If a precision size was defined for this field, set the displayed precision
+			my $precision = $dbo-&gt;{fields}-&gt;[$field]-&gt;{precision};
+			if ($precision) {
+				if (($cell_type&nbsp;!~ /char/i) and ($cell_type&nbsp;!~ /date/i)) {
+					$cell_data = sprintf('%.' . $precision . 'f', $cell_data);
+				}
+			}
+
+			# highlight negatives if the flag was passed
+			if ($highlight_negatives) {
+				if ($cell_data =~ /^-\d(.*)/) {
+					$cell_data = qq[&lt;font color=&quot;$self-&gt;{misc}{negatives}&quot;&gt;$cell_data&lt;/font&gt;];
+				}
+			}
+
+			$content .= qq[&lt;td align=$cell_align style=&quot;$cell_style&quot;&gt;$cell_data&lt;/td&gt;];
+		}
+		$content .= &quot;&lt;/tr&gt;\n&quot;;
+	}
+
+	$content .= qq[&lt;/table&gt;];
+
+	return $content;
+}
+
+##########################################################################################################################
+# Private Methods
+
+sub build_report {
+	my $self = shift;
+
+	my $content;
+	my $current_report_page = '1';
+	my $record_html;
+
+	if(! $self-&gt;{global_number_fields}) {
+		$self-&gt;{global_number_fields} = $self-&gt;{datasource}-&gt;{internal}-&gt;{width};
+		$self-&gt;{global_number_records} = $self-&gt;{datasource}-&gt;{internal}-&gt;{height};
+	}
+
+	# open the first table
+	$content .= &quot;$self-&gt;{page_table_html}\n&quot;;
+
+	# We need to pass the current report page back through this loop
+	for (my $index = 0; $index &lt;= $self-&gt;{global_number_records}; $index++) {
+		($record_html, $current_report_page) = $self-&gt;build_record_html($index, $current_report_page);
+		$content .= $record_html;
+	}
+
+	# close the last table
+	$content .= &quot;&lt;/table&gt;\n&quot;;
+
+	return $content;
+}
+
+sub build_record_html {
+	my $self = shift;
+
+	my $record = shift || '0';
+	my $current_report_page = shift;
+	my $previous_report_page;
+
+	my $totals_flag = 0;
+	my $span_flag = 0;
+	my $spacer_underline_flag = 0;
+	my $spacer_flag = 0;
+	my $pre_spacer_flag = 0;
+	my $page_flag = 0;
+	my $headers_flag = 0;
+	my $hnum_flag = 0;
+	my $span_interface_flag = 1;
+	my $zero2space_flag = 0;
+
+	my $content;
+
+	if ($record ne '(undefined)') {
+		# reset flags
+		$totals_flag = 0;
+		$span_flag = 0;
+		$spacer_flag = 0;
+		$pre_spacer_flag = 0;
+		$page_flag = 0;
+		$headers_flag = 0;
+		$hnum_flag = 0;
+		$span_interface_flag = 1;
+		$zero2space_flag = 0;
+		$spacer_underline_flag = 0;
+
+		# page control
+		$previous_report_page = $current_report_page;
+
+		if ($current_report_page ne $previous_report_page) {
+			$pre_spacer_flag = 1;
+			$page_flag = 1;
+		}
+
+		# currently, formatting tags are in column 2 (0-index)
+		my $dfm_tags;
+		my $formatting = $self-&gt;{datasource}-&gt;{data}-&gt;[$record][$self-&gt;{dfm_column}];
+
+		if ($formatting =~ /totals/i) {
+			$totals_flag = 1;
+
+			# test ahead, does next line have another totals in it?
+			my $next_record = $record + 1;
+			my $next_record_keys = $self-&gt;{datasource}-&gt;{data}-&gt;[$next_record][$self-&gt;{dfm_column}];
+
+			if ($next_record_keys&nbsp;!~ /totals/i) {
+				# if not, force a spacer
+				$spacer_flag = 1;
+			}
+			if ($next_record_keys =~ /h\d/i) {
+				$spacer_underline_flag = 0;
+			}
+		}
+
+		if ($formatting =~ /\[(.*)\]/) {
+
+			# extract the dfm tags
+			$formatting = $1;
+			$dfm_tags = $formatting;
+
+			# set any special record-wide display flags;
+
+			# headers
+			if ($formatting =~ /h(\d)/) {
+
+				# key first page col headers on h4 tag
+				if ($1 == '4') {
+					$headers_flag = 1;
+				}
+				$span_flag = 1;
+				$spacer_flag = 1;
+#				$hnum_flag = 1;		# put line over headers
+# headers
+#				$headers_flag = 1;
+			}
+
+			# linefeeds
+# NOTE: Possible new dfm tag
+			if ($formatting =~ /line/i) {
+				$spacer_flag = 1;
+# headers?
+#				$headers_flag = 1;
+			}
+
+			# pagefeeds
+			if ($formatting =~ /page/i) {
+				$spacer_flag = 1;
+				$page_flag = 1;
+			}
+
+			# get the style html tag
+			$formatting = $self-&gt;build_format_string($formatting);
+			if ($hnum_flag) {
+				$formatting =~ s/&quot;$/border-top: 2px solid black;&quot;/;
+			}
+		} else {
+			$formatting = &quot;style=\&quot;$self-&gt;{default_font_style}\&quot;&quot;;
+		}
+
+		# handle pre-spacer (leading page-breaks)
+		if ($pre_spacer_flag) {
+			my $formatting;
+
+			if ($page_flag) {
+# page
+#				$formatting = 'style=&quot;page-break-after: always;&quot;';
+			} else {
+# dots
+				$formatting = 'style=&quot;border-top: 2px solid #000; border-bottom: 1px dotted #aaa;&quot;';
+			}
+
+			$span_interface_flag = 0;
+			$content .= '&lt;tr&gt;' . build_spanned_field_html(&quot;&nbsp;&quot;,$formatting, $span_interface_flag) . &quot;&lt;/tr&gt;\n&quot;;
+# headers
+			if ($page_flag) {
+				$content .= &quot;&lt;/table&gt;\n&quot; . $self-&gt;{page_table_html} . $self-&gt;do_page_break();
+				$page_flag = 0;
+			}
+		}
+
+# cells
+		# open tr html tag
+		$content .= &quot;&lt;tr&gt;&quot;;
+
+		if (! $span_flag) {
+			for (my $index = 0; $index &lt;= $self-&gt;{global_number_fields}; $index++) {
+				# only display the column if it is not in the exclusion list
+				if ($self-&gt;{skip_fields}&nbsp;!~ /\s$index\s/) {
+
+					if (($totals_flag) and ($formatting&nbsp;!~ /border-top/)) {
+						$formatting =~ s/&quot;$//;		# remove trailing quote
+						$formatting .= &quot; border-top: 1px dotted #000;\&quot;&quot;;
+					}
+# zero2space - remove?
+					# if the record is being formatted on a h? dfm tag
+					if ($dfm_tags =~ /h\d/) {
+						$zero2space_flag = 1;
+					}
+
+					$content .= $self-&gt;build_field_html($record, $index, $formatting, $zero2space_flag);
+				}
+			}
+		} else {
+			# do table-wide colspan for headers
+			$content .= $self-&gt;build_spanned_field_html($self-&gt;{datasource}-&gt;{data}-&gt;[$record][$self-&gt;{dfm_column}], $formatting, $span_interface_flag);
+		}
+
+	} else {
+		# simulate/display error record
+		$content .= &quot;&lt;!-- record was not passed --&gt;\n&quot;;
+	}
+
+	$content .= &quot;&lt;/tr&gt;\n&quot;;
+
+	# add a spacer line after the record we just built
+	if ($spacer_flag) {
+		my $formatting;
+
+		if ($page_flag) {
+			if ($spacer_underline_flag) {
+				$formatting = 'style=&quot;border-top: 2px solid #000;&quot;';
+			} else {
+				$formatting = 'style=&quot;&quot;';
+			}
+		} else {
+# dots
+			if ($spacer_underline_flag) {
+				$formatting = 'style=&quot;border-top: 2px solid #000; border-bottom: 1px dotted #aaa;&quot;';
+			} else {
+				$formatting = 'style=&quot;border-top: 2px solid #000;&quot;';
+			}
+		}
+		$content .= '&lt;tr&gt;' . $self-&gt;build_spanned_field_html(&quot;&nbsp;&quot;,$formatting, 0) . &quot;&lt;/tr&gt;\n&quot;;
+
+# headers
+#		if ($page_flag) { $content .= &quot;&lt;/table&gt;\n&quot; . $self-&gt;{page_table_html} . $self-&gt;do_page_break(); }
+		if ($page_flag) { $content .= &quot;&lt;/table&gt;\n&quot; . $self-&gt;{page_table_html}; }
+
+	}
+
+	# add a page headers line after the record we just built.
+	if ($headers_flag) {
+# headers
+		$content .= $self-&gt;do_page_break();
+	}
+
+	# a better way would be to have $current_report_page declared a local static
+	# or global variable.  need to find out how it's done in perl...
+	#
+	# we need to return $current_report_page to the caller, so that
+	# the caller can let us know what the last page processed was
+	# during the next iteration.
+	return ($content, $current_report_page);
+}
+
+sub build_field_html {				# No parameter checking....
+	my $self = shift;
+
+	my $record = shift;
+	my $field = shift;
+	my $formatting = shift;
+	my $zero2space_flag = shift;
+
+	my $cell_width = 0;
+
+	my $field_data = $self-&gt;{datasource}-&gt;{data}-&gt;[$record][$field];
+	my $field_type = $self-&gt;{datasource}-&gt;{fields}-&gt;[$field]-&gt;{type};
+
+	if (! $field_data) { $field_data = '&nbsp;'; }
+	if ($field_data =~ /NULL/i) { $field_data = '&nbsp;'; }
+
+	if ($field_data =~ /^\[.*\](.*)/) {
+		$field_data = $1;
+	}
+
+	if ($field_data =~ /^(.*)\s+00:00:00/) {
+		$field_data = $1;
+	}
+
+	if (! $self-&gt;{pf_flag}) {
+		# color negative values red if device is not printer
+		if ($field_data =~ /^\-/) { $field_data = &quot;&lt;font color=#FF0000&gt;$field_data&lt;/font&gt;&quot;; }
+	}
+
+
+	# Test the data - if it contains /[a-zA-Z][a-zA-Z][a-zA-Z]\s+\d+\s+\d\d\d\d/ set it to a date type
+	if ($field_data =~ /[a-zA-Z][a-zA-Z][a-zA-Z]\s+\d+\s+\d\d\d\d/) {
+		$field_type = 'datetime';
+	}
+
+	# A commify flag needs to be in the gui properties...  should be tested here.
+	if ($field_type&nbsp;!~ /date/i) {
+		if ($field_data&nbsp;!~ /[a-zA-Z]/) {
+			if($self-&gt;{misc}{block_commify} &lt; 1) {
+				if($self-&gt;{datasource}-&gt;{fields}[$field]{commify} &gt; 0) {
+					$field_data = $self-&gt;commify($field_data);
+				}
+			}
+		}
+	}
+
+	# If a precision size was defined for this field, set the displayed precision
+	my $precision = $self-&gt;{datasource}-&gt;{fields}-&gt;[$field]-&gt;{precision};
+	if ($precision) {
+		if ($field_data&nbsp;!~ /[a-zA-Z]/) {
+			$field_data = sprintf('%.' . $precision . 'f', $field_data);
+		}
+	}
+
+	# If a prefix string  was defined for this field, prepend it
+	my $prefix = $self-&gt;{datasource}-&gt;{fields}-&gt;[$field]-&gt;{prefix};
+	if ($prefix) {
+		if ($field_data =~ /&nbsp;/) {
+			$field_data = $prefix . $field_data;
+		}
+	}
+
+	# If a postfix string  was defined for this field, append it
+	my $postfix = $self-&gt;{datasource}-&gt;{fields}-&gt;[$field]-&gt;{postfix};
+	if ($postfix) {
+		if ($field_data =~ /&nbsp;/) {
+			$field_data .= $postfix;
+		}
+	}
+
+	# If an alignment was defined for this field, set it
+	if ($formatting&nbsp;!~ /align/) {
+		my $align = $self-&gt;{datasource}-&gt;{fields}-&gt;[$field]-&gt;{align};
+		if ($align) {
+			$formatting =~ s/&quot;$//;
+			$formatting .= &quot; text-align: $align;\&quot;&quot;;
+		}
+	}
+
+	my $content;
+	if ($cell_width) {
+		$content = &quot;&lt;td width=$cell_width valign=top $formatting&gt;$field_data&lt;/td&gt;&quot;;
+	} else {
+		$content = &quot;&lt;td valign=top $formatting&gt;$field_data&lt;/td&gt;&quot;;
+	}
+
+	return $content;
+}
+
+sub build_spanned_field_html {
+	my $self = shift;
+
+	my $field_data = shift;
+	my $formatting = shift;
+	my $interface_control = shift;
+
+	if (! $field_data) { $field_data = '&nbsp;'; }
+	if ($field_data =~ /NULL/i) { $field_data = '&nbsp;'; }
+
+	if ($field_data =~ /^\[.*\](.*)/) {
+		$field_data = $1;
+	}
+
+	if ($interface_control) {
+#		$field_data .= &quot;&lt;br/&gt;\n&lt;a href=\&quot;#interface\&quot;&gt;( Options )&lt;/a&gt;\n&quot;;
+	}
+
+	# force left aligned text
+	$formatting =~ s/&quot;$//;				# remove the trailing quote
+	$formatting .= &quot; text-align: left;\&quot;&quot;;		# add text-align and trailing quote
+	my $content = &quot;&lt;td colspan=&quot; . (($self-&gt;{global_number_fields} + 1) - $self-&gt;{num_skip_fields}) . &quot; $formatting&gt;$field_data&lt;/td&gt;&quot;;
+
+	return $content;
+}
+
+sub do_page_break {
+	my $self = shift;
+
+	my $content;
+
+	$content = &quot;&lt;tr&gt;&quot;;
+
+	for (my $index = 0; $index &lt;= $self-&gt;{global_number_fields}; $index++) {
+
+		my $cell_width = 50;
+
+		# only display the column label if it is not in the exclusion list
+		if ($self-&gt;{skip_fields}&nbsp;!~ /\s+$index\s+/) {
+
+			my $label = $self-&gt;{datasource}-&gt;{column_info}-&gt;[$index]-&gt;{label};
+			$label = ucfirst($label);
+
+			if ($index == 2) {
+				$label = '&nbsp;';
+			}
+
+			my $align;
+			if ($index == 2) {
+				$align = 'left';
+				$cell_width = 255;
+			} else {
+				$align = 'right';
+			}
+
+			if ($self-&gt;{first_page_break}) {
+# fix this&nbsp;:(
+				if ($index == 2) {
+					$content .= &quot;&lt;td width=$cell_width style=\&quot;text-align: $align;\&quot;&gt;$label&lt;/td&gt;&quot;;
+				} else {
+					$content .= &quot;&lt;td width=$cell_width style=\&quot;text-align: $align; border-bottom: 1px dotted #000;\&quot;&gt;$label&lt;/td&gt;&quot;;
+				}
+			} else {
+# fix this&nbsp;:(
+				if ($index == 2) {
+					$content .= &quot;&lt;td width=$cell_width style=\&quot;page-break-before: always; text-align: $align;\&quot;&gt;$label&lt;/td&gt;&quot;;
+				} else {
+					$content .= &quot;&lt;td width=$cell_width style=\&quot;page-break-before: always; text-align: $align; border-bottom: 1px dotted #000;\&quot;&gt;$label&lt;/td&gt;&quot;;
+				}
+			}
+		} else {
+			# skip
+		}
+	}
+
+	$content .= &quot;&lt;/tr&gt;\n&quot;;
+
+	if ($self-&gt;{first_page_break}) { $self-&gt;{first_page_break} = 0; }	# clear 1st pgbreak flag
+
+	return $content;
+}
+
+sub build_format_string {
+	my $self = shift;
+
+	my $formatting = shift || '(undefined)';
+	my @tags = split(/\s+/, $formatting);
+	my $num_tags = $#tags;
+	my $fstring;
+
+	my %tag_styles = (
+		'italics'	=&gt; 'font-style: italic',
+		'cite'		=&gt; 'font-style: italic',
+		'bold'		=&gt; 'font-weight: bold',
+		'strong'	=&gt; 'font-weight: bold',
+		'fgcolor'	=&gt; 'color',
+		'bgcolor'	=&gt; 'background-color',
+		'fg'		=&gt; 'color',			# short-form for fgcolor
+		'bg'		=&gt; 'background-color',		# short-form for bgcolor
+		'h1'		=&gt; 'font-size: 32px',		# largest heading
+		'h2'		=&gt; 'font-size: 24px',		
+		'h3'		=&gt; 'font-size: 18px',		
+		'h4'		=&gt; 'font-size: 16px',		
+		'h5'		=&gt; 'font-size: 12px',		# smallest heading
+
+# new 09/13/2004
+		'solid_under'	=&gt; 'border-bottom: 1px solid #000',	# line under cells
+		'solid_over'	=&gt; 'border-top: 1px solid #000',	# line over cells
+		'dashed_under'	=&gt; 'border-bottom: 1px dashed #000',	# line under cells
+		'dashed_over'	=&gt; 'border-top: 1px dashed #000',	# line over cells
+		'double_under'	=&gt; 'border-bottom: 3px double #000',	# line under cells
+		'double_over'	=&gt; 'border-top: 3px double #000',	# line over cells
+	);
+
+# quick-search: index-lists
+	my $device_excludes;					# simpler exclusion list
+	if ($self-&gt;{pf_flag}) {					#  than the columns since
+		$device_excludes = 's bg fg s';			#  we don't need to know
+	}							#  how many items are in
+								#  the list.
+	if ($formatting ne '(undefined)') {
+
+		# open the style html tag segment
+		$fstring = 'style=&quot;';
+
+		# build the css settings
+		for (my $index = 0; $index &lt;= $num_tags; $index++) {
+			my $current_tag = $tags[$index];
+			next if ($device_excludes =~ /\s+$current_tag\s+/);
+
+			if ($current_tag =~ /=/) {
+				# tag has associated value
+				my ($tmp_tag, $tmp_value) = split(/=/, $current_tag);
+				next if ($device_excludes =~ /\s+$tmp_tag\s+/);
+				$fstring .= $tag_styles{$tmp_tag} . ': ' . $tmp_value . '; ';
+			} else {
+				# tag does not have assoc value
+				$fstring .= $tag_styles{$current_tag} . '; ';
+			}
+		}
+
+		# if no heading dfm tag was found, we need to append default text size
+		if ($fstring&nbsp;!~ /font\-size/) {
+			$fstring .= $self-&gt;{default_font_style};
+		}
+
+		# clean up the trailing space
+		$fstring =~ s/\s$//;
+
+		# close the style html tag segment
+		$fstring .= '&quot;';
+	} else {
+
+		# the formatting string was undefined, set to default
+		$fstring = &quot;style=\&quot;$self-&gt;{default_font_style}\&quot;&quot;;
+	}
+
+	return $fstring;
+}
+
+sub commify {
+	my $self = shift;
+
+	my $number = reverse $_[0];
+	$number =~ s/(\d\d\d)(?=\d)(?!\d*\.)/$1,/g;
+	return scalar reverse $number;
+}
+
+1;
+
+=pod
+
+=head1 Name
+
+SAL::WebDDR
+
+=head1 Synopsis
+
+=head1 Methods
+
+=head2 Constructor
+
+new()
+
+=head2 Eponymous Hash
+
+=head2 Public
+
+build_window()
+
+build_scroll_window()
+
+build_iframe_window()
+
+build_data_table()
+
+build_report()
+
+build_record_html()
+
+build_field_html()
+
+build_spanned_field_html()
+
+do_page_break()
+
+build_format_string()
+
+commify()
+
+=head1 See Also
+
+SAL::DBI, SAL::Graph, SAL::WebDDR, SAL::WebApplication
+
+=cut
+
+</pre>
+<div class="printfooter">
+Retrieved from "<a href="http://localhost/wiki/SAL-WebDDR">http://localhost/wiki/SAL-WebDDR</a>"</div>
+	    	    <!-- end content -->
+	    <div class="visualClear"></div>
+	  </div>
+	</div>
+      </div>
+      <div id="column-one">
+	<div id="p-cactions" class="portlet">
+	  <h5>Views</h5>
+	  <ul>
+	    <li id="ca-nstab-main"
+	       class="selected"	       ><a href="/wiki/SAL-WebDDR">Article</a></li><li id="ca-talk"
+	       class="new"	       ><a href="/mediawiki/index.php?title=Talk:SAL-WebDDR&amp;action=edit">Discussion</a></li><li id="ca-edit"
+	       	       ><a href="/mediawiki/index.php?title=SAL-WebDDR&amp;action=edit">Edit</a></li><li id="ca-history"
+	       	       ><a href="/mediawiki/index.php?title=SAL-WebDDR&amp;action=history">History</a></li>	  </ul>
+	</div>
+	<div class="portlet" id="p-personal">
+	  <h5>Personal tools</h5>
+	  <div class="pBody">
+	    <ul>
+	    <li id="pt-login"><a href="/mediawiki/index.php?title=Special:Userlogin&amp;returnto=SAL-WebDDR">Create an account or log in</a></li>	    </ul>
+	  </div>
+	</div>
+	<div class="portlet" id="p-logo">
+	  <a style="background-image: url(/wiki/upload/wiki.png);"
+	    href="/wiki/Main_Page"
+	    title="Main Page"></a>
+	</div>
+	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+		<div class='portlet' id='p-navigation'>
+	  <h5>Navigation</h5>
+	  <div class='pBody'>
+	    <ul>
+	    	      <li id="n-mainpage"><a href="/wiki/Main_Page">Main Page</a></li>
+	     	      <li id="n-smap"><a href="/wiki/Sitemap">Sitemap</a></li>
+	     	      <li id="n-recentchanges"><a href="/wiki/Special:Recentchanges">Recent changes</a></li>
+	     	      <li id="n-randompage"><a href="/wiki/Special:Random">Random page</a></li>
+	     	      <li id="n-admin"><a href="/wiki/Site_Administration">gtalug.org Administration</a></li>
+	     	    </ul>
+	  </div>
+	</div>
+		<div class='portlet' id='p-community'>
+	  <h5>community</h5>
+	  <div class='pBody'>
+	    <ul>
+	    	      <li id="n-portal"><a href="/wiki/GTALUG:Community_Portal">Resources</a></li>
+	     	      <li id="n-mailing-lists"><a href="/wiki/Mailing_lists">Mailing lists</a></li>
+	     	      <li id="n-currentevents"><a href="/wiki/Current_events">Current events</a></li>
+	     	      <li id="n-groups"><a href="/wiki/Toronto_opensource_computing_groups">Other groups</a></li>
+	     	      <li id="n-Open-Source-Projects"><a href="/wiki/Projects">Open Source Projects</a></li>
+	     	      <li id="n-classifieds"><a href="/wiki/Classifieds">Bulletin Board/Classifieds</a></li>
+	     	      <li id="n-Meeting-History"><a href="/wiki/Historical:Meetings">Meeting History</a></li>
+	     	    </ul>
+	  </div>
+	</div>
+		<div class='portlet' id='p-editsidebar-title'>
+	  <h5>Customize</h5>
+	  <div class='pBody'>
+	    <ul>
+	    	      <li id="n-editsidebar"><a href="http://localhost/mediawiki/index.php?title=MediaWiki:Sidebar&amp;action=edit">Edit sidebar</a></li>
+	     	    </ul>
+	  </div>
+	</div>
+		<div id="p-search" class="portlet">
+	  <h5><label for="searchInput">Search</label></h5>
+	  <div class="pBody">
+	    <form name="searchform" action="/wiki/Special:Search" id="searchform">
+	      <input id="searchInput" name="search" type="text"
+	        accesskey="f" value="" />
+	      <input type='submit' name="go" class="searchButton" id="searchGoButton"
+	        value="Go"
+	        />&nbsp;<input type='submit' name="fulltext"
+	        class="searchButton"
+	        value="Search" />
+	    </form>
+	  </div>
+	</div>
+	<div class="portlet" id="p-tb">
+	  <h5>Toolbox</h5>
+	  <div class="pBody">
+	    <ul>
+		  		  <li id="t-whatlinkshere"><a href="/wiki/Special:Whatlinkshere/SAL-WebDDR">What links here</a></li>
+		  		  <li id="t-recentchangeslinked"><a href="/wiki/Special:Recentchangeslinked/SAL-WebDDR">Related changes</a></li>
+		                	      	      	      	      	      	      	      <li id="t-upload"><a href="/wiki/Special:Upload">Upload file</a></li>	      	      <li id="t-specialpages"><a href="/wiki/Special:Specialpages">Special pages</a></li>	      	      	      <li id="t-print"><a href="/mediawiki/index.php?title=SAL-WebDDR&amp;printable=yes">Printable version</a></li>
+	      	    </ul>
+	  </div>
+	</div>
+	      </div><!-- end of the left (by default at least) column -->
+      <div class="visualClear"></div>
+      <div id="footer">
+    <div id="f-poweredbyico"><a href="http://www.mediawiki.org/"><img src="/mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="MediaWiki" /></a></div>	<div id="f-copyrightico"><a href="http://www.gnu.org/copyleft/fdl.html"><img src="/mediawiki/skins/common/images/gnu-fdl.png" alt='GNU Free Documentation License 1.2' /></a></div>	<ul id="f-list">
+	  <li id="f-lastmod"> This page was last modified 21:41, 20 July 2009.</li>	  <li id="f-viewcount">This page has been accessed 5,765 times.</li>	  	  	  <li id="f-copyright">Content is available under <a href="http://www.gnu.org/copyleft/fdl.html" class='external ' title="http://www.gnu.org/copyleft/fdl.html" rel="nofollow">GNU Free Documentation License 1.2</a>.</li>	  <li id="f-about"><a href="/wiki/GTALUG:About" title="GTALUG:About">About GTALUG</a></li>	  <li id="f-disclaimer"><a href="/wiki/GTALUG:General_disclaimer" title="GTALUG:General disclaimer">Disclaimers</a></li>	  	</ul>
+      </div>
+    </div>
+    <!-- Served by gold.ss.org in 0.09 secs. -->  </body>
+</html>

@@ -1,0 +1,359 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="KEYWORDS" content="SAL-Graph,Culture,Psema4,SAL,SAL Reporting Examples,Sitemap" />
+<meta name="robots" content="index,follow" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link title="Creative Commons" type="application/rdf+xml" href="/mediawiki/index.php?title=SAL-Graph&amp;action=creativecommons" rel="meta" />
+<link rel="copyright" href="http://www.gnu.org/copyleft/fdl.html" />
+    <title>SAL-Graph - GTALUG</title>
+    <style type="text/css" media="screen,projection">/*<![CDATA[*/ @import "/mediawiki/skins/gtalug/main.css"; /*]]>*/</style>
+    <link rel="stylesheet" type="text/css" media="print" href="/mediawiki/skins/common/commonPrint.css" />
+    <!--[if lt IE 5.5000]><style type="text/css">@import "/mediawiki/skins/gtalug/IE50Fixes.css";</style><![endif]-->
+    <!--[if IE 5.5000]><style type="text/css">@import "/mediawiki/skins/gtalug/IE55Fixes.css";</style><![endif]-->
+    <!--[if gte IE 6]><style type="text/css">@import "/mediawiki/skins/gtalug/IE60Fixes.css";</style><![endif]-->
+    <!--[if IE]><script type="text/javascript" src="/mediawiki/skins/common/IEFixes.js"></script>
+    <meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+    <script type="text/javascript" src="/mediawiki/index.php?title=-&amp;action=raw&amp;gen=js"></script>    <script type="text/javascript" src="/mediawiki/skins/common/wikibits.js"></script>
+    <style type="text/css">/*<![CDATA[*/
+@import "/mediawiki/index.php?title=MediaWiki:Gtalug.css&action=raw&ctype=text/css&smaxage=18000";
+@import "/mediawiki/index.php?title=-&action=raw&gen=css&maxage=18000";
+/*]]>*/</style>              </head>
+  <body                 class="ns-0">
+    <div id="globalWrapper">
+      <div id="column-content">
+	<div id="content">
+	  <a name="top" id="top"></a>
+	  	  <h1 class="firstHeading">SAL-Graph</h1>
+	  <div id="bodyContent">
+	    <h3 id="siteSub">From GTALUG</h3>
+	    <div id="contentSub"></div>
+	    	    	    <!-- start content -->
+	    <p><a href="/wiki/Sitemap" title="Sitemap">Sitemap</a> > <a href="/wiki/Culture" title="Culture">Culture</a> > <a href="/wiki/Psema4" title="Psema4">Psema4</a> > <a href="/wiki/SAL" title="SAL">SAL</a> > SAL-Graph
+</p>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/mediawiki/index.php?title=SAL-Graph&amp;action=edit&amp;section=1" title="SAL-Graph">edit</a>]</div><a name="Screenshots"></a><h2> Screenshots </h2>
+<p>From: <a href="/wiki/SAL_Reporting_Examples" title="SAL Reporting Examples">SAL Reporting Examples</a>:&nbsp;&nbsp;<img src="http://psema4.gotdns.com/images/projects/screens/salgraph.png" alt="salgraph.png" />
+</p><p><br />
+</p>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/mediawiki/index.php?title=SAL-Graph&amp;action=edit&amp;section=2" title="SAL-Graph">edit</a>]</div><a name="Source"></a><h2> Source </h2>
+<pre>
+package SAL::Graph;
+
+# This script is licensed under the FDL (Free Document License)
+# The complete license text can be found at http://www.gnu.org/copyleft/fdl.html
+# Contains excerpts from various man pages, tutorials and books on perl
+# GRAPHING MODULE
+
+use strict;
+use DBI;
+use Carp;
+use Data::Dumper;
+use GD;
+use GD::Graph::lines;
+use GD::Graph::bars;
+use GD::Graph::linespoints;
+use GD::Graph::lines3d;
+use GD::Graph::bars3d;
+use GD::Graph::Data;
+use GD::Graph::colour qw(:colours&nbsp;:lists&nbsp;:files&nbsp;:convert);
+
+
+BEGIN {
+	use Exporter ();
+	our ($VERSION, @ISA, @EXPORT, @EXPORT_OK, %EXPORT_TAGS);
+	$VERSION = 3.0;
+	@ISA = qw(Exporter);
+	@EXPORT = qw();
+	%EXPORT_TAGS = ();
+	@EXPORT_OK = qw();
+}
+our @EXPORT_OK;
+
+END { }
+
+our %Graph = (
+######################################
+ 'datasource'	=&gt; '',
+######################################
+ 'type'		=&gt; '',
+######################################
+ 'legend'	=&gt; [],
+######################################
+ 'image'	=&gt; {},
+######################################
+ 'formatting'	=&gt; {},
+######################################
+ 'out'		=&gt; '',
+######################################
+ 'dump'		=&gt; '',
+######################################
+);
+
+# Setup accessors via closure (from perltooc manpage)
+sub _classobj {
+	my $obclass = shift || __PACKAGE__;
+	my $class = ref($obclass) || $obclass;
+	no strict &quot;refs&quot;;
+	return \%$class;
+}
+
+for my $datum (keys %{ _classobj() }) {
+	no strict &quot;refs&quot;;
+	*$datum = sub {
+		my $self = shift-&gt;_classobj();
+		$self-&gt;{$datum} = shift if @_;
+		return $self-&gt;{$datum};
+	}
+}
+
+##########################################################################################################################
+# Constructors (Public)
+sub new {
+	my $obclass = shift || __PACKAGE__;
+	my $class = ref($obclass) || $obclass;
+	my $self = {};
+
+	bless($self, $class);
+
+	$self-&gt;{'type'} = 'lines';
+	$self-&gt;{'out'} = 'png';
+
+	$self-&gt;{legend}-&gt;[0] = 'Legend not defined.';
+	$self-&gt;{legend}-&gt;[1] = 'Legend not defined.';
+
+	$self-&gt;{'image'}{'width'}			= 400;
+	$self-&gt;{'image'}{'height'}			= 400;
+	$self-&gt;{'formatting'}{'x_label'}		= 'X Label';
+	$self-&gt;{'formatting'}{'x_label_skip'}		= 1;
+	$self-&gt;{'formatting'}{'x_labels_vertical'}	= 1;
+	$self-&gt;{'formatting'}{'y_label'}		= 'Y Label';
+	$self-&gt;{'formatting'}{'title'}			= 'Graph Title';
+	$self-&gt;{'formatting'}{'box_axis'}		= 1;
+	$self-&gt;{'formatting'}{'long_ticks'}		= 0;
+	$self-&gt;{'formatting'}{'show_values'}		= 0;
+	$self-&gt;{'formatting'}{'values_vertical'}	= 0;
+	$self-&gt;{'formatting'}{'text_space'}		= 8;
+	$self-&gt;{'formatting'}{'axis_space'}		= 10;
+	$self-&gt;{'formatting'}{'fgclr'}			= '#AAAAAA';
+	$self-&gt;{'formatting'}{'boxclr'}			= '#FFFFFF';
+	$self-&gt;{'formatting'}{'labelclr'}		= 'black';
+	$self-&gt;{'formatting'}{'axislabelclr'}		= 'black';
+	$self-&gt;{'formatting'}{'textclr'}		= 'black';
+	$self-&gt;{'formatting'}{'valuesclr'}		= 'black';
+	$self-&gt;{'formatting'}{'shadowclr'}		= 'dgray';
+	$self-&gt;{'formatting'}{'shadow_depth'}		= '4';
+	$self-&gt;{'formatting'}{'transparent'}		= 1;
+
+	my @plot_colors = ('#598F94','#980D36','#4848FF','#DDDD00');
+	$self-&gt;{formatting}{'dclrs'} = \@plot_colors;
+
+	$self-&gt;{dump} = Dumper($self);
+
+	return $self;
+}
+
+##########################################################################################################################
+# Destructor (Public)
+sub destruct {
+	my $self = shift;
+
+}
+
+##########################################################################################################################
+# Public Methods
+
+sub build_graph {
+	my ($self, $send_mime, $datasource, $query, @params) = @_;
+
+	GD::Graph::colour::add_colour('#AAAAAA');
+	GD::Graph::colour::add_colour('#1F9DC2');
+
+	my $data = new GD::Graph::Data;
+
+	if ($datasource) {
+		# do dbi
+		my ($w, $h) = $datasource-&gt;execute($query, @params);
+
+		$datasource-&gt;clean_times(0);
+		$datasource-&gt;short_dates(0);
+
+		for (my $record = 0; $record &lt; $h; $record++) {
+			my @row = $datasource-&gt;get_row($record);
+			$data-&gt;add_point(@row);
+		}
+	} else {
+		croak(&quot;No datasource set\n&quot;);
+	}
+
+	my $graph;
+	my $gtype = $self-&gt;{'type'};
+	my $gpkg = &quot;GD::Graph::$gtype&quot;; 
+
+	$graph = $gpkg-&gt;new($self-&gt;{image}{width}, $self-&gt;{image}{height});
+
+	my @colour_names = GD::Graph::colour::colour_list(8);
+
+	$graph-&gt;set( %{$self-&gt;{formatting}} )        or die $graph-&gt;error;
+
+	my @legend  = @{$self-&gt;{legend}};
+	$graph-&gt;set_legend(@legend);
+
+	$graph-&gt;plot($data) or die $graph-&gt;error;
+
+	my $result;
+
+	# If the caller requested the mime type, add it to the results...
+	if ($send_mime) {
+		if ($self-&gt;{out} eq 'png') {
+			$result = &quot;Content-type: image/png\n\n&quot;;
+		}
+	}
+
+	# Put the graph in the results...
+	if ($self-&gt;{out} eq 'png') {
+		$result .= $graph-&gt;gd-&gt;png;
+	}
+
+	# And return them
+	return $result;
+}
+
+sub set_legend {
+	my ($self, @legend) = @_;
+
+	my $index = 0;
+	foreach my $entry (@legend) {
+		$self-&gt;{legend}[$index] = $entry;
+		$index++;
+	}
+}
+
+1;
+
+=pod
+
+=head1 Name
+
+SAL::Graph
+
+=head1 Synopsis
+
+=head1 Methods
+
+=head2 Constructor
+
+new()
+
+=head2 Eponymous Hash
+
+=head2 Public
+
+build_graph()
+
+set_legend()
+
+=head1 See Also
+
+SAL::DBI, SAL::Graph, SAL::WebDDR, SAL::WebApplication
+
+=cut
+
+</pre>
+<div class="printfooter">
+Retrieved from "<a href="http://localhost/wiki/SAL-Graph">http://localhost/wiki/SAL-Graph</a>"</div>
+	    	    <!-- end content -->
+	    <div class="visualClear"></div>
+	  </div>
+	</div>
+      </div>
+      <div id="column-one">
+	<div id="p-cactions" class="portlet">
+	  <h5>Views</h5>
+	  <ul>
+	    <li id="ca-nstab-main"
+	       class="selected"	       ><a href="/wiki/SAL-Graph">Article</a></li><li id="ca-talk"
+	       class="new"	       ><a href="/mediawiki/index.php?title=Talk:SAL-Graph&amp;action=edit">Discussion</a></li><li id="ca-edit"
+	       	       ><a href="/mediawiki/index.php?title=SAL-Graph&amp;action=edit">Edit</a></li><li id="ca-history"
+	       	       ><a href="/mediawiki/index.php?title=SAL-Graph&amp;action=history">History</a></li>	  </ul>
+	</div>
+	<div class="portlet" id="p-personal">
+	  <h5>Personal tools</h5>
+	  <div class="pBody">
+	    <ul>
+	    <li id="pt-login"><a href="/mediawiki/index.php?title=Special:Userlogin&amp;returnto=SAL-Graph">Create an account or log in</a></li>	    </ul>
+	  </div>
+	</div>
+	<div class="portlet" id="p-logo">
+	  <a style="background-image: url(/wiki/upload/wiki.png);"
+	    href="/wiki/Main_Page"
+	    title="Main Page"></a>
+	</div>
+	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+		<div class='portlet' id='p-navigation'>
+	  <h5>Navigation</h5>
+	  <div class='pBody'>
+	    <ul>
+	    	      <li id="n-mainpage"><a href="/wiki/Main_Page">Main Page</a></li>
+	     	      <li id="n-smap"><a href="/wiki/Sitemap">Sitemap</a></li>
+	     	      <li id="n-recentchanges"><a href="/wiki/Special:Recentchanges">Recent changes</a></li>
+	     	      <li id="n-randompage"><a href="/wiki/Special:Random">Random page</a></li>
+	     	      <li id="n-admin"><a href="/wiki/Site_Administration">gtalug.org Administration</a></li>
+	     	    </ul>
+	  </div>
+	</div>
+		<div class='portlet' id='p-community'>
+	  <h5>community</h5>
+	  <div class='pBody'>
+	    <ul>
+	    	      <li id="n-portal"><a href="/wiki/GTALUG:Community_Portal">Resources</a></li>
+	     	      <li id="n-mailing-lists"><a href="/wiki/Mailing_lists">Mailing lists</a></li>
+	     	      <li id="n-currentevents"><a href="/wiki/Current_events">Current events</a></li>
+	     	      <li id="n-groups"><a href="/wiki/Toronto_opensource_computing_groups">Other groups</a></li>
+	     	      <li id="n-Open-Source-Projects"><a href="/wiki/Projects">Open Source Projects</a></li>
+	     	      <li id="n-classifieds"><a href="/wiki/Classifieds">Bulletin Board/Classifieds</a></li>
+	     	      <li id="n-Meeting-History"><a href="/wiki/Historical:Meetings">Meeting History</a></li>
+	     	    </ul>
+	  </div>
+	</div>
+		<div class='portlet' id='p-editsidebar-title'>
+	  <h5>Customize</h5>
+	  <div class='pBody'>
+	    <ul>
+	    	      <li id="n-editsidebar"><a href="http://localhost/mediawiki/index.php?title=MediaWiki:Sidebar&amp;action=edit">Edit sidebar</a></li>
+	     	    </ul>
+	  </div>
+	</div>
+		<div id="p-search" class="portlet">
+	  <h5><label for="searchInput">Search</label></h5>
+	  <div class="pBody">
+	    <form name="searchform" action="/wiki/Special:Search" id="searchform">
+	      <input id="searchInput" name="search" type="text"
+	        accesskey="f" value="" />
+	      <input type='submit' name="go" class="searchButton" id="searchGoButton"
+	        value="Go"
+	        />&nbsp;<input type='submit' name="fulltext"
+	        class="searchButton"
+	        value="Search" />
+	    </form>
+	  </div>
+	</div>
+	<div class="portlet" id="p-tb">
+	  <h5>Toolbox</h5>
+	  <div class="pBody">
+	    <ul>
+		  		  <li id="t-whatlinkshere"><a href="/wiki/Special:Whatlinkshere/SAL-Graph">What links here</a></li>
+		  		  <li id="t-recentchangeslinked"><a href="/wiki/Special:Recentchangeslinked/SAL-Graph">Related changes</a></li>
+		                	      	      	      	      	      	      	      <li id="t-upload"><a href="/wiki/Special:Upload">Upload file</a></li>	      	      <li id="t-specialpages"><a href="/wiki/Special:Specialpages">Special pages</a></li>	      	      	      <li id="t-print"><a href="/mediawiki/index.php?title=SAL-Graph&amp;printable=yes">Printable version</a></li>
+	      	    </ul>
+	  </div>
+	</div>
+	      </div><!-- end of the left (by default at least) column -->
+      <div class="visualClear"></div>
+      <div id="footer">
+    <div id="f-poweredbyico"><a href="http://www.mediawiki.org/"><img src="/mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="MediaWiki" /></a></div>	<div id="f-copyrightico"><a href="http://www.gnu.org/copyleft/fdl.html"><img src="/mediawiki/skins/common/images/gnu-fdl.png" alt='GNU Free Documentation License 1.2' /></a></div>	<ul id="f-list">
+	  <li id="f-lastmod"> This page was last modified 03:57, 24 May 2009.</li>	  <li id="f-viewcount">This page has been accessed 4,738 times.</li>	  	  	  <li id="f-copyright">Content is available under <a href="http://www.gnu.org/copyleft/fdl.html" class='external ' title="http://www.gnu.org/copyleft/fdl.html" rel="nofollow">GNU Free Documentation License 1.2</a>.</li>	  <li id="f-about"><a href="/wiki/GTALUG:About" title="GTALUG:About">About GTALUG</a></li>	  <li id="f-disclaimer"><a href="/wiki/GTALUG:General_disclaimer" title="GTALUG:General disclaimer">Disclaimers</a></li>	  	</ul>
+      </div>
+    </div>
+    <!-- Served by gold.ss.org in 0.08 secs. -->  </body>
+</html>

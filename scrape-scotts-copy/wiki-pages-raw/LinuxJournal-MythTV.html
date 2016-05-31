@@ -1,0 +1,158 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="KEYWORDS" content="LinuxJournal-MythTV" />
+<meta name="robots" content="index,follow" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link title="Creative Commons" type="application/rdf+xml" href="/mediawiki/index.php?title=LinuxJournal-MythTV&amp;action=creativecommons" rel="meta" />
+<link rel="copyright" href="http://www.gnu.org/copyleft/fdl.html" />
+    <title>LinuxJournal-MythTV - GTALUG</title>
+    <style type="text/css" media="screen,projection">/*<![CDATA[*/ @import "/mediawiki/skins/gtalug/main.css"; /*]]>*/</style>
+    <link rel="stylesheet" type="text/css" media="print" href="/mediawiki/skins/common/commonPrint.css" />
+    <!--[if lt IE 5.5000]><style type="text/css">@import "/mediawiki/skins/gtalug/IE50Fixes.css";</style><![endif]-->
+    <!--[if IE 5.5000]><style type="text/css">@import "/mediawiki/skins/gtalug/IE55Fixes.css";</style><![endif]-->
+    <!--[if gte IE 6]><style type="text/css">@import "/mediawiki/skins/gtalug/IE60Fixes.css";</style><![endif]-->
+    <!--[if IE]><script type="text/javascript" src="/mediawiki/skins/common/IEFixes.js"></script>
+    <meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+    <script type="text/javascript" src="/mediawiki/index.php?title=-&amp;action=raw&amp;gen=js"></script>    <script type="text/javascript" src="/mediawiki/skins/common/wikibits.js"></script>
+    <style type="text/css">/*<![CDATA[*/
+@import "/mediawiki/index.php?title=MediaWiki:Gtalug.css&action=raw&ctype=text/css&smaxage=18000";
+@import "/mediawiki/index.php?title=-&action=raw&gen=css&maxage=18000";
+/*]]>*/</style>              </head>
+  <body                 class="ns-0">
+    <div id="globalWrapper">
+      <div id="column-content">
+	<div id="content">
+	  <a name="top" id="top"></a>
+	  	  <h1 class="firstHeading">LinuxJournal-MythTV</h1>
+	  <div id="bodyContent">
+	    <h3 id="siteSub">From GTALUG</h3>
+	    <div id="contentSub"></div>
+	    	    	    <!-- start content -->
+	    <p>The following was written by local author Colin McGregor and first appeared on LinuxJournal.com in November 2005.
+</p>
+<div class="editsection" style="float:right;margin-left:5px;">[<a href="/mediawiki/index.php?title=LinuxJournal-MythTV&amp;action=edit&amp;section=1" title="LinuxJournal-MythTV">edit</a>]</div><a name="A_Beginning_Look_At_MythTV"></a><h3> A Beginning Look At MythTV </h3>
+<p>By Colin McGregor
+</p><p>MythTV is a software package that lets you turn your Linux-based computer into a television and personal video recorder (PVR) by recording shows onto the hard disk. MythTV lets you select the TV shows you want to record by using an on-screen menu, pointing and clicking your way way through a schedule by show name or time.
+</p><p>MythTV is similar to TiVo in its ability to record TV shows onto a hard drive. MythTV also offers a point-and-click scheduling feature with TV listings downloaded off the Internet, the same way that TiVo does. Unlike a TiVo, however, you can build as much storage into a MythTV box as the Linux kernel and/or your budget allows. With its links to Xmame, MythTV also lets your box act as a video arcade. Similar to the X Window System, MythTV is set up on a client/server model. This means the TV tuner card(s) can be in one computer while the display is in another computer(s).
+</p><p>The ability to watch TV shows over the network can be a great thing. For example, I once worked in the consulting arm of a Canadian accounting firm. Every time a new Federal budget was introduced into Parliament, the entire accounting staff was required to watch TV at the office so we could follow along. At home, too, it can be nice to have only a laptop with a wireless connection to your server and still be able to watch TV. With MythTV, one server box can provide TV for a number of Linux desktops, be it in a home or office setting.
+</p><p>When considering whether to use MythTV, the first question to ask is, "Does MythTV make sense from a cost standpoint?" A used TiVo PVR often can be found in on-line auctions such as e-Bay for under $100, and TiVo offers many--but not all--of the features MythTV has. So, if you can do this MythTV project for under $100, or if you really want features that MythTV has and TiVo doesn't, then great, go with MythTV. Otherwise, it may be wiser to look at a TiVo or one of TiVo's direct competitors.
+</p><p>The other consideration to make is how much free time do you want to commit to this project? MythTV is not an easy program to get installed and running. I have run into issues with drivers for different TV capture cards conflicting, database security and several other problems. All of these issues are solvable, but they all take time to deal with--in some cases, significant amounts of time.
+</p><p>If you decide to proceed with MythTV, the next question is, "What hardware do I need?" Running MythTV will test your hardware in a number of ways, so you need to pay attention to everything from video cards to hard drives to cases. When it comes to disk storage, you are looking at upwards of 2GB per hour of recorded programming. Even more space is required if you're dealing with HDTV, so if you have less than 40GB of free space, you likely should be checking prices of new hard drives. If you do get a new hard drive for MythTV, keep filesystems in mind. MythTV is storage hungry and expects all program files to be in the same directory. Logical Volume Management, which allows you to add drive space as needed, is worth careful consideration here.
+</p><p>For TV tuner cards, the gold standard is the Hauppauge PVR cards, as they all can do MPEG-2 encoding on the card without depending on the main CPU. As of this writing, the Hauppauge PVR series of cards consists of the PVR-150, PVR-250, PVR-350 and PVR-500. The PVR-150 is a cost-reduced version of the PVR-250, and the only basis for deciding between them is cost. The PVR-350 has an MPEG-2 decoder on the card and can act as a video card. The PVR-500 has two TV tuners on the one card and acts like two PVR-250 cards. Hauppauge does offer multiple versions of some of these cards, some with a remote control and some without, so double-check what is or isn't included with the card before you buy one. Also of note is the existence of one AverMedia card, the M179, that can support the same MPEG-2 encoding tricks as the Hauppauge PVR-150.
+</p><p>A large number of low-end TV tuner cards are available from a large number of manufacturers, including AverMedia and Hauppauge. They normally are built around the Brooktree bt8xx or Phillips SAA71xx chips. When looking for information about these parts, you should keep in mind that Brooktree now is a part of Conexant.
+</p><p>Besides low price, there are two common elements to the Brooktree- and Phillips-based cards. They depend on the main CPU to do the conversion to MPEG-2, significantly increasing the sort of CPU you need to support these cards. Second, almost all of these cards depend on the sound card to digitize the TV audio. Therefore, if you want to record two shows at the same time, you need two audio cards.
+</p><p>MythTV does support selected USB and Firewire external TV tuner boxes. So, if you hate the idea of opening up your PC to install a PCI card, or if you have a laptop PC where installing a PCI card is not an option, you still can use MythTV. Do keep in mind, though, that you will pay a substantial premium for these boxes, so if at all possible, go with a PCI card solution. Finally, MythTV does support some HDTV tuner cards.
+</p><p>As I noted in a previous article, I like nVidia-based video cards because of the quality of the video driver software. Assuming you need a new video card and have decided not to use a Hauppauge PVR-350 card, the nVidia GeForce FX 5200-based cards have received many good reviews in the MythTV community. The GeForce FX 5200 is a poor performer when it comes to 3-D video games, but it does have four big things going for it: good software support, the ability to handle anything MythTV can throw at it, low cost (its an older card) and fan-less versions are available. If you are planning to set up your MythTV box in a family room or living room, a fanless card may prove critical. When watching TV, you want all of the noises you hear to be part of what is happening on screen, not your computer.
+</p><p>What you need for a computer CPU depends on several factors, starting with your TV capture card. The TV capture cards that do MPEG-2 encoding on the cards themselves place less strain on the CPU than do video cards that handle MPEG-2 encoding through the main CPU. Likewise, video cards that can do MPEG-2 decoding on the card rather than through the main CPU are easier to deal with. Still, a 750MHz Pentium III is about as low of a machine as you want to go. Yes, you can get away with a lower-end machine if you use high-end capture and video cards. But if you use basic capture and video cards, you probably will find yourself needing a higher-end CPU.
+</p><p>If you are building a MythTV box from scratch, you should give some thought to the case. As with the video card, low noise is a consideration for this project. Cases are available that offer sound muffling for a price that may be worthwhile in some situations. Here you can find a list of real-world examples of the kinds of hardware that have been made to work and get some idea as to how happy the people in question have been with the results.
+</p><p>What you are going to need in the way of software depends on the hardware you have and where you live. To start with, you need the MythTV package, which contains the MythTV front-end and MythTV back-end software. It is available on the MythTV Web site. While perusing the MythTV Web site, you likely will want the desirable but not required plugins package, which adds support for weather displays, games and other useful additions.
+</p><p>MythTV depends on its database, which runs under MySQL, so the next stop is the MySQL Web site. MySQL is offered under two licenses, a commercial one and a free GPL one. For MythTV purposes, the GPL version is fine and should be downloaded and installed.
+</p><p>Driver software is required for your TV capture device(s). Exactly what you need here depends on the device(s) in question. For the Hauppauge PVR series, you need the IVTV driver. For drivers and information about a number of other TV tuner cards, take a look at the video4linux wiki.
+</p><p>One of the nice features of all self-respecting PVRs is the ability to point and click what shows you want to record. This means MythTV needs to somehow know when/where, for example. Doctor Who or Corner Gas will be shown. If you are in the United States or Canada, you should set up an account with Zap2it Labs. It provides a TV listing service for MythTV users, the only requirement being that you complete a short survey every 3 months.
+</p><p>When setting up an account with Zap2it, you need to answer some user-profile questions, such as how many hours do you spend reading each week. You also need to provide some location information, your zip/postal code, antenna/cable/satellite provider name, plus the MythTV certificate code: ZIYN-DQZO-SBUT. If you live outside the US or Canada, instead of using Zap2it, you need a copy of XMLTV. XMLTV is a program that, as of this writing, can grab TV listings for Austria, Britain, Denmark, Ireland, Finland, France, Germany, Hungary, Japan, Netherlands, Norway, Romania, Spain and Sweden from local Web sites. It then turns the listings into a format that MythTV is happy with.
+</p><p>To support the ability to use a TV-style remote control with MythTV, you need a copy of the Linux Infrared Remote Control (LIRC) software and some sort of infrared detector for your PC. Depending on the sort of TV capture card you choose, an infrared detector may have been included. Alternatively, if you're comfortable working with a 25-40 watt soldering iron, the LIRC Web site has plans for several simple infrared detectors that work well with its software.
+</p><p>For the remote control, if you don't use the remote included with your TV tuner card, then almost any "universal" remote control can be made to work with the LIRC software. The one brand of remotes with known issues is Bang &amp; Olufsen, which uses a proprietary protocol. In my case, I was able to get a perfectly usable, factory refurbished remote and a package of batteries from a local electronics clearance shop, all for under $5.
+</p><p>Next comes the installation. As previously noted, this step is going to be tough, with a number of distribution-related oddities. So, you are going to need help beyond what is included with the software or what is available on the MythTV Web site. Jarod Wilson wrote an excellent on-line guide for setting up MythTV under Fedora Core 4. This MythTV users mailing list is useful, but at around 100 messages a day, is somewhat high volume. In addition, the major search engines such as Google and Yahoo are your friends in tasks such as this one. You almost can be certain that someone somewhere has encountered the same problem you're now facing and has posted a note about it on the Net. [Also, check out the December 2005 issue of Linux Journal for more articles about MythTV.--Eds.]
+</p><p>If you choose to set up a remote front-end box that does only the display work, while depending on a back-end box for files and TV capture cards, there is some debate as to what makes the best front-end box. Ironically, Microsoft XBox video game machines are a popular choice for a front end, as they can be made to run Linux. XBox machines are small, and they blend in well with a family room decor. More importantly, they have almost all of the key hardware you would need for a front-end box, such as built-in network connections. And, with the November 2005 release of the XBox 360, used original XBox machines should be inexpensive.
+</p><p>Beyond the basic install, the MythTV plugins offer a great many goodies. There are two legal issues to be aware of with two of the plugins, MythDVD and MythGame. In order to be able to watch properly the DVDs you have bought or rented from the local video store, you need a program that can deal with the Content Scrambling System, or CSS. CSS is the encryption system used on a great many DVDs that supposedly prevents DVD piracy. The movie studios have been all too happy to sue software developers who develop open-source CSS software or even those who provide links to where you can find CSS software. Still, as noted, when you run into a problem with getting something to work with MythTV, search engines are your friend.
+</p><p>Other legal issues can come up with MythGame, which uses Xmame to allow you to play old video arcade games. Xmame mimics the hardware of old machines and can support over 3,000 games. After all, a 3GHz, 64-bit PC has no trouble mimicking 25-year-old, 1MHz, 8-bit video game hardware. The old video game software for Xmame can be an issue, though, as all of it still is under copyright. Thus, there can be issues running it under Linux. Copyright holders for two games, Gridlee and Robbie Roto, have given their permission for non-commercial use of these games. In addition, the copyright holder for the game Poly-Play, VEB Polytechnik Karl-Marx-Stadt, disappeared in the collapse of East Germany, and the game is treated as being public domain. Before you legally can play the thousands of other old games available, you need to get the ROMs that originally were shipped with the game. Once you have an original set of, say, Battlezone, Space Invaders or Asteroids ROMs, you can in most jurisdictions legally make a backup copy to your PC and then run the backup copy on your PC.
+</p><p>Colin McGregor (colin@mcgregor.org) works for a Toronto area charity, does consulting on the side and has served as President of the Toronto Free-Net. He also is secretary for and occasional guest speaker at the Greater Toronto Area Linux User Group meetings.
+</p><div class="printfooter">
+Retrieved from "<a href="http://localhost/wiki/LinuxJournal-MythTV">http://localhost/wiki/LinuxJournal-MythTV</a>"</div>
+	    	    <!-- end content -->
+	    <div class="visualClear"></div>
+	  </div>
+	</div>
+      </div>
+      <div id="column-one">
+	<div id="p-cactions" class="portlet">
+	  <h5>Views</h5>
+	  <ul>
+	    <li id="ca-nstab-main"
+	       class="selected"	       ><a href="/wiki/LinuxJournal-MythTV">Article</a></li><li id="ca-talk"
+	       class="new"	       ><a href="/mediawiki/index.php?title=Talk:LinuxJournal-MythTV&amp;action=edit">Discussion</a></li><li id="ca-edit"
+	       	       ><a href="/mediawiki/index.php?title=LinuxJournal-MythTV&amp;action=edit">Edit</a></li><li id="ca-history"
+	       	       ><a href="/mediawiki/index.php?title=LinuxJournal-MythTV&amp;action=history">History</a></li>	  </ul>
+	</div>
+	<div class="portlet" id="p-personal">
+	  <h5>Personal tools</h5>
+	  <div class="pBody">
+	    <ul>
+	    <li id="pt-login"><a href="/mediawiki/index.php?title=Special:Userlogin&amp;returnto=LinuxJournal-MythTV">Create an account or log in</a></li>	    </ul>
+	  </div>
+	</div>
+	<div class="portlet" id="p-logo">
+	  <a style="background-image: url(/wiki/upload/wiki.png);"
+	    href="/wiki/Main_Page"
+	    title="Main Page"></a>
+	</div>
+	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+		<div class='portlet' id='p-navigation'>
+	  <h5>Navigation</h5>
+	  <div class='pBody'>
+	    <ul>
+	    	      <li id="n-mainpage"><a href="/wiki/Main_Page">Main Page</a></li>
+	     	      <li id="n-smap"><a href="/wiki/Sitemap">Sitemap</a></li>
+	     	      <li id="n-recentchanges"><a href="/wiki/Special:Recentchanges">Recent changes</a></li>
+	     	      <li id="n-randompage"><a href="/wiki/Special:Random">Random page</a></li>
+	     	      <li id="n-admin"><a href="/wiki/Site_Administration">gtalug.org Administration</a></li>
+	     	    </ul>
+	  </div>
+	</div>
+		<div class='portlet' id='p-community'>
+	  <h5>community</h5>
+	  <div class='pBody'>
+	    <ul>
+	    	      <li id="n-portal"><a href="/wiki/GTALUG:Community_Portal">Resources</a></li>
+	     	      <li id="n-mailing-lists"><a href="/wiki/Mailing_lists">Mailing lists</a></li>
+	     	      <li id="n-currentevents"><a href="/wiki/Current_events">Current events</a></li>
+	     	      <li id="n-groups"><a href="/wiki/Toronto_opensource_computing_groups">Other groups</a></li>
+	     	      <li id="n-Open-Source-Projects"><a href="/wiki/Projects">Open Source Projects</a></li>
+	     	      <li id="n-classifieds"><a href="/wiki/Classifieds">Bulletin Board/Classifieds</a></li>
+	     	      <li id="n-Meeting-History"><a href="/wiki/Historical:Meetings">Meeting History</a></li>
+	     	    </ul>
+	  </div>
+	</div>
+		<div class='portlet' id='p-editsidebar-title'>
+	  <h5>Customize</h5>
+	  <div class='pBody'>
+	    <ul>
+	    	      <li id="n-editsidebar"><a href="http://localhost/mediawiki/index.php?title=MediaWiki:Sidebar&amp;action=edit">Edit sidebar</a></li>
+	     	    </ul>
+	  </div>
+	</div>
+		<div id="p-search" class="portlet">
+	  <h5><label for="searchInput">Search</label></h5>
+	  <div class="pBody">
+	    <form name="searchform" action="/wiki/Special:Search" id="searchform">
+	      <input id="searchInput" name="search" type="text"
+	        accesskey="f" value="" />
+	      <input type='submit' name="go" class="searchButton" id="searchGoButton"
+	        value="Go"
+	        />&nbsp;<input type='submit' name="fulltext"
+	        class="searchButton"
+	        value="Search" />
+	    </form>
+	  </div>
+	</div>
+	<div class="portlet" id="p-tb">
+	  <h5>Toolbox</h5>
+	  <div class="pBody">
+	    <ul>
+		  		  <li id="t-whatlinkshere"><a href="/wiki/Special:Whatlinkshere/LinuxJournal-MythTV">What links here</a></li>
+		  		  <li id="t-recentchangeslinked"><a href="/wiki/Special:Recentchangeslinked/LinuxJournal-MythTV">Related changes</a></li>
+		                	      	      	      	      	      	      	      <li id="t-upload"><a href="/wiki/Special:Upload">Upload file</a></li>	      	      <li id="t-specialpages"><a href="/wiki/Special:Specialpages">Special pages</a></li>	      	      	      <li id="t-print"><a href="/mediawiki/index.php?title=LinuxJournal-MythTV&amp;printable=yes">Printable version</a></li>
+	      	    </ul>
+	  </div>
+	</div>
+	      </div><!-- end of the left (by default at least) column -->
+      <div class="visualClear"></div>
+      <div id="footer">
+    <div id="f-poweredbyico"><a href="http://www.mediawiki.org/"><img src="/mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="MediaWiki" /></a></div>	<div id="f-copyrightico"><a href="http://www.gnu.org/copyleft/fdl.html"><img src="/mediawiki/skins/common/images/gnu-fdl.png" alt='GNU Free Documentation License 1.2' /></a></div>	<ul id="f-list">
+	  <li id="f-lastmod"> This page was last modified 18:41, 12 June 2007.</li>	  <li id="f-viewcount">This page has been accessed 1,026 times.</li>	  	  	  <li id="f-copyright">Content is available under <a href="http://www.gnu.org/copyleft/fdl.html" class='external ' title="http://www.gnu.org/copyleft/fdl.html" rel="nofollow">GNU Free Documentation License 1.2</a>.</li>	  <li id="f-about"><a href="/wiki/GTALUG:About" title="GTALUG:About">About GTALUG</a></li>	  <li id="f-disclaimer"><a href="/wiki/GTALUG:General_disclaimer" title="GTALUG:General disclaimer">Disclaimers</a></li>	  	</ul>
+      </div>
+    </div>
+    <!-- Served by gold.ss.org in 0.08 secs. -->  </body>
+</html>

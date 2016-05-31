@@ -1,0 +1,522 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="KEYWORDS" content="SAL-DBI,Culture,Psema4,SAL,Sitemap" />
+<meta name="robots" content="index,follow" />
+<link rel="shortcut icon" href="/favicon.ico" />
+<link title="Creative Commons" type="application/rdf+xml" href="/mediawiki/index.php?title=SAL-DBI&amp;action=creativecommons" rel="meta" />
+<link rel="copyright" href="http://www.gnu.org/copyleft/fdl.html" />
+    <title>SAL-DBI - GTALUG</title>
+    <style type="text/css" media="screen,projection">/*<![CDATA[*/ @import "/mediawiki/skins/gtalug/main.css"; /*]]>*/</style>
+    <link rel="stylesheet" type="text/css" media="print" href="/mediawiki/skins/common/commonPrint.css" />
+    <!--[if lt IE 5.5000]><style type="text/css">@import "/mediawiki/skins/gtalug/IE50Fixes.css";</style><![endif]-->
+    <!--[if IE 5.5000]><style type="text/css">@import "/mediawiki/skins/gtalug/IE55Fixes.css";</style><![endif]-->
+    <!--[if gte IE 6]><style type="text/css">@import "/mediawiki/skins/gtalug/IE60Fixes.css";</style><![endif]-->
+    <!--[if IE]><script type="text/javascript" src="/mediawiki/skins/common/IEFixes.js"></script>
+    <meta http-equiv="imagetoolbar" content="no" /><![endif]-->
+    <script type="text/javascript" src="/mediawiki/index.php?title=-&amp;action=raw&amp;gen=js"></script>    <script type="text/javascript" src="/mediawiki/skins/common/wikibits.js"></script>
+    <style type="text/css">/*<![CDATA[*/
+@import "/mediawiki/index.php?title=MediaWiki:Gtalug.css&action=raw&ctype=text/css&smaxage=18000";
+@import "/mediawiki/index.php?title=-&action=raw&gen=css&maxage=18000";
+/*]]>*/</style>              </head>
+  <body                 class="ns-0">
+    <div id="globalWrapper">
+      <div id="column-content">
+	<div id="content">
+	  <a name="top" id="top"></a>
+	  	  <h1 class="firstHeading">SAL-DBI</h1>
+	  <div id="bodyContent">
+	    <h3 id="siteSub">From GTALUG</h3>
+	    <div id="contentSub"></div>
+	    	    	    <!-- start content -->
+	    <p><a href="/wiki/Sitemap" title="Sitemap">Sitemap</a> > <a href="/wiki/Culture" title="Culture">Culture</a> > <a href="/wiki/Psema4" title="Psema4">Psema4</a> > <a href="/wiki/SAL" title="SAL">SAL</a> > SAL-DBI
+</p>
+<pre>
+package SAL::DBI;
+
+# This script is licensed under the FDL (Free Document License)
+# The complete license text can be found at http://www.gnu.org/copyleft/fdl.html
+# Contains excerpts from various man pages, tutorials and books on perl
+# DBI ABSTRACTION
+
+use strict;
+use DBI;
+use Carp;
+
+BEGIN {
+	use Exporter ();
+	our ($VERSION, @ISA, @EXPORT, @EXPORT_OK, %EXPORT_TAGS);
+	$VERSION = 3.0;
+	@ISA = qw(Exporter);
+	@EXPORT = qw();
+	%EXPORT_TAGS = ();
+	@EXPORT_OK = qw();
+}
+our @EXPORT_OK;
+
+END { }
+
+our %DBI = (
+######################################
+ 'connection' =&gt; {
+   # Shared
+	'type'		=&gt; '',
+	'dbh'		=&gt; '',
+	'sth'		=&gt; '',
+	'user'		=&gt; '',
+	'passwd'	=&gt; '',
+    # For MySQL
+	'server'	=&gt; '',
+	'database'	=&gt; '',
+    # For ODBC
+	'dsn'		=&gt; '',
+    # For SQLite
+	'dbfile'	=&gt; ''
+  },
+######################################
+  'fields' =&gt; (
+    {
+	'name'		=&gt; '',
+	'label'		=&gt; '',
+	'type'		=&gt; '',
+	'visible'	=&gt;  0,
+	'header'	=&gt;  0,
+	'writeable'	=&gt;  0,
+	'css'		=&gt; '',
+	'precision'	=&gt; '',
+	'commify'	=&gt; '',
+	'align'		=&gt; '',
+	'prefix'	=&gt; '',
+	'postfix'	=&gt; '',
+    }
+  ),
+######################################
+  'data'		=&gt; [],
+######################################
+ 'internal' =&gt; {
+	'width'		=&gt; '',
+	'height'	=&gt; '',
+  },
+######################################
+);
+
+# Setup accessors via closure (from perltooc manpage)
+sub _classobj {
+	my $obclass = shift || __PACKAGE__;
+	my $class = ref($obclass) || $obclass;
+	no strict &quot;refs&quot;;
+	return \%$class;
+}
+
+for my $datum (keys %{ _classobj() }) {
+	no strict &quot;refs&quot;;
+	*$datum = sub {
+		my $self = shift-&gt;_classobj();
+		$self-&gt;{$datum} = shift if @_;
+		return $self-&gt;{$datum};
+	}
+}
+
+##########################################################################################################################
+# Constructors (Public)
+sub new {
+	my $obclass = shift || __PACKAGE__;
+	my $class = ref($obclass) || $obclass;
+	my $self = {};
+
+	bless($self, $class);
+
+	return $self;
+}
+
+sub spawn_mysql {
+	my $obclass = shift || __PACKAGE__;
+	my $class = ref($obclass) || $obclass;
+
+	my $db_type = 'mysql';
+	my $db_server = shift || '(undefined)';
+	my $db_user = shift || '(undefined)';
+	my $db_passwd = shift || '(undefined)';
+	my $db_database = shift || '(undefined)';
+
+	my $self = {};
+	$self-&gt;{connection}{type} = $db_type;
+	$self-&gt;{connection}{server} = $db_server;
+	$self-&gt;{connection}{user} = $db_user;
+	$self-&gt;{connection}{passwd} = $db_passwd;
+	$self-&gt;{connection}{database} = $db_database;
+
+	bless($self, $class);
+
+	# make the connection
+	$self-&gt;{connection}{dbh} = DBI-&gt;connect(&quot;DBI:mysql:$db_database:$db_server&quot;,$db_user,$db_passwd) || confess($DBI::errstr);
+
+	return $self;
+}
+
+sub spawn_odbc {
+	my $obclass = shift || __PACKAGE__;
+	my $class = ref($obclass) || $obclass;
+
+	my $db_type = 'odbc';
+	my $db_dsn = shift || '';
+	my $db_user = shift || '';
+	my $db_passwd = shift || '';
+
+
+	my $self = {};
+	$self-&gt;{connection}{type} = $db_type;
+	$self-&gt;{connection}{dsn} = $db_dsn;
+	$self-&gt;{connection}{user} = $db_user;
+	$self-&gt;{connection}{passwd} = $db_passwd;
+
+	bless($self, $class);
+
+	# make the connection
+	$self-&gt;{connection}{dbh} = DBI-&gt;connect(&quot;DBI:ODBC:$db_dsn&quot;,$db_user,$db_passwd) || confess($DBI::errstr);
+
+	return $self;
+}
+
+sub spawn_sqlite {
+	my $obclass = shift || __PACKAGE__;
+	my $class = ref($obclass) || $obclass;
+
+	my $db_type = 'sqlite';
+	my $db_server = '';
+	my $db_user = '';
+	my $db_passwd = '';
+	my $db_database = shift || '(undefined)';
+
+	my $self = {};
+	$self-&gt;{connection}{type} = $db_type;
+	$self-&gt;{connection}{server} = $db_server;
+	$self-&gt;{connection}{user} = $db_user;
+	$self-&gt;{connection}{passwd} = $db_passwd;
+	$self-&gt;{connection}{database} = $db_database;
+
+	bless($self, $class);
+
+	# make the connection
+	$self-&gt;{connection}{dbh} = DBI-&gt;connect(&quot;DBI:SQLite:dbname=$db_database&quot;,$db_user,$db_passwd) || confess($DBI::errstr);
+
+	return $self;
+}
+
+##########################################################################################################################
+# Destructor (Public)
+sub destruct {
+	my $self = shift;
+
+	if(defined($self-&gt;{connection}{dbh})) {
+		$self-&gt;{connection}{dbh}-&gt;disconnect();
+	}
+}
+
+##########################################################################################################################
+# Public Methods
+sub do {
+	my ($self, $statement) = @_;
+	my $rv = $self-&gt;{connection}{dbh}-&gt;do($statement);
+	return $rv;
+}
+
+sub execute {
+	my ($self, $statement, @params) = @_;
+
+	my $table = $self-&gt;_extract_table($statement);
+
+	# From the section &quot;Outline Usage&quot; of the DBI pod (http://search.cpan.org/~timb/DBI-1.43/DBI.pm)
+	# This should probably be it's own function...  Note also the way placeholders are used...
+	$self-&gt;{connection}{sth} = $self-&gt;{connection}{dbh}-&gt;prepare($statement) || confess(&quot;Can't Prepare SQL Statement: &quot; . $self-&gt;{connection}{dbh}-&gt;errstr);
+	#
+
+	$self-&gt;{connection}{sth}-&gt;execute(@params) || confess(&quot;Can't Execute SQL Statement: &quot; . $self-&gt;{connection}{sth}-&gt;errstr . &quot;\n\nSQL Statement:\n$statement\nParams:\n@params\n\n&quot;);
+	$self-&gt;{data} = $self-&gt;{connection}{sth}-&gt;fetchall_arrayref();
+
+	# get the width and height (aka metrics) of the returned data set...
+	my $width = $#{$self-&gt;{data}[0]};
+	my $height = $self-&gt;{connection}{sth}-&gt;rows();
+	$self-&gt;{internal}{width} = $width;
+	$self-&gt;{internal}{height} = $height;
+
+	foreach my $column (0..$width) {
+		$self-&gt;{fields}[$column]{visible} = 1;
+		$self-&gt;{fields}[$column]{header} = 1;
+		$self-&gt;{fields}[$column]{writeable} = 0;
+	}
+
+	$self-&gt;_get_labels($table);
+	return ($width, $height);
+}
+
+sub get_column {
+	my $self = shift;
+	my $column = shift;
+	my @data;
+
+	foreach my $i (0 .. $self-&gt;{internal}{height}) {
+		push (@data, $self-&gt;{data}-&gt;[$i][$column]);
+	}
+
+	return @data;
+}
+
+sub get_row {
+	my $self = shift;
+	my $row = shift;
+	my @data;
+
+	foreach my $i (0 .. $self-&gt;{internal}{width}) {
+		push (@data, $self-&gt;{data}-&gt;[$row][$i]);
+	}
+
+	return @data;
+}
+
+sub get_labels {
+	my $self = shift;
+	my @data;
+
+	foreach my $i (0 .. $self-&gt;{internal}{width}) {
+		push (@data, $self-&gt;{fields}-&gt;[$i]-&gt;{label});
+	}
+
+	return @data;
+}
+
+sub clean_times {
+	my $self = shift;
+	my $col = shift || '0';
+
+	foreach my $i (0 .. $self-&gt;{internal}{height}-1) {
+		$self-&gt;{data}-&gt;[$i][$col] =~ s/\s+\d\d:\d\d:\d\d.*$//;
+	}
+}
+
+sub short_dates {
+	my $self = shift;
+	my $col = shift || '0';
+
+	foreach my $i (0 .. $self-&gt;{internal}{height}-1) {
+		$self-&gt;{data}-&gt;[$i][$col] =~ s/\d\d(\d\d)-(\d\d)-(\d\d)/$2-$3-$1/;
+	}
+}
+
+##########################################################################################################################
+# Private Methods
+sub _get_labels {
+	my $self = shift;
+	my $table = shift;
+	my $tmp;
+	my $query;
+	my @labels = ();
+
+	if ($self-&gt;{connection}{type} eq 'mysql') {
+		$query = &quot;SHOW COLUMNS FROM $table&quot;;	# cant use&nbsp;? placeholder (embeds in single quotes)
+		$self-&gt;{connection}{sth} = $self-&gt;{connection}{dbh}-&gt;prepare($query) || confess($self-&gt;{connection}{dbh}-&gt;errstr);
+		$self-&gt;{connection}{sth}-&gt;execute() || confess($self-&gt;{connection}{sth}-&gt;errstr);
+	} elsif ($self-&gt;{connection}{type} eq 'odbc') {
+		$query = 'SELECT column_name, data_type FROM information_schema.columns WHERE table_name=?';
+		$self-&gt;{connection}{sth} = $self-&gt;{connection}{dbh}-&gt;prepare($query) || confess($self-&gt;{connection}{dbh}-&gt;errstr);
+		$self-&gt;{connection}{sth}-&gt;execute($table) || confess($self-&gt;{connection}{sth}-&gt;errstr);
+	} elsif ($self-&gt;{connection}{type} eq 'sqlite') {
+		$query = &quot;PRAGMA table_info($table)&quot;;
+		$self-&gt;{connection}{sth} = $self-&gt;{connection}{dbh}-&gt;prepare($query) || confess($self-&gt;{connection}{dbh}-&gt;errstr);
+		$self-&gt;{connection}{sth}-&gt;execute() || confess($self-&gt;{connection}{sth}-&gt;errstr);
+	}
+
+	$tmp = $self-&gt;{connection}{sth}-&gt;fetchall_arrayref();
+
+	if (defined($tmp)) {
+		my $num_rows = $#{$tmp};
+		my $column = 0;
+
+		for my $row (0..$num_rows) {
+			if ($self-&gt;{connection}{type} ne 'sqlite') {
+				my $name = $tmp-&gt;[$row][0];
+				my $type = $tmp-&gt;[$row][1];
+				$self-&gt;{fields}[$column]{label} = $name;
+				$self-&gt;{fields}[$column]{name} = $name;
+				$self-&gt;{fields}[$column]{type} = $type;
+				$column++;
+			} else {
+				my $name = $tmp-&gt;[$row][1];
+				my $type = $tmp-&gt;[$row][3];
+				$self-&gt;{fields}[$column]{label} = $name;
+				$self-&gt;{fields}[$column]{name} = $name;
+				$self-&gt;{fields}[$column]{type} = $type;
+				$column++;
+			}
+		}
+	}
+}
+
+sub _extract_table {
+	my $self = shift;
+	my $statement = shift;
+	my $table;
+
+	# Add a space so that the regex below does not fail on statements like:
+	# &quot;SELECT * FROM some_table&quot;
+
+	$statement .= ' ';
+
+	if ($statement =~ /^SELECT\s+(.*)\s+FROM\s+(\w+)\s+(.*)/) {
+		$table = $2;
+	} else {
+		$table = 'undefined_tablename';
+	}
+
+	return $table;
+}
+
+1;
+
+=pod
+
+=head1 Name
+
+SAL::DBI
+
+=head1 Synopsis
+
+=head1 Methods
+
+=head2 Constructors
+
+new()
+
+spawn_mysql()
+
+spawn_odbc()
+
+spawn_sqlite()
+
+=head2 Destructor
+
+destruct()
+
+=head2 Eponymous Hash
+
+=head2 Public
+
+do()
+
+execute()
+
+get_column()
+
+get_row()
+
+get_labels()
+
+clean_times()
+
+short_dates()
+
+=head1 See Also
+
+SAL::DBI, SAL::Graph, SAL::WebDDR, SAL::WebApplication
+
+=cut
+
+</pre>
+<div class="printfooter">
+Retrieved from "<a href="http://localhost/wiki/SAL-DBI">http://localhost/wiki/SAL-DBI</a>"</div>
+	    	    <!-- end content -->
+	    <div class="visualClear"></div>
+	  </div>
+	</div>
+      </div>
+      <div id="column-one">
+	<div id="p-cactions" class="portlet">
+	  <h5>Views</h5>
+	  <ul>
+	    <li id="ca-nstab-main"
+	       class="selected"	       ><a href="/wiki/SAL-DBI">Article</a></li><li id="ca-talk"
+	       class="new"	       ><a href="/mediawiki/index.php?title=Talk:SAL-DBI&amp;action=edit">Discussion</a></li><li id="ca-edit"
+	       	       ><a href="/mediawiki/index.php?title=SAL-DBI&amp;action=edit">Edit</a></li><li id="ca-history"
+	       	       ><a href="/mediawiki/index.php?title=SAL-DBI&amp;action=history">History</a></li>	  </ul>
+	</div>
+	<div class="portlet" id="p-personal">
+	  <h5>Personal tools</h5>
+	  <div class="pBody">
+	    <ul>
+	    <li id="pt-login"><a href="/mediawiki/index.php?title=Special:Userlogin&amp;returnto=SAL-DBI">Create an account or log in</a></li>	    </ul>
+	  </div>
+	</div>
+	<div class="portlet" id="p-logo">
+	  <a style="background-image: url(/wiki/upload/wiki.png);"
+	    href="/wiki/Main_Page"
+	    title="Main Page"></a>
+	</div>
+	<script type="text/javascript"> if (window.isMSIE55) fixalpha(); </script>
+		<div class='portlet' id='p-navigation'>
+	  <h5>Navigation</h5>
+	  <div class='pBody'>
+	    <ul>
+	    	      <li id="n-mainpage"><a href="/wiki/Main_Page">Main Page</a></li>
+	     	      <li id="n-smap"><a href="/wiki/Sitemap">Sitemap</a></li>
+	     	      <li id="n-recentchanges"><a href="/wiki/Special:Recentchanges">Recent changes</a></li>
+	     	      <li id="n-randompage"><a href="/wiki/Special:Random">Random page</a></li>
+	     	      <li id="n-admin"><a href="/wiki/Site_Administration">gtalug.org Administration</a></li>
+	     	    </ul>
+	  </div>
+	</div>
+		<div class='portlet' id='p-community'>
+	  <h5>community</h5>
+	  <div class='pBody'>
+	    <ul>
+	    	      <li id="n-portal"><a href="/wiki/GTALUG:Community_Portal">Resources</a></li>
+	     	      <li id="n-mailing-lists"><a href="/wiki/Mailing_lists">Mailing lists</a></li>
+	     	      <li id="n-currentevents"><a href="/wiki/Current_events">Current events</a></li>
+	     	      <li id="n-groups"><a href="/wiki/Toronto_opensource_computing_groups">Other groups</a></li>
+	     	      <li id="n-Open-Source-Projects"><a href="/wiki/Projects">Open Source Projects</a></li>
+	     	      <li id="n-classifieds"><a href="/wiki/Classifieds">Bulletin Board/Classifieds</a></li>
+	     	      <li id="n-Meeting-History"><a href="/wiki/Historical:Meetings">Meeting History</a></li>
+	     	    </ul>
+	  </div>
+	</div>
+		<div class='portlet' id='p-editsidebar-title'>
+	  <h5>Customize</h5>
+	  <div class='pBody'>
+	    <ul>
+	    	      <li id="n-editsidebar"><a href="http://localhost/mediawiki/index.php?title=MediaWiki:Sidebar&amp;action=edit">Edit sidebar</a></li>
+	     	    </ul>
+	  </div>
+	</div>
+		<div id="p-search" class="portlet">
+	  <h5><label for="searchInput">Search</label></h5>
+	  <div class="pBody">
+	    <form name="searchform" action="/wiki/Special:Search" id="searchform">
+	      <input id="searchInput" name="search" type="text"
+	        accesskey="f" value="" />
+	      <input type='submit' name="go" class="searchButton" id="searchGoButton"
+	        value="Go"
+	        />&nbsp;<input type='submit' name="fulltext"
+	        class="searchButton"
+	        value="Search" />
+	    </form>
+	  </div>
+	</div>
+	<div class="portlet" id="p-tb">
+	  <h5>Toolbox</h5>
+	  <div class="pBody">
+	    <ul>
+		  		  <li id="t-whatlinkshere"><a href="/wiki/Special:Whatlinkshere/SAL-DBI">What links here</a></li>
+		  		  <li id="t-recentchangeslinked"><a href="/wiki/Special:Recentchangeslinked/SAL-DBI">Related changes</a></li>
+		                	      	      	      	      	      	      	      <li id="t-upload"><a href="/wiki/Special:Upload">Upload file</a></li>	      	      <li id="t-specialpages"><a href="/wiki/Special:Specialpages">Special pages</a></li>	      	      	      <li id="t-print"><a href="/mediawiki/index.php?title=SAL-DBI&amp;printable=yes">Printable version</a></li>
+	      	    </ul>
+	  </div>
+	</div>
+	      </div><!-- end of the left (by default at least) column -->
+      <div class="visualClear"></div>
+      <div id="footer">
+    <div id="f-poweredbyico"><a href="http://www.mediawiki.org/"><img src="/mediawiki/skins/common/images/poweredby_mediawiki_88x31.png" alt="MediaWiki" /></a></div>	<div id="f-copyrightico"><a href="http://www.gnu.org/copyleft/fdl.html"><img src="/mediawiki/skins/common/images/gnu-fdl.png" alt='GNU Free Documentation License 1.2' /></a></div>	<ul id="f-list">
+	  <li id="f-lastmod"> This page was last modified 22:05, 11 February 2010.</li>	  <li id="f-viewcount">This page has been accessed 3,435 times.</li>	  	  	  <li id="f-copyright">Content is available under <a href="http://www.gnu.org/copyleft/fdl.html" class='external ' title="http://www.gnu.org/copyleft/fdl.html" rel="nofollow">GNU Free Documentation License 1.2</a>.</li>	  <li id="f-about"><a href="/wiki/GTALUG:About" title="GTALUG:About">About GTALUG</a></li>	  <li id="f-disclaimer"><a href="/wiki/GTALUG:General_disclaimer" title="GTALUG:General disclaimer">Disclaimers</a></li>	  	</ul>
+      </div>
+    </div>
+    <!-- Served by gold.ss.org in 0.08 secs. -->  </body>
+</html>
